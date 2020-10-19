@@ -1,0 +1,1 @@
+# Power-Series-Calculation-Model-of-Genome-Combination

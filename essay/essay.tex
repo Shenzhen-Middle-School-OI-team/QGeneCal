@@ -1,0 +1,263 @@
+\documentclass{article}
+\usepackage{ctex}
+\usepackage{import}
+\usepackage{hyperref}	% 用于交叉引用
+\usepackage{setspace}	% 用于设置行间距
+\usepackage{listings}	% 用于代码高亮
+\usepackage{xcolor}		% 用于处理颜色
+\usepackage{ulem}		% 用于各种线
+\usepackage{amsmath}	% 用于数学公式（如 \begin{align}）
+\usepackage{amsthm}		% 用于数学版式（如 \newtheorem{cmd}{caption}）
+\usepackage{booktabs}	% 用于表格画线
+\usepackage{graphicx}	% 用于插入图片
+\usepackage{minted}
+\usepackage{amssymb}
+
+\usepackage{algorithm}  
+\usepackage{algorithmicx}  
+\usepackage{algpseudocode}  
+\usepackage{amsmath}  % 用于伪代码
+
+\floatname{algorithm}{算法}
+\renewcommand{\algorithmicrequire}{\textbf{输入:}}
+\renewcommand{\algorithmicensure}{\textbf{输出:}}
+
+
+\usepackage[top = 0.8in, bottom = 0.8in, left = 0.8in, right = 0.8in]{geometry} %设置页边距
+
+
+\title{研究性学习结题报告书}
+\author{}
+\begin{document}
+	\maketitle
+	\begin{itemize}
+		\item[\textbf{课题名称}] 用信息方法研究遗传学问题 \centering
+		\item[\textbf{课题负责人}] 杨景云
+		\item[\textbf{课题成员}] blablabla
+		\item[\textbf{指导教师}] 李丽华老师
+		\item[\textbf{所在班级}] 高二(9)班
+	\end{itemize}
+	\newpage
+	\section{约定}
+		\begin{itemize}
+			\item[\textbf{真值运算符}] 若 $[]$ 内表达式为真，则是 $1$，否则是 $0$。
+		\end{itemize}
+	\section{定义}
+	
+	\subsection{基因集合}
+
+	我们用 $\mathbb{G}$ 来表示基因集合。
+
+	对于只有显隐性的情况，基因集合由一系列大写字母和小写字母组成，大写字母表示显性，小写字母表示隐性。对于只有两对等位基因 $\texttt{A,B}$ 的情况，$\mathbb{G}=\{\texttt{A,B,a,b}\}$。
+
+	对于另一些更复杂的情况，拿喷瓜举例，基因集合可以写作 $\mathbb{G}=\{\texttt{g}^{-},\texttt{g}^{+},\texttt{G}\}$。
+	
+	\subsection{对于集合元素的标号}
+
+	创建基因集合到 $\{1,2,\cdots |\mathbb{G}|\}$ 的映射 $f:\mathbb{G} \to \mathbb{Z}$。
+
+	基因的顺序就是标号的顺序。
+	
+	容易发现其有逆运算 $f'$。
+
+	\subsection{集合到向量的转化}
+
+	一个集合 $S$ 可以转化为一个 $|S|$ 维向量 $v$，其中 $v_i=[f'(i) \in S]$。
+
+	若基因集合为 $\{\texttt{A,B}\}$，$\texttt{A}$ 标号为 $1$，$\texttt{B}$ 标号为 $2$，那么集合 $\{\texttt{A}\}$ 可以转化为 $(1,0)$。
+
+	\subsection{基因片段}
+
+	基因片段是一个向量。记基因片段组成的集合为 $\mathbb{P}$。
+
+	\subsubsection{配子基因片段}
+	
+	我们用 $\vec G$ 来表示配子基因片段。
+
+	我们可以将一个具有 $k$ 个基因的配子用一个 $k$ 维有序向量 $\{a_i\}$ 表示，$a_i \in \mathbb{G}$。
+
+	\subsubsection{个体基因片段}
+
+	我们用 $\vec I$ 来表示个体基因片段。
+
+	我们可以将一个具有 $k$ 对等位基因的个体用一个 $k$ 维有序向量 $\{(l_i,r_i)\}$表示，$l_i,r_i \in \mathbb{G}$。
+
+	\subsection{基因片段的运算}
+
+	\subsubsection{加法运算 $+$}
+
+	对于 $L,R \in \mathbb{P}$，而且 $L,R$ 同为配子基因片段或个体基因片段，定义加法运算为两基因片段的 \textbf{有序} 拼接。
+
+	如 $(\texttt{A},\texttt{C}) + (\texttt{B}) = (\texttt{A},\texttt{B},\texttt{C})$。
+
+	\subsubsection{结合运算 $\oplus$}
+
+	对于 $L,R \in \mathbb{P}$，而且 $L,R$ 同为配子基因片段，而且长度相等，定义结合运算为按位有序结合：
+
+	$$(L \oplus R)_i=(\max(L_i,R_i),\min(L_i,R_i))$$
+
+	$\max,\min$ 为取序号较大/较小者。
+
+	如 $(\texttt{A},\texttt{b}) + (\texttt{a},\texttt{B})=(\texttt{(A,a)},\texttt{(B,b)})$。
+
+	\subsection{生成函数 (Generating function)} 
+	
+	定义：
+
+	$$\textbf{A}=\sum_{i} a_i x^{i}$$
+
+	是序列 $\{a_i\}$ 的生成函数。
+
+	我们不关心 $x$ 的取值和级数是否收敛，把 $x$ 作为形式，只关心系数 $a_i$。
+
+	\subsection{基因片段生成函数}
+
+	定义：
+
+	$$\textbf{A}=\sum_{i \in \mathbb{P}} a_i x^{i}$$
+
+	是序列 $\{a_i\}$ 的基因片段生成函数。
+
+	\subsection{基因片段生成函数的系列运算}
+	
+	\subsubsection{乘法运算 $\times$}
+	
+	$$x^L \times x^R=x^{L+R}$$
+
+	\subsubsection{结合乘法运算 $\otimes$}
+
+	$$x^L \otimes x^R=x^{L \oplus R}$$
+
+	\subsection{基因片段生成函数的应用}
+
+	\begin{itemize}
+		\item 求基因型为 $\texttt{AaBB}$ 的个体产生的配子数量比。
+	\end{itemize}
+
+	构造生成函数：
+	
+	$$\begin{aligned}
+		\textbf{G} &= (\frac{1}{2} x^{\texttt{A}}+ \frac{1}{2}x^{\texttt{a}})(\frac{1}{2} x^{\texttt{B}}+ \frac{1}{2}x^{\texttt{B}}) \\
+		           &= \frac{1}{2} x^{\texttt{AB}} + \frac{1}{2} x^{\texttt{aB}}
+	\end{aligned}$$
+
+	即配子数量比为 $\texttt{AB} : \texttt{aB}=1:1$。
+
+	\begin{itemize}
+		\item 求其自交后个体的基因型比例。
+	\end{itemize}
+
+	构造生成函数：
+
+	$$\begin{aligned}
+		\textbf{I} &= \textbf{G} \otimes \textbf{G} \\
+		           &= \frac{1}{4} x^{\texttt{AABB}} + \frac{1}{2} x^{\texttt{AaBB}} + \frac{1}{4} x^{\texttt{aaBB}}
+	\end{aligned}$$
+
+	即基因型数量比为 $\texttt{AABB} : \texttt{AaBB} : \texttt{aaBB}=1:2:1$。
+
+	\subsection{表现型集合}
+
+	定义 $\mathbb{E}$ 为表现型集合，一般地，$\mathbb{E}=\mathbb{G}$。
+
+	\subsection{表现型映射}
+
+	我们创建映射：$exp:\mathbb{G} \times \mathbb{G} \to \mathbb{E}$，对于一对等位基因 $l,r \in G$ 使得 $exp(l,r)$ 为这个个体的表现型。
+
+	比如 $exp(\texttt{A},\texttt{a})=\texttt{A}$，$exp(\texttt{a},\texttt{a})=\texttt{a}$。
+
+	\subsection{表现型映射的性质}
+
+	\begin{itemize}
+		\item $exp(i,j)=exp(j,i)$。
+		\item $exp(i,i)=i$。
+	\end{itemize}
+
+	\subsection{计算个体的表现型}
+
+	个体的表现型可以用一个 $k$ 维向量 $\vec E$ 表示，其中
+
+	$$\vec E_i=exp(\vec I_i)$$
+
+	\subsection{卷积}
+
+	给定环 $R$ 上的 $n$ 维向量 $\vec A=\{a_i\},\vec B=\{b_i\}$ 和下标运算 $\circ$，设 $C=\{c_i\}=A*B$，则满足：
+
+	$$c_i=\sum_{j,k} [j \circ k=i] a_jb_k$$
+
+	称 $C$ 为 $A$ 和 $B$ 关于 $\circ$ 的离散卷积，以下简称卷积。
+
+	记 $C=A*_{\circ}B$，如果不引起混淆，简记为 $C=A*B$，其中 $*$ 为卷积算子。
+
+	若 $\circ = +$，就是我们熟悉的多项式乘法运算。
+
+	\subsection{卷积与生成函数运算的联系}
+
+	若满足运算 $x^L \times x^R = x^{L \circ R}$，那么生成函数 $\mathbf{F}=\sum f_i x^i$ 的乘法：
+
+	$$\textbf{H}=\textbf{F} \times \textbf{G}$$
+
+	和卷积 $\vec F=\{f_i\},\vec G=\{g_i\},\vec H=\vec F *_{\circ} \vec G=\{h_i\}$ 等价。
+
+	\subsection{快速沃尔什变换的实现}
+
+	\begin{algorithm}
+        \caption{快速莫比乌斯变换}
+        \begin{algorithmic}[1]
+            \Require 集合幂级数 $f$
+            \Ensure $f$ 的莫比乌斯变换
+            \Function {FastMobiusTransform}{$f$}
+				\For{$i \gets 1 \textbf{ to } n$}
+					\For{$\textbf{all }S \subseteq U \setminus \{i\}$}
+						\State $f_{S \cup \{i\}} \gets f_{S \cup \{i\}} + f_{S}$
+					\EndFor
+				\EndFor
+                \State \Return{$f$}
+            \EndFunction
+		\end{algorithmic}
+	\end{algorithm}
+
+	\begin{algorithm}
+		\caption{快速莫比乌斯反演}
+		\begin{algorithmic}[1]
+			\Require 集合幂级数 $f$
+			\Ensure $f$ 的莫比乌斯反演
+			\Function {FastMobiusInversion}{$f$}
+				\For{$i \gets 1 \textbf{ to } n$}
+					\For{$\textbf{all }S \subseteq U \setminus \{i\}$}
+						\State $f_{S \cup \{i\}} \gets f_{S \cup \{i\}} - f_{S}$
+					\EndFor
+				\EndFor
+				\State \Return{$f$}
+			\EndFunction
+		\end{algorithmic}
+	\end{algorithm}
+
+	\begin{algorithm}
+		\caption{多维广义离散傅里叶变换}
+		\begin{algorithmic}[1]
+			\Require 幂级数 $f$，单位根 $w_k$，操作符 $opr$ 代表正变换还是逆变换。
+			\Ensure $f$ 的傅里叶变换
+			\Function {FourierTransform}{$f,w_k,opr$}
+				\If $\ opr=1$
+					\State $matrix_{i,j}=w^{(i-1)(j-1)}_k$
+				\Else
+					\State $matrix_{i,j}=\frac{1}{k}w^{-(i-1)(j-1)}_k$
+				\EndIf
+				\For{$i \gets 1 \textbf{ to } n$}
+					\For{$\texttt{The k vectors satisfying }1 \cdots k\texttt{ on the i-th bit and the other bits are same.}$}
+						\State $v \gets \texttt{the k vectors}$
+						\For{$j \gets 1 \textbf{ to } k$}
+							\State $g_j \gets f_{v_j}$
+						\EndFor
+						\State $g \gets g \times matrix$
+						\For{$j \gets 1 \textbf{ to } k$}
+							\State $f_{v_j} \gets g_j$
+						\EndFor
+					\EndFor
+				\EndFor
+				\State \Return{$f$}
+			\EndFunction
+		\end{algorithmic}
+	\end{algorithm}
+\end{document}

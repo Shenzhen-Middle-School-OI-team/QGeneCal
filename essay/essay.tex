@@ -29,235 +29,424 @@
 \title{研究性学习结题报告书}
 \author{}
 \begin{document}
-	\maketitle
+\maketitle
+\begin{itemize}
+	\item[\textbf{课题名称}] 用信息方法研究遗传学问题 \centering
+	\item[\textbf{课题负责人}] 杨景云
+	\item[\textbf{课题成员}] blablabla
+	\item[\textbf{指导教师}] 李丽华老师
+	\item[\textbf{所在班级}] 高二(9)班
+\end{itemize}
+\newpage
+\section{约定}
 	\begin{itemize}
-		\item[\textbf{课题名称}] 用信息方法研究遗传学问题 \centering
-		\item[\textbf{课题负责人}] 杨景云
-		\item[\textbf{课题成员}] blablabla
-		\item[\textbf{指导教师}] 李丽华老师
-		\item[\textbf{所在班级}] 高二(9)班
+		\item[\textbf{真值运算符}] 若 $[]$ 内表达式为真，则是 $1$，否则是 $0$。
 	\end{itemize}
-	\newpage
-	\section{约定}
-		\begin{itemize}
-			\item[\textbf{真值运算符}] 若 $[]$ 内表达式为真，则是 $1$，否则是 $0$。
-		\end{itemize}
-	\section{定义}
-	
-	\subsection{基因集合}
+\section{定义}
 
-	我们用 $\mathbb{G}$ 来表示基因集合。
+\subsection{基因集合}
 
-	对于只有显隐性的情况，基因集合由一系列大写字母和小写字母组成，大写字母表示显性，小写字母表示隐性。对于只有两对等位基因 $\texttt{A,B}$ 的情况，$\mathbb{G}=\{\texttt{A,B,a,b}\}$。
+我们用 $\mathbb{G}$ 来表示基因集合。
 
-	对于另一些更复杂的情况，拿喷瓜举例，基因集合可以写作 $\mathbb{G}=\{\texttt{g}^{-},\texttt{g}^{+},\texttt{G}\}$。
-	
-	\subsection{对于集合元素的标号}
+对于只有显隐性的情况，基因集合由一系列大写字母和小写字母组成，大写字母表示显性，小写字母表示隐性。对于只有两对等位基因 $\texttt{A,B}$ 的情况，$\mathbb{G}=\{\texttt{A,B,a,b}\}$。
 
-	创建基因集合到 $\{1,2,\cdots |\mathbb{G}|\}$ 的映射 $f:\mathbb{G} \to \mathbb{Z}$。
+对于另一些更复杂的情况，拿喷瓜举例，基因集合可以写作 $\mathbb{G}=\{\texttt{g}^{-},\texttt{g}^{+},\texttt{G}\}$。
 
-	基因的顺序就是标号的顺序。
-	
-	容易发现其有逆运算 $f'$。
+\subsection{对于集合元素的标号}
 
-	\subsection{集合到向量的转化}
+创建基因集合到 $\{1,2,\cdots |\mathbb{G}|\}$ 的映射 $f:\mathbb{G} \to \mathbb{Z}$。
 
-	一个集合 $S$ 可以转化为一个 $|S|$ 维向量 $v$，其中 $v_i=[f'(i) \in S]$。
+基因的顺序就是标号的顺序。
 
-	若基因集合为 $\{\texttt{A,B}\}$，$\texttt{A}$ 标号为 $1$，$\texttt{B}$ 标号为 $2$，那么集合 $\{\texttt{A}\}$ 可以转化为 $(1,0)$。
+容易发现其有逆运算 $f'$。
 
-	\subsection{基因片段}
+\subsection{集合到向量的转化}
 
-	基因片段是一个向量。记基因片段组成的集合为 $\mathbb{P}$。
+一个集合 $S$ 可以转化为一个 $|S|$ 维向量 $v$，其中 $v_i=[f'(i) \in S]$。
 
-	\subsubsection{配子基因片段}
-	
-	我们用 $\vec G$ 来表示配子基因片段。
+若基因集合为 $\{\texttt{A,B}\}$，$\texttt{A}$ 标号为 $1$，$\texttt{B}$ 标号为 $2$，那么集合 $\{\texttt{A}\}$ 可以转化为 $(1,0)$。
 
-	我们可以将一个具有 $k$ 个基因的配子用一个 $k$ 维有序向量 $\{a_i\}$ 表示，$a_i \in \mathbb{G}$。
+\subsection{基因片段}
 
-	\subsubsection{个体基因片段}
+基因片段是一个向量。记基因片段组成的集合为 $\mathbb{P}$。
 
-	我们用 $\vec I$ 来表示个体基因片段。
+\subsubsection{配子基因片段}
 
-	我们可以将一个具有 $k$ 对等位基因的个体用一个 $k$ 维有序向量 $\{(l_i,r_i)\}$表示，$l_i,r_i \in \mathbb{G}$。
+我们用 $\vec G$ 来表示配子基因片段。
 
-	\subsection{基因片段的运算}
+我们可以将一个具有 $k$ 个基因的配子用一个 $k$ 维有序向量 $\{a_i\}$ 表示，$a_i \in \mathbb{G}$。
 
-	\subsubsection{加法运算 $+$}
+\subsubsection{个体基因片段}
 
-	对于 $L,R \in \mathbb{P}$，而且 $L,R$ 同为配子基因片段或个体基因片段，定义加法运算为两基因片段的 \textbf{有序} 拼接。
+我们用 $\vec I$ 来表示个体基因片段。
 
-	如 $(\texttt{A},\texttt{C}) + (\texttt{B}) = (\texttt{A},\texttt{B},\texttt{C})$。
+我们可以将一个具有 $k$ 对等位基因的个体用一个 $k$ 维有序向量 $\{(l_i,r_i)\}$表示，$l_i,r_i \in \mathbb{G}$。
 
-	\subsubsection{结合运算 $\oplus$}
+\subsection{基因片段的运算}
 
-	对于 $L,R \in \mathbb{P}$，而且 $L,R$ 同为配子基因片段，而且长度相等，定义结合运算为按位有序结合：
+\subsubsection{加法运算 $+$}
 
-	$$(L \oplus R)_i=(\max(L_i,R_i),\min(L_i,R_i))$$
+对于 $L,R \in \mathbb{P}$，而且 $L,R$ 同为配子基因片段或个体基因片段，定义加法运算为两基因片段的 \textbf{有序} 拼接。
 
-	$\max,\min$ 为取序号较大/较小者。
+如 $(\texttt{A},\texttt{C}) + (\texttt{B}) = (\texttt{A},\texttt{B},\texttt{C})$。
 
-	如 $(\texttt{A},\texttt{b}) + (\texttt{a},\texttt{B})=(\texttt{(A,a)},\texttt{(B,b)})$。
+\subsubsection{结合运算 $\oplus$}
 
-	\subsection{生成函数 (Generating function)} 
-	
-	定义：
+对于 $L,R \in \mathbb{P}$，而且 $L,R$ 同为配子基因片段，而且长度相等，定义结合运算为按位有序结合：
 
-	$$\textbf{A}=\sum_{i} a_i x^{i}$$
+$$(L \oplus R)_i=(\max(L_i,R_i),\min(L_i,R_i))$$
 
-	是序列 $\{a_i\}$ 的生成函数。
+$\max,\min$ 为取序号较大/较小者。
 
-	我们不关心 $x$ 的取值和级数是否收敛，把 $x$ 作为形式，只关心系数 $a_i$。
+如 $(\texttt{A},\texttt{b}) + (\texttt{a},\texttt{B})=(\texttt{(A,a)},\texttt{(B,b)})$。
 
-	\subsection{基因片段生成函数}
+\subsection{生成函数 (Generating function)} 
 
-	定义：
+定义：
 
-	$$\textbf{A}=\sum_{i \in \mathbb{P}} a_i x^{i}$$
+$$\textbf{A}=\sum_{i} a_i x^{i}$$
 
-	是序列 $\{a_i\}$ 的基因片段生成函数。
+是序列 $\{a_i\}$ 的生成函数。
 
-	\subsection{基因片段生成函数的系列运算}
-	
-	\subsubsection{乘法运算 $\times$}
-	
-	$$x^L \times x^R=x^{L+R}$$
+我们不关心 $x$ 的取值和级数是否收敛，把 $x$ 作为形式，只关心系数 $a_i$。
 
-	\subsubsection{结合乘法运算 $\otimes$}
+\subsection{基因片段生成函数}
 
-	$$x^L \otimes x^R=x^{L \oplus R}$$
+定义：
 
-	\subsection{基因片段生成函数的应用}
+$$\textbf{A}=\sum_{i \in \mathbb{P}} a_i x^{i}$$
 
-	\begin{itemize}
-		\item 求基因型为 $\texttt{AaBB}$ 的个体产生的配子数量比。
-	\end{itemize}
+是序列 $\{a_i\}$ 的基因片段生成函数。
 
-	构造生成函数：
-	
-	$$\begin{aligned}
-		\textbf{G} &= (\frac{1}{2} x^{\texttt{A}}+ \frac{1}{2}x^{\texttt{a}})(\frac{1}{2} x^{\texttt{B}}+ \frac{1}{2}x^{\texttt{B}}) \\
-		           &= \frac{1}{2} x^{\texttt{AB}} + \frac{1}{2} x^{\texttt{aB}}
-	\end{aligned}$$
+\subsection{基因片段生成函数的系列运算}
 
-	即配子数量比为 $\texttt{AB} : \texttt{aB}=1:1$。
+\subsubsection{乘法运算 $\times$}
 
-	\begin{itemize}
-		\item 求其自交后个体的基因型比例。
-	\end{itemize}
+$$x^L \times x^R=x^{L+R}$$
 
-	构造生成函数：
+\subsubsection{结合乘法运算 $\otimes$}
 
-	$$\begin{aligned}
-		\textbf{I} &= \textbf{G} \otimes \textbf{G} \\
-		           &= \frac{1}{4} x^{\texttt{AABB}} + \frac{1}{2} x^{\texttt{AaBB}} + \frac{1}{4} x^{\texttt{aaBB}}
-	\end{aligned}$$
+$$x^L \otimes x^R=x^{L \oplus R}$$
 
-	即基因型数量比为 $\texttt{AABB} : \texttt{AaBB} : \texttt{aaBB}=1:2:1$。
+\subsection{基因片段生成函数的应用}
 
-	\subsection{表现型集合}
+\textbf{求基因型为 $\texttt{AaBB}$ 的个体产生的配子数量比。}
 
-	定义 $\mathbb{E}$ 为表现型集合，一般地，$\mathbb{E}=\mathbb{G}$。
+构造生成函数：
 
-	\subsection{表现型映射}
+$$\begin{aligned}
+	\textbf{G} &= (\frac{1}{2} x^{\texttt{A}}+ \frac{1}{2}x^{\texttt{a}})(\frac{1}{2} x^{\texttt{B}}+ \frac{1}{2}x^{\texttt{B}}) \\
+				&= \frac{1}{2} x^{\texttt{AB}} + \frac{1}{2} x^{\texttt{aB}}
+\end{aligned}$$
 
-	我们创建映射：$exp:\mathbb{G} \times \mathbb{G} \to \mathbb{E}$，对于一对等位基因 $l,r \in G$ 使得 $exp(l,r)$ 为这个个体的表现型。
+即配子数量比为 $\texttt{AB} : \texttt{aB}=1:1$。
 
-	比如 $exp(\texttt{A},\texttt{a})=\texttt{A}$，$exp(\texttt{a},\texttt{a})=\texttt{a}$。
+\textbf{求其自交后个体的基因型比例。}
 
-	\subsection{表现型映射的性质}
+构造生成函数：
 
-	\begin{itemize}
-		\item $exp(i,j)=exp(j,i)$。
-		\item $exp(i,i)=i$。
-	\end{itemize}
+$$\begin{aligned}
+	\textbf{I} &= \textbf{G} \otimes \textbf{G} \\
+				&= \frac{1}{4} x^{\texttt{AABB}} + \frac{1}{2} x^{\texttt{AaBB}} + \frac{1}{4} x^{\texttt{aaBB}}
+\end{aligned}$$
 
-	\subsection{计算个体的表现型}
+即基因型数量比为 $\texttt{AABB} : \texttt{AaBB} : \texttt{aaBB}=1:2:1$。
 
-	个体的表现型可以用一个 $k$ 维向量 $\vec E$ 表示，其中
+\subsection{表现型集合}
 
-	$$\vec E_i=exp(\vec I_i)$$
+定义 $\mathbb{E}$ 为表现型集合，一般地，$\mathbb{E}=\mathbb{G}$。
 
-	\subsection{卷积}
+\subsection{表现型映射}
 
-	给定环 $R$ 上的 $n$ 维向量 $\vec A=\{a_i\},\vec B=\{b_i\}$ 和下标运算 $\circ$，设 $C=\{c_i\}=A*B$，则满足：
+我们创建映射：$exp:\mathbb{G} \times \mathbb{G} \to \mathbb{E}$，对于一对等位基因 $l,r \in G$ 使得 $exp(l,r)$ 为这个个体的表现型。
 
-	$$c_i=\sum_{j,k} [j \circ k=i] a_jb_k$$
+比如 $exp(\texttt{A},\texttt{a})=\texttt{A}$，$exp(\texttt{a},\texttt{a})=\texttt{a}$。
 
-	称 $C$ 为 $A$ 和 $B$ 关于 $\circ$ 的离散卷积，以下简称卷积。
+\subsection{表现型映射的性质}
 
-	记 $C=A*_{\circ}B$，如果不引起混淆，简记为 $C=A*B$，其中 $*$ 为卷积算子。
+\begin{itemize}
+	\item $exp(i,j)=exp(j,i)$。
+	\item $exp(i,i)=i$。
+\end{itemize}
 
-	若 $\circ = +$，就是我们熟悉的多项式乘法运算。
+\subsection{计算个体的表现型}
 
-	\subsection{卷积与生成函数运算的联系}
+个体的表现型可以用一个 $k$ 维向量 $\vec E$ 表示，其中
 
-	若满足运算 $x^L \times x^R = x^{L \circ R}$，那么生成函数 $\mathbf{F}=\sum f_i x^i$ 的乘法：
+$$\vec E_i=exp(\vec I_i)$$
 
-	$$\textbf{H}=\textbf{F} \times \textbf{G}$$
+\subsection{卷积}
 
-	和卷积 $\vec F=\{f_i\},\vec G=\{g_i\},\vec H=\vec F *_{\circ} \vec G=\{h_i\}$ 等价。
+给定环 $R$ 上的 $n$ 维向量 $\vec A=\{a_i\},\vec B=\{b_i\}$ 和下标运算 $\circ$，设 $C=\{c_i\}=A*B$，则满足：
 
-	\subsection{快速沃尔什变换的实现}
+\begin{equation}
+	c_i=\sum_{j,k} [j \circ k=i] a_jb_k \label{(1)}
+\end{equation}
 
-	\begin{algorithm}
-        \caption{快速莫比乌斯变换}
-        \begin{algorithmic}[1]
-            \Require 集合幂级数 $f$
-            \Ensure $f$ 的莫比乌斯变换
-            \Function {FastMobiusTransform}{$f$}
-				\For{$i \gets 1 \textbf{ to } n$}
-					\For{$\textbf{all }S \subseteq U \setminus \{i\}$}
-						\State $f_{S \cup \{i\}} \gets f_{S \cup \{i\}} + f_{S}$
+称 $C$ 为 $A$ 和 $B$ 关于 $\circ$ 的离散卷积，以下简称卷积。
+
+记 $C=A*_{\circ}B$，如果不引起混淆，简记为 $C=A*B$，其中 $*$ 为卷积算子。
+
+若 $\circ = +$，就是我们熟悉的多项式乘法运算。
+
+\subsection{卷积与生成函数运算的联系}
+
+若满足运算 $x^L \times x^R = x^{L \circ R}$，那么生成函数 $\mathbf{F}=\sum f_i x^i$ 的乘法：
+
+$$\textbf{H}=\textbf{F} \times \textbf{G}$$
+
+和卷积 $\vec F=\{f_i\},\vec G=\{g_i\},\vec H=\vec F *_{\circ} \vec G=\{h_i\}$ 等价。
+
+\section{只有显隐性情况群体自由交配的计算}
+
+参考 2.9 中做法，我们需要分成两部分计算，第一部分是求配子生成函数 \textbf{G}，第二部分是求基因片段生成函数 \textbf{I}。
+
+\subsection{配子生成函数的求法}
+
+将基因片段对应到一个二进制数，如 $\texttt{AB}=(11)_2=3,\texttt{aB}=(01)_2=1$。
+
+\subsubsection{朴素求法}
+
+模拟生成配子的过程，每次生成一个长度为 $k$ 的二进制数，若第 $i$ 位为 $0$，则选择第 $i$ 对等位基因的其中一个，否则选择另一个。
+
+拿 $\texttt{AaBB}$ 举例：
+
+\begin{table}[htbp]
+	\centering
+	\begin{tabular}{|c|c|}
+		选择的二进制数 & 得到的配子 \\
+		00 & \texttt{AB} \\
+		01 & \texttt{AB} \\
+		10 & \texttt{aB} \\
+		11 & \texttt{aB} \\
+	\end{tabular}
+\end{table}
+
+生成二进制数的时间复杂度（time complexity）为 $\mathcal O(2^k)$，而计算配子的时间复杂度为 $\mathcal O(k)$。
+
+所以总时间复杂度是 $\mathcal O(k 2^k)$，对于 $n$ 个个体都计算一次，时间复杂度为 $\mathcal O(nk 2^k)$，是不能接受的。
+
+\subsubsection{快速做法}
+
+考虑维护配子出现次数函数 $f$，一开始为 $x^{\texttt{None}}$，考虑每次加入一对基因，$f$ 的变化。假设它变为 $f'$。
+
+若加入的基因是一对显性基因，如 $\texttt{AA}$，那么 $f'(x \times 2 + 1)=2f(x)$。
+
+若加入的基因是一个显性和一个隐形基因，如 $\texttt{Aa}$，那么 $f'(x \times 2 + 1)=f(x),f'(x \times 2)=f(x)$。
+
+若加入的基因是一对隐性基因，如 $\texttt{aa}$，那么$f'(x \times 2)=2f(x)$。
+
+加入 $k$ 等位基因，每次都 $\mathcal O(2^k)$ 计算，时间复杂度和上面没有区别，看似没有优化。
+
+但是程序处理时，加入到第 $i$ 个等位基因时，可以只用考虑 $0 \sim 2^i$ 的函数值，总时间复杂度是 $\mathcal O(\sum_{i=1}^k 2^i)=\mathcal O(2^k)$，可以将一个 $k$ 优化掉。
+
+对于 $n$ 个个体都计算一次，时间复杂度为 $\mathcal O(n2^k)$，比较快速。
+
+\subsection{基因片段生成函数的求法}
+
+我们想求出一个基因片段生成函数乘法的快速实现。
+
+\subsubsection*{朴素做法}
+
+考虑朴素地实现 $(1)$ 中的卷积，要枚举 $j,k$，通过下标运算 $\circ$ 计算出 $c_i$，时间复杂度是 $\mathcal O(4^k)$，是不能接受的。
+
+\subsubsection*{优化的第一步}
+
+我们发现 \textbf{对于只有显隐性情况的基因片段生成函数，可以转化为集合生成函数}。而且集合生成函数已经存在快速算法。
+
+\subsubsection*{集合生成函数}
+
+可以使用符号：
+
+$$f=\sum_{S \subseteq U} f_S x^S$$
+
+来表示一个集合生成函数。
+
+这里我们定义算子 $\circ=\cup$，即：$x^L \times x^R=x^{L \cup R}$。
+
+容易发现集合生成函数的乘法运算恰好为 \textbf{集合并卷积}。
+
+\subsubsection*{基因片段生成函数到集合生成函数的转换}
+
+定义全集 $U$ 是：$\{\texttt{A},\texttt{B},\cdots\}$。
+
+我们将基因片段中的显性基因抽取出来，形成一个集合，如 $\texttt{ABc} \Rightarrow \{\texttt{A},\texttt{B}\}$。
+
+这样发现集合并卷积刚好符合“显性基因克制隐形基因”的条件，因为只要某一位有对应的显性基因，那么个体就表现为显性，可以结合集合运算表来理解：
+
+\begin{table}[htbp]
+	\centering
+	\begin{tabular}{|c|c|c|}
+		\hline
+		$\cup$ & $\{\texttt{A}\}$ & $\varnothing$ \\ \hline
+		$\{\texttt{A}\}$ & $\{\texttt{A}\}$ & $\{\texttt{A}\}$\\ \hline
+		$\varnothing$ & $\{\texttt{A}\}$ & $\varnothing$ \\ \hline
+	\end{tabular}
+\end{table}
+
+
+\subsubsection*{集合生成函数的快速卷积算法：FWT}
+
+仿照 FFT 的思路，\textbf{我们求出 $f$ 的一种变换 $\hat f$，使得 $f * g = h \Rightarrow \hat f_i \times \hat g_i = \hat h_i$}，即将系数表示法转化为点值表示法。
+
+我们给出关于集合并卷积的 FWT 运算，即快速莫比乌斯变换。
+
+$$\hat f_S=\sum_{T \subseteq S} f_T$$
+
+证明：
+
+$$
+\begin{aligned}
+	\hat h_S &=\sum_{L} \sum_{R} [(L \cup R) \subseteq S] f_L g_R \\
+		 &= \sum_{L} \sum_{R} [L \subseteq S][R \subseteq S] f_L g_R \\
+		 &= \sum_{L} [L \subseteq S] f_L \sum_{R} [R \subseteq S] g_R \\
+		 &= \hat f_S \hat g_S
+\end{aligned}
+$$
+
+我们求出 $\hat h_S$ 后，当然需要将 $\hat h$ 转化为 $h$，于是需要反演运算：
+
+$$f_S=\sum_{T \subseteq S} (-1)^{|S|-|T|}\hat f_T$$
+
+可以用容斥简单证明。
+
+\subsubsection*{朴素的变换和反演的实现}
+
+枚举 $T$ 和 $S$，并且判断是否 $T \subseteq S$，时间复杂度 $\mathcal O(4^n)$，没有太大的变化。
+
+\subsubsection*{经过优化的变换和反演的实现}
+
+通过程序精细实现，能够以 $\mathcal O(2^{|S|})$ 的时间复杂度枚举 $S$ 的子集。
+
+如果对于所有的 $S \subseteq U$，都这样枚举子集，时间复杂度为：
+
+$$\mathcal O(\sum_{i=1}^k \binom{k}{i}2^i)= \mathcal O(3^k)$$
+
+比上述做法稍有进步。
+
+\subsubsection*{进一步优化的变换和反演的实现}
+
+我们使用递推的思路，推导出 $\hat f_S$。
+
+设 $\hat f_S^{(i)}=\sum_{T\subseteq S}[(S\setminus T)\subseteq\{1,\cdots,i\}]f_T$，$\hat f_S^{(n)}$ 即是目标序列。
+
+首先有 $\hat f_S^{(0)}=f_S$，因为只有当 $S \setminus T$ 为空集时，才能属于空集。
+
+对于所有 $i\notin S$ 的 $S$，满足 $\hat f_S^{(i)}=\hat f_S^{(i-1)},\hat f_{S\cup\{i\}}^{(i)}=\hat f_S^{(i-1)}+\hat f_{S\cup\{i\}}^{(i-1)}$。
+
+我们解释一下两个式子。
+
+$$\begin{aligned}
+\hat f_S^{(i)} &= \sum_{T \subseteq S}[(S \setminus T)\subseteq\{1,\cdots,i\}]f_T\\
+               &= \sum_{T \subseteq S}[(S \setminus T)\subseteq\{1,\cdots,i-1\}]f_T\\
+               &= \hat f_S^{(i-1)}
+\end{aligned}$$
+
+这里我们发现 $i \notin (S \setminus T)$，所以可以直接把 $\{i\}$ 去掉，也是等价的。
+
+$$
+\begin{aligned}
+\hat f_{S\cup\{i\}}^{(i)} &= \sum_{T \subseteq (S\cup\{i\})}[(S\cup\{i\}) \setminus T)\subseteq\{1,\cdots,i\}]f_T\\
+               &= \sum_{T \subseteq (S\cup\{i\}) \text{ and } i \notin T}[((S\cup\{i\}) \setminus T)\subseteq\{1,\cdots,i\}]f_T+\sum_{T \subseteq (S\cup\{i\}) \text{ and } i \in T}[((S\cup\{i\}) \setminus T)\subseteq\{1,\cdots,i-1\}]f_T\\
+               &= \sum_{T \subseteq S \text{ and } i \notin T}[(S \setminus T)\subseteq\{1,\cdots,i-1\}]f_T+\sum_{T \subseteq (S\cup\{i\}) \text{ and } i \in T}[((S\cup\{i\}) \setminus T)\subseteq\{1,\cdots,i-1\}]f_T\\
+               &= \hat f_S^{(i-1)}+\hat f_{S \cup \{i\}}^{(i-1)}
+\end{aligned}
+$$
+
+这样，我们 $\mathcal{O}(n2^n)$ 求出 $\hat f_S,\hat g_S$，按位乘，然后再反演回去即可。
+
+
+\subsubsection*{快速莫比乌斯变换和反演的伪代码实现}
+
+\begin{algorithm}
+	\caption{快速莫比乌斯变换}
+	\begin{algorithmic}[1]
+		\Require 集合幂级数 $f$
+		\Ensure $f$ 的莫比乌斯变换
+		\Function {FastMobiusTransform}{$f$}
+			\For{$i \gets 1 \textbf{ to } n$}
+				\For{$\textbf{all }S \subseteq U \setminus \{i\}$}
+					\State $f_{S \cup \{i\}} \gets f_{S \cup \{i\}} + f_{S}$
+				\EndFor
+			\EndFor
+			\State \Return{$f$}
+		\EndFunction
+	\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+	\caption{快速莫比乌斯反演}
+	\begin{algorithmic}[1]
+		\Require 集合幂级数 $f$
+		\Ensure $f$ 的莫比乌斯反演
+		\Function {FastMobiusInversion}{$f$}
+			\For{$i \gets 1 \textbf{ to } n$}
+				\For{$\textbf{all }S \subseteq U \setminus \{i\}$}
+					\State $f_{S \cup \{i\}} \gets f_{S \cup \{i\}} - f_{S}$
+				\EndFor
+			\EndFor
+			\State \Return{$f$}
+		\EndFunction
+	\end{algorithmic}
+\end{algorithm}
+
+\section{只有显隐性情况群体自由交配的计算的推广}
+
+\subsection{共显性问题}
+
+有一种花卉，基因型为 $\texttt{AA}$ 时表现为红色，基因型为 $\texttt{Aa}$ 时表现为粉色，基因型为 $\texttt{aa}$ 时表现为白色。
+
+我们将基因片段中的显性和隐性基因抽取出来，形成一个集合，如 $\texttt{ABc} \Rightarrow \{\texttt{A},\texttt{B},\texttt{c}\}$。
+
+也可以理解为把一对等位基因拆成两位：
+
+\begin{itemize}
+	\item $\texttt{A} \Rightarrow 10$
+	\item $\texttt{a} \Rightarrow 01$
+\end{itemize}
+
+容易发现这样做的时间复杂度为 $\mathcal O(2k \times 2^{2k})=\mathcal O(2k \times 4^k)$，和朴素做法差不多，是不可接受的。
+
+\subsection{喷瓜问题}
+
+喷瓜的性别由等位基因 $\texttt{g}^{-},\texttt{g}^{+},\texttt{G}$ 决定，其中：
+
+\begin{table}[htbp]
+	\centering
+	\begin{tabular}{|c|c|c|c|}
+		\hline
+		$\oplus$ & $\texttt{g}^{-}$ & $\texttt{g}^{+}$ & $\texttt{G}$\\ \bottomrule
+		$\texttt{g}^{-}$ & $\texttt{g}^{-}$ & $\texttt{g}^{+}$ & $\texttt{G}$\\ \hline
+		$\texttt{g}^{+}$ & $\texttt{g}^{+}$ & $\texttt{g}^{+}$ & $\texttt{G}$\\ \hline
+		$\texttt{G}$ & $\texttt{G}$ & $\texttt{G}$ & $\texttt{G}$\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{algorithm}
+	\caption{多维广义离散傅里叶变换}
+	\begin{algorithmic}[1]
+		\Require 幂级数 $f$，单位根 $w_k$，操作符 $opr$ 代表正变换还是逆变换。
+		\Ensure $f$ 的傅里叶变换
+		\Function {FourierTransform}{$f,w_k,opr$}
+			\If $\ opr=1$
+				\State $matrix_{i,j}=w^{(i-1)(j-1)}_k$
+			\Else
+				\State $matrix_{i,j}=\frac{1}{k}w^{-(i-1)(j-1)}_k$
+			\EndIf
+			\For{$i \gets 1 \textbf{ to } n$}
+				\For{$\texttt{The k vectors satisfying }1 \cdots k\texttt{ on the i-th bit and the other bits are same.}$}
+					\State $v \gets \texttt{the k vectors}$
+					\For{$j \gets 1 \textbf{ to } k$}
+						\State $g_j \gets f_{v_j}$
+					\EndFor
+					\State $g \gets g \times matrix$
+					\For{$j \gets 1 \textbf{ to } k$}
+						\State $f_{v_j} \gets g_j$
 					\EndFor
 				\EndFor
-                \State \Return{$f$}
-            \EndFunction
-		\end{algorithmic}
-	\end{algorithm}
-
-	\begin{algorithm}
-		\caption{快速莫比乌斯反演}
-		\begin{algorithmic}[1]
-			\Require 集合幂级数 $f$
-			\Ensure $f$ 的莫比乌斯反演
-			\Function {FastMobiusInversion}{$f$}
-				\For{$i \gets 1 \textbf{ to } n$}
-					\For{$\textbf{all }S \subseteq U \setminus \{i\}$}
-						\State $f_{S \cup \{i\}} \gets f_{S \cup \{i\}} - f_{S}$
-					\EndFor
-				\EndFor
-				\State \Return{$f$}
-			\EndFunction
-		\end{algorithmic}
-	\end{algorithm}
-
-	\begin{algorithm}
-		\caption{多维广义离散傅里叶变换}
-		\begin{algorithmic}[1]
-			\Require 幂级数 $f$，单位根 $w_k$，操作符 $opr$ 代表正变换还是逆变换。
-			\Ensure $f$ 的傅里叶变换
-			\Function {FourierTransform}{$f,w_k,opr$}
-				\If $\ opr=1$
-					\State $matrix_{i,j}=w^{(i-1)(j-1)}_k$
-				\Else
-					\State $matrix_{i,j}=\frac{1}{k}w^{-(i-1)(j-1)}_k$
-				\EndIf
-				\For{$i \gets 1 \textbf{ to } n$}
-					\For{$\texttt{The k vectors satisfying }1 \cdots k\texttt{ on the i-th bit and the other bits are same.}$}
-						\State $v \gets \texttt{the k vectors}$
-						\For{$j \gets 1 \textbf{ to } k$}
-							\State $g_j \gets f_{v_j}$
-						\EndFor
-						\State $g \gets g \times matrix$
-						\For{$j \gets 1 \textbf{ to } k$}
-							\State $f_{v_j} \gets g_j$
-						\EndFor
-					\EndFor
-				\EndFor
-				\State \Return{$f$}
-			\EndFunction
-		\end{algorithmic}
-	\end{algorithm}
+			\EndFor
+			\State \Return{$f$}
+		\EndFunction
+	\end{algorithmic}
+\end{algorithm}
 \end{document}

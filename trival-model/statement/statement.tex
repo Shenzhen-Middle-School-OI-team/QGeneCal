@@ -1,0 +1,98 @@
+\documentclass{article}
+\usepackage{ctex}
+\usepackage{import}
+\usepackage{hyperref}	% 用于交叉引用
+\usepackage{setspace}	% 用于设置行间距
+\usepackage{listings}	% 用于代码高亮
+\usepackage{xcolor}		% 用于处理颜色
+\usepackage{ulem}		% 用于各种线
+\usepackage{amsmath}	% 用于数学公式（如 \begin{align}）
+\usepackage{amsthm}		% 用于数学版式（如 \newtheorem{cmd}{caption}）
+\usepackage{booktabs}	% 用于表格画线
+\usepackage{graphicx}	% 用于插入图片
+\usepackage{minted}
+\usepackage{amssymb}
+
+\usepackage{algorithm}  
+\usepackage{algorithmicx}  
+\usepackage{algpseudocode}  
+\usepackage{amsmath}  % 用于伪代码
+
+
+\newcommand \Problem [1] {\newpage \section{#1}}
+\newcommand \Description {\subsection*{题目描述}}
+\newcommand \Input {\subsection*{输入}}
+\newcommand \Output {\subsection*{输出}}
+\newcommand \Sample [1][] {\subsection*{样例 #1}}
+\newcommand \SampleInput {\subsubsection*{输入}}
+\newcommand \SampleOutput {\subsubsection*{输出}}
+\newcommand \Explanation {\subsubsection*{解释}}
+\newcommand \Constraint {\subsection*{数据规模与约定}}
+\newcommand \Hint {\subsection*{提示}}
+\newcommand \insertsubject {{Subject}}
+
+\floatname{algorithm}{算法}
+\renewcommand{\algorithmicrequire}{\textbf{输入:}}
+\renewcommand{\algorithmicensure}{\textbf{输出:}}
+
+
+\usepackage[top = 0.8in, bottom = 0.8in, left = 0.8in, right = 0.8in]{geometry} %设置页边距
+
+\begin{document}
+	\Problem{只有显隐性情况自交的计算}
+	\Description
+
+	某个植物有 $k$ 对等位基因（在非同源染色体上），它们遵循自由组合定律。大写字母表示显性基因，小写字母表示隐性基因。
+
+	显性基因会克制隐性基因，导致表现型成为显性，如 \texttt{AaBBcc} 的表现型可以看成 \texttt{ABc}。
+
+	现在拥有很多这种植物的种子，告诉你某种基因型的种子占总数的比例是 $\frac{a}{b}$，把这些种子全部种出来，然后让它们 \textbf{自由交配}，问得到下一代种子的表现型频率为多少。
+
+	我们用 $a \times b^{-1} \bmod 998244353$ 来表述这个比值，其中 $b^{-1}$ 表示 $b$ 在模 $998244353$ 意义下的逆元。
+
+	\Input
+
+	第一行两个数 $k,n$，代表等位基因的对数和种子基因型的个数。
+
+	后面 $n$ 行，形式如 str fre，其中 str 为基因型的字母表示，长度为 $2k$，后面 fre 代表种子比例在 $\bmod 998244353$ 下的值。
+
+	\Output
+
+	输出 $2^k$ 行，每行形式如 str fre，其中 str 为表现型，长度为 $k$，后面 fre 代表频率在 $\bmod 998244353$ 下的值。
+
+	按照隐性优先级为 $0$，显性优先级为 $1$ 字典序排列，具体可以参考样例。
+
+	\Sample
+	\SampleInput
+2 2
+
+AaBb 332748118
+
+Aabb 665496236
+
+	\SampleOutput
+ab 381273885
+
+Ab 367409380
+
+aB 145577302
+
+AB 103983787
+
+	\Explanation
+
+	$332748118\equiv \dfrac{1}{3} \mod {998244353}$。
+
+	$665496236\equiv \dfrac{2}{3} \mod {998244353}$。
+
+	后面四个数分别是 $\dfrac{25}{144},\dfrac{11}{144},\dfrac{75}{144},\dfrac{33}{144}$。
+
+	\Constraint
+	
+	对于 $10\%$ 的数据，$k=2$。
+
+	对于另外 $30\%$ 的数据，$k \le 10$。
+
+	对于 $100\%$ 的数据，$k \le 15, 0 \le n \le \min(15,3^k)$。
+
+\end{document}

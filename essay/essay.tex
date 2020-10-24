@@ -12,6 +12,11 @@
 \usepackage{graphicx}	% 用于插入图片
 \usepackage{minted}
 \usepackage{amssymb}
+\usepackage{tabularx}
+
+
+\usepackage{makecell}
+\usepackage{boldline}
 
 \usepackage{algorithm}  
 \usepackage{algorithmicx}  
@@ -22,6 +27,12 @@
 \renewcommand{\algorithmicrequire}{\textbf{输入:}}
 \renewcommand{\algorithmicensure}{\textbf{输出:}}
 
+
+\makeatletter
+\def\hlinewd#1{%
+\noalign{\ifnum0=`}\fi\hrule \@height #1 %
+\futurelet\reserved@a\@xhline}
+\makeatother
 
 \usepackage[top = 0.8in, bottom = 0.8in, left = 0.8in, right = 0.8in]{geometry} %设置页边距
 
@@ -39,14 +50,14 @@
 \end{itemize}
 \newpage
 \section{约定}
-	\begin{itemize}
-		\item[\textbf{真值运算符}] 若 $[]$ 内表达式为真，则是 $1$，否则是 $0$。
-	\end{itemize}
+
+\textsl{真值运算符} \qquad 若 $[]$ 内表达式为真，则是 $1$，否则是 $0$。
+		 
 \section{定义}
 
 \subsection{基因集合}
 
-我们用 $\mathbb{G}$ 来表示基因集合。
+我们用 $\mathbb{G}$ 来表示\textsl{基因集合}。
 
 对于只有显隐性的情况，基因集合由一系列大写字母和小写字母组成，大写字母表示显性，小写字母表示隐性。对于只有两对等位基因 $\texttt{A,B}$ 的情况，$\mathbb{G}=\{\texttt{A,B,a,b}\}$。
 
@@ -68,45 +79,45 @@
 
 \subsection{基因片段}
 
-基因片段是一个向量。记基因片段组成的集合为 $\mathbb{P}$。
+\textsl{基因片段}是一个向量。记基因片段组成的集合为 $\mathbb{P}$。
 
-\subsubsection{配子基因片段}
+\subsubsection*{配子基因片段}
 
-我们用 $\vec G$ 来表示配子基因片段。
+我们用 $\vec G$ 来表示\textsl{配子基因片段}。
 
-我们可以将一个具有 $k$ 个基因的配子用一个 $k$ 维有序向量 $\{a_i\}$ 表示，$a_i \in \mathbb{G}$。
+我们可以将一个具有 $k$ 个基因的配子用一个 $k$ 维向量 $\{a_i\}$ 表示，$a_i \in \mathbb{G}$。
 
-\subsubsection{个体基因片段}
+\subsubsection*{个体基因片段}
 
-我们用 $\vec I$ 来表示个体基因片段。
+我们用 $\vec I$ 来表示\textsl{个体基因片段}。
 
-我们可以将一个具有 $k$ 对等位基因的个体用一个 $k$ 维有序向量 $\{(l_i,r_i)\}$表示，$l_i,r_i \in \mathbb{G}$。
+我们可以将一个具有 $k$ 对等位基因的个体用一个 $k$ 维向量 $\{(l_i,r_i)\}$表示，$l_i,r_i \in \mathbb{G}$。
 
 \subsection{基因片段的运算}
 
 \subsubsection{加法运算 $+$}
 
-对于 $L,R \in \mathbb{P}$，而且 $L,R$ 同为配子基因片段或个体基因片段，定义加法运算为两基因片段的 \textbf{有序} 拼接。
+对于 $L,R \in \mathbb{P}$，而且 $L,R$ 同为配子基因片段或个体基因片段，定义\textsl{加法运算}为两基因片段的有序拼接。
 
 如 $(\texttt{A},\texttt{C}) + (\texttt{B}) = (\texttt{A},\texttt{B},\texttt{C})$。
 
 \subsubsection{结合运算 $\oplus$}
 
-对于 $L,R \in \mathbb{P}$，而且 $L,R$ 同为配子基因片段，而且长度相等，定义结合运算为按位有序结合：
+对于 $L,R \in \mathbb{P}$，而且 $L,R$ 同为配子基因片段，而且长度相等，定义\textsl{结合运算}为按位有序结合：
 
 $$(L \oplus R)_i=(\max(L_i,R_i),\min(L_i,R_i))$$
 
 $\max,\min$ 为取序号较大/较小者。
 
-如 $(\texttt{A},\texttt{b}) + (\texttt{a},\texttt{B})=(\texttt{(A,a)},\texttt{(B,b)})$。
+如 $(\texttt{A},\texttt{b}) + (\texttt{a},\texttt{B})=((\texttt{A},\texttt{a}),(\texttt{B},\texttt{b}))$。
 
 \subsection{生成函数 (Generating function)} 
 
 定义：
 
-$$\textbf{A}=\sum_{i} a_i x^{i}$$
+$$A=\sum_{i} a_i x^{i}$$
 
-是序列 $\{a_i\}$ 的生成函数。
+是序列 $\{a_i\}$ 的\textsl{生成函数}。
 
 我们不关心 $x$ 的取值和级数是否收敛，把 $x$ 作为形式，只关心系数 $a_i$。
 
@@ -114,40 +125,40 @@ $$\textbf{A}=\sum_{i} a_i x^{i}$$
 
 定义：
 
-$$\textbf{A}=\sum_{i \in \mathbb{P}} a_i x^{i}$$
+$$A=\sum_{i \in \mathbb{P}} a_i x^{i}$$
 
-是序列 $\{a_i\}$ 的基因片段生成函数。
+是序列 $\{a_i\}$ 的\textsl{基因片段生成函数}。
 
 \subsection{基因片段生成函数的系列运算}
 
-\subsubsection{乘法运算 $\times$}
+\subsubsection*{乘法运算 $\times$}
 
 $$x^L \times x^R=x^{L+R}$$
 
-\subsubsection{结合乘法运算 $\otimes$}
+\subsubsection*{结合乘法运算 $\otimes$}
 
 $$x^L \otimes x^R=x^{L \oplus R}$$
 
 \subsection{基因片段生成函数的应用}
 
-\textbf{求基因型为 $\texttt{AaBB}$ 的个体产生的配子数量比。}
+\textbf{求基因型为 $\texttt{AaBB}$ 的个体产生的配子数量比}
 
 构造生成函数：
 
 $$\begin{aligned}
-	\textbf{G} &= (\frac{1}{2} x^{\texttt{A}}+ \frac{1}{2}x^{\texttt{a}})(\frac{1}{2} x^{\texttt{B}}+ \frac{1}{2}x^{\texttt{B}}) \\
+	G &= (\frac{1}{2} x^{\texttt{A}}+ \frac{1}{2}x^{\texttt{a}})(\frac{1}{2} x^{\texttt{B}}+ \frac{1}{2}x^{\texttt{B}}) \\
 				&= \frac{1}{2} x^{\texttt{AB}} + \frac{1}{2} x^{\texttt{aB}}
 \end{aligned}$$
 
 即配子数量比为 $\texttt{AB} : \texttt{aB}=1:1$。
 
-\textbf{求其自交后个体的基因型比例。}
+\textbf{求其自交后个体的基因型比例}
 
 构造生成函数：
 
 $$\begin{aligned}
-	\textbf{I} &= \textbf{G} \otimes \textbf{G} \\
-				&= \frac{1}{4} x^{\texttt{AABB}} + \frac{1}{2} x^{\texttt{AaBB}} + \frac{1}{4} x^{\texttt{aaBB}}
+	I &= G \otimes G \\
+		&= \frac{1}{4} x^{\texttt{AABB}} + \frac{1}{2} x^{\texttt{AaBB}} + \frac{1}{4} x^{\texttt{aaBB}}
 \end{aligned}$$
 
 即基因型数量比为 $\texttt{AABB} : \texttt{AaBB} : \texttt{aaBB}=1:2:1$。
@@ -158,22 +169,22 @@ $$\begin{aligned}
 
 \subsection{表现型映射}
 
-我们创建映射：$exp:\mathbb{G} \times \mathbb{G} \to \mathbb{E}$，对于一对等位基因 $l,r \in G$ 使得 $exp(l,r)$ 为这个个体的表现型。
+我们创建映射：$\operatorname{exp}:\mathbb{G} \times \mathbb{G} \to \mathbb{E}$，对于一对等位基因 $l,r \in G$ 使得 $\operatorname{exp}(l,r)$ 为这个个体的表现型。
 
-比如 $exp(\texttt{A},\texttt{a})=\texttt{A}$，$exp(\texttt{a},\texttt{a})=\texttt{a}$。
+比如 $\operatorname{exp}(\texttt{A},\texttt{a})=\texttt{A}$，$\operatorname{exp}(\texttt{a},\texttt{a})=\texttt{a}$。
 
 \subsection{表现型映射的性质}
 
 \begin{itemize}
-	\item $exp(i,j)=exp(j,i)$。
-	\item $exp(i,i)=i$。
+	\item $\operatorname{exp}(i,j)=\operatorname{exp}(j,i)$。
+	\item $\operatorname{exp}(i,i)=i$。
 \end{itemize}
 
 \subsection{计算个体的表现型}
 
 个体的表现型可以用一个 $k$ 维向量 $\vec E$ 表示，其中
 
-$$\vec E_i=exp(\vec I_i)$$
+$$\vec E_i=\operatorname{exp}(\vec I_i)$$
 
 \subsection{卷积}
 
@@ -191,21 +202,27 @@ $$\vec E_i=exp(\vec I_i)$$
 
 \subsection{卷积与生成函数运算的联系}
 
-若满足运算 $x^L \times x^R = x^{L \circ R}$，那么生成函数 $\mathbf{F}=\sum f_i x^i$ 的乘法：
+若满足运算 $x^L \times x^R = x^{L \circ R}$，那么生成函数 $F=\sum f_i x^i$ 的乘法：
 
-$$\textbf{H}=\textbf{F} \times \textbf{G}$$
+$$H=F \times G$$
 
 和卷积 $\vec F=\{f_i\},\vec G=\{g_i\},\vec H=\vec F *_{\circ} \vec G=\{h_i\}$ 等价。
 
 \section{只有显隐性情况群体自由交配的计算}
 
-参考 2.9 中做法，我们需要分成两部分计算，第一部分是求配子生成函数 \textbf{G}，第二部分是求基因片段生成函数 \textbf{I}。
+参考 2.9 中做法，我们分步计算。
+
+\begin{enumerate}
+	\item 对于第 $i$ 个个体，求配子生成函数 $G_i$。
+	\item 计算 $G=\sum_{i=1}^n G_i$。 
+	\item 计算 $I=G \otimes G$，
+\end{enumerate}
 
 \subsection{配子生成函数的求法}
 
 将基因片段对应到一个二进制数，如 $\texttt{AB}=(11)_2=3,\texttt{aB}=(01)_2=1$。
 
-\subsubsection{朴素求法}
+\subsubsection*{朴素求法}
 
 模拟生成配子的过程，每次生成一个长度为 $k$ 的二进制数，若第 $i$ 位为 $0$，则选择第 $i$ 对等位基因的其中一个，否则选择另一个。
 
@@ -213,6 +230,7 @@ $$\textbf{H}=\textbf{F} \times \textbf{G}$$
 
 \begin{table}[htbp]
 	\centering
+	\caption{配子计算表}
 	\begin{tabular}{|c|c|}
 		选择的二进制数 & 得到的配子 \\
 		00 & \texttt{AB} \\
@@ -222,11 +240,11 @@ $$\textbf{H}=\textbf{F} \times \textbf{G}$$
 	\end{tabular}
 \end{table}
 
-生成二进制数的时间复杂度（time complexity）为 $\mathcal O(2^k)$，而计算配子的时间复杂度为 $\mathcal O(k)$。
+生成二进制数的\textsl{时间复杂度}（time complexity）为 $\mathcal O(2^k)$，而计算配子的时间复杂度为 $\mathcal O(k)$。
 
 所以总时间复杂度是 $\mathcal O(k 2^k)$，对于 $n$ 个个体都计算一次，时间复杂度为 $\mathcal O(nk 2^k)$，是不能接受的。
 
-\subsubsection{快速做法}
+\subsubsection*{快速做法}
 
 考虑维护配子出现次数函数 $f$，一开始为 $x^{\texttt{None}}$，考虑每次加入一对基因，$f$ 的变化。假设它变为 $f'$。
 
@@ -248,7 +266,7 @@ $$\textbf{H}=\textbf{F} \times \textbf{G}$$
 
 \subsubsection*{朴素做法}
 
-考虑朴素地实现 $(1)$ 中的卷积，要枚举 $j,k$，通过下标运算 $\circ$ 计算出 $c_i$，时间复杂度是 $\mathcal O(4^k)$，是不能接受的。
+考虑朴素地实现 $(1)$ 中的卷积，时间复杂度是 $\mathcal O(4^k)$，是不能接受的。
 
 \subsubsection*{优化的第一步}
 
@@ -260,11 +278,11 @@ $$\textbf{H}=\textbf{F} \times \textbf{G}$$
 
 $$f=\sum_{S \subseteq U} f_S x^S$$
 
-来表示一个集合生成函数。
+来表示一个\textsl{集合生成函数}。
 
 这里我们定义算子 $\circ=\cup$，即：$x^L \times x^R=x^{L \cup R}$。
 
-容易发现集合生成函数的乘法运算恰好为 \textbf{集合并卷积}。
+容易发现集合生成函数的乘法运算恰好为\textsl{集合并卷积}。
 
 \subsubsection*{基因片段生成函数到集合生成函数的转换}
 
@@ -276,11 +294,11 @@ $$f=\sum_{S \subseteq U} f_S x^S$$
 
 \begin{table}[htbp]
 	\centering
-	\begin{tabular}{|c|c|c|}
-		\hline
-		$\cup$ & $\{\texttt{A}\}$ & $\varnothing$ \\ \hline
+	\caption{集合运算表}
+	\begin{tabular}{cV{3}c|c}
+		$\cup$ & $\{\texttt{A}\}$ & $\varnothing$ \\ \hlinewd{1pt}
 		$\{\texttt{A}\}$ & $\{\texttt{A}\}$ & $\{\texttt{A}\}$\\ \hline
-		$\varnothing$ & $\{\texttt{A}\}$ & $\varnothing$ \\ \hline
+		$\varnothing$ & $\{\texttt{A}\}$ & $\varnothing$
 	\end{tabular}
 \end{table}
 
@@ -312,15 +330,15 @@ $$f_S=\sum_{T \subseteq S} (-1)^{|S|-|T|}\hat f_T$$
 
 \subsubsection*{朴素的变换和反演的实现}
 
-枚举 $T$ 和 $S$，并且判断是否 $T \subseteq S$，时间复杂度 $\mathcal O(4^n)$，没有太大的变化。
+枚举 $T$ 和 $S$，并且判断是否 $T \subseteq S$，时间复杂度 $\mathcal O(4^k)$，没有太大的变化。
 
 \subsubsection*{经过优化的变换和反演的实现}
 
 通过程序精细实现，能够以 $\mathcal O(2^{|S|})$ 的时间复杂度枚举 $S$ 的子集。
 
-如果对于所有的 $S \subseteq U$，都这样枚举子集，时间复杂度为：
+如果对于所有的 $S \subseteq U$，都这样枚举子集 $T$，时间复杂度为：
 
-$$\mathcal O(\sum_{i=1}^k \binom{k}{i}2^i)= \mathcal O(3^k)$$
+$$\mathcal O(\sum_{i=0}^k \binom{k}{i}2^i)= \mathcal O(3^k)$$
 
 比上述做法稍有进步。
 
@@ -390,20 +408,25 @@ $$
 	\end{algorithmic}
 \end{algorithm}
 
+\newpage
+
 \section{只有显隐性情况群体自由交配的计算的推广}
 
 \subsection{共显性问题}
 
 有一种花卉，基因型为 $\texttt{AA}$ 时表现为红色，基因型为 $\texttt{Aa}$ 时表现为粉色，基因型为 $\texttt{aa}$ 时表现为白色。
 
-我们将基因片段中的显性和隐性基因抽取出来，形成一个集合，如 $\texttt{ABc} \Rightarrow \{\texttt{A},\texttt{B},\texttt{c}\}$。
+\begin{table}[htbp]
+	\centering
+	\caption{共显性表现型表}
+	\begin{tabular}{cV{3}c|c|c}
+		$\operatorname{exp}$ & $\texttt{A}$ & $\texttt{a}$ \\ \hlinewd{1pt}
+		$\texttt{A}$ & $\texttt{A}$ & $$\texttt{Aa}$$ \\ \hline
+		$\texttt{a}$ & $\texttt{Aa}$ & $$\texttt{a}$$
+	\end{tabular}
+\end{table}
 
-也可以理解为把一对等位基因拆成两位：
-
-\begin{itemize}
-	\item $\texttt{A} \Rightarrow 10$
-	\item $\texttt{a} \Rightarrow 01$
-\end{itemize}
+我们将基因片段中的显性和隐性基因抽取出来，形成一个集合，如 $\texttt{ABc} \Rightarrow \{\texttt{A},\texttt{B},\texttt{c}\}$，对这样的集合作集合并卷积，也可以理解为把一对等位基因拆成两位，$\texttt{A} \Rightarrow 10$，$\texttt{a} \Rightarrow 01$。
 
 容易发现这样做的时间复杂度为 $\mathcal O(2k \times 2^{2k})=\mathcal O(2k \times 4^k)$，和朴素做法差不多，是不可接受的。
 
@@ -413,34 +436,297 @@ $$
 
 \begin{table}[htbp]
 	\centering
-	\begin{tabular}{|c|c|c|c|}
-		\hline
-		$\oplus$ & $\texttt{g}^{-}$ & $\texttt{g}^{+}$ & $\texttt{G}$\\ \bottomrule
+	\caption{喷瓜表现型表}
+	\begin{tabular}{cV{3}c|c|c}
+		$\operatorname{exp}$ & $\texttt{g}^{-}$ & $\texttt{g}^{+}$ & $\texttt{G}$\\ \hlinewd{1pt}
 		$\texttt{g}^{-}$ & $\texttt{g}^{-}$ & $\texttt{g}^{+}$ & $\texttt{G}$\\ \hline
 		$\texttt{g}^{+}$ & $\texttt{g}^{+}$ & $\texttt{g}^{+}$ & $\texttt{G}$\\ \hline
-		$\texttt{G}$ & $\texttt{G}$ & $\texttt{G}$ & $\texttt{G}$\\ \hline
+		$\texttt{G}$ & $\texttt{G}$ & $\texttt{G}$ & $\texttt{G}$
 	\end{tabular}
 \end{table}
+
+容易发现，这些等位基因构成一个\textsl{偏序集}，我们发现若 $\texttt{g}^{-} \le \texttt{g}^{+} \le \texttt{G}$，则 $\operatorname{exp}$ 运算对应 $\max$ 运算。
+
+将 $\texttt{g}^{-},\texttt{g}^{+},\texttt{G}$ 编码成为 $00,01,10$，那么容易看出：
+
+\begin{table}[htbp]
+	\centering
+	\caption{编码运算表}
+	\begin{tabular}{cV{3}c|c|c}
+		$\operatorname{or}$ & $00(\texttt{g}^{-})$ & $01(\texttt{g}^{+})$ & $10(\texttt{G})$\\ \hlinewd{1pt}
+		$00(\texttt{g}^{-})$ & $00(\texttt{g}^{-})$ & $01(\texttt{g}^{+})$ & $10(\texttt{G})$\\ \hline
+		$01(\texttt{g}^{+})$ & $01(\texttt{g}^{+})$ & $01(\texttt{g}^{+})$ & $11(\texttt{G})$\\ \hline
+		$10(\texttt{G})$ & $10(\texttt{G})$ & $11(\texttt{G})$ & $10(\texttt{G})$
+	\end{tabular}
+\end{table}
+
+发现 $11,10$ 都对应 $\texttt{G}$，而 $00$ 对应 $\texttt{g}^-$，$01$ 对应 $\texttt{g}^+$。我们在程序实现时最后一步处理一下即可。
+
+容易发现这样做的时间复杂度还是 $\mathcal O(2k \times 2^{2k})=\mathcal O(2k \times 4^k)$，和朴素做法差不多，是不可接受的。
+
+\newpage
+
+\section{高维 FWT}
+
+以上两个问题在只运用集合并卷积的情况下，都没有较低时间复杂度的算法，下面，我们引入高维 FWT，并且逐渐探寻 FWT 的一般式。
+
+\subsection{定义}
+
+定义生成函数 $F=\sum f_S x^S$，其中 $S$ 不再是一个集合，而是一个每维可以取 $0,\cdots ,k-1$ 的向量。
+
+\subsection{每维取 $\max$ 的 FWT}
+
+容易看出，当 $k=2$，而且：
+
+$$\begin{aligned}0 \circ 0 = 0 \\ 1 \circ 0 = 1 \\ 0 \circ 1 = 1 \\ 1 \circ 1 = 1\end{aligned}$$
+
+那么，这就对应了集合并卷积。
+
+这里，我们不再讨论集合并卷积，而是考虑更加一般的形式，即 $\circ = \max$ 时的情形。
+
+定义：
+
+$$\hat f[x^S]=\sum[S \circ T=S] f_T$$
+
+容易发现：
+
+$$\hat h_S=\sum_{L}\sum_{R}[S \circ (L \circ R) = S] f_L \times g_R$$
+
+由于：
+
+$$\max(a,\max(b,c))=a \Leftrightarrow \max(a,b)=a \operatorname{and} \max(a,c)=a$$
+
+有：
+
+$$[(S \circ (L \circ R))=S]=[(S \circ L) =S][(S \circ R)=S]$$
+
+得：
+
+$$\begin{aligned} \hat h_S &= \sum_{L} \sum_{R} [(S \circ L) =S][(S \circ R)=S] f_L \times g_R \\ &= \sum_{L} [(S \circ L)=S] f_L \times \sum_{R} [(S \circ R)=S] g_R \\ &= \hat f_S \times \hat g_S\end{aligned}$$
+
+
+那么，我们在 FWT 的 $k$ 个向量中，取前缀和即可，如果是反演的话，相邻做差即可。
+
+\subsection{喷瓜问题的快速算法}
+
+通过上述算法，将 $\texttt{g}^-$ 对应到 $0$，$\texttt{g}^+$ 对应到 $1$，$\texttt{G}$ 对应到 $2$，我们就可以解决上述的喷瓜问题，时间复杂度为 $\mathcal O(n \times 3^n)$。
+
+\subsection{任意操作符的 FWT 问题}
+
+容易发现，每次 FWT，都是在对其他位相同，而某一位分别为 $0, \cdots ,k-1$ 的 $k$ 个向量对应的下标做矩阵乘法。
+
+如集合并卷积的矩阵：
+
+$$\begin{bmatrix} 1 & 0 \\ 1 & 1 \end{bmatrix}$$
+
+集合交卷积的矩阵：
+
+$$\begin{bmatrix} 1 & 1 \\ 0 & 1 \end{bmatrix}$$
+
+集合对称差卷积的矩阵：
+
+$$\begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix}$$
+
+上述 $\max$ 卷积的矩阵：
+
+$$\begin{bmatrix} 1& 0 & 0& \cdots & 0\\ 1& 1& 0& \cdots & 0\\ 1& 1 & 1& \cdots & 0\\ \vdots& \vdots& \vdots& \ddots& \vdots\\ 1& 1& 1 & \cdots & 1 \end{bmatrix}$$
+
+而反演则是乘对应的逆矩阵。
+
+我们设矩阵为：
+
+$$\mathbf{M}=\begin{bmatrix} a_{0,0}&  a_{0,1} &  a_{0,2}& \cdots &  a_{0,k-1}\\  a_{1,0}&  a_{1,1}&  a_{1,2}& \cdots &  a_{1,k-1}\\  a_{2,0}&  a_{2,1} &  a_{2,2}& \cdots &  a_{2,k-1}\\ \vdots& \vdots& \vdots& \ddots& \vdots\\  a_{k-1,0}&  a_{k-1,1}&  a_{k-1,2} & \cdots &  a_{k-1,k-1} \end{bmatrix}$$
+
+由于 FWT 按位独立，对于某一维分析，有：
+
+$$\left(\begin{bmatrix}f_0 \\ f_1 \\ f_2 \\ \vdots \\ f_{k-1} \end{bmatrix}\times \mathbf{M} \right) \cdot \left(\begin{bmatrix}g_0 \\ g_1 \\ g_2 \\ \vdots \\ g_{k-1} \end{bmatrix}\times \mathbf{M}\right) = \begin{bmatrix}h_0 \\ h_1 \\ h_2 \\ \vdots \\ h_{k-1} \end{bmatrix}\times \mathbf{M}$$
+
+其中 $\cdot$ 代表“按位乘”，即：
+
+$$\begin{bmatrix}f_0 \\ f_1 \\ f_2 \\ \vdots \\ f_{k-1} \end{bmatrix} \cdot \begin{bmatrix}g_0 \\ g_1 \\ g_2 \\ \vdots \\ g_{k-1} \end{bmatrix} = \begin{bmatrix}f_0 \times g_0 \\ f_1 \times g_1 \\ f_2 \times g_2 \\ \vdots \\ f_{k-1} \times g_{k-1} \end{bmatrix}$$
+
+由于 $h_{i}=\sum_{j,k} [j \circ k =i]f_{j} \times g_{k}$，枚举每个 $i$，对于每个 $f_j \times g_k$ 分析，容易列出方程：
+
+$$a_{i,j} \times a_{i,k}=a_{i,j \circ k}$$
+
+发现不管对于哪个 $i$，方程都是一样的，去掉 $i$，我们就只用解方程 $a_{j} \times a_{k}=a_{j \circ k}$。
+
+如，当 $\circ$ 运算为取 $\operatorname{or}$ 的时候，有：
+
+$$
+\begin{cases}
+	a_{0} \times a_{0}=a_{0} \\
+	a_{1} \times a_{0}=a_{1} \\
+	a_{0} \times a_{1}=a_{1} \\
+	a_{1} \times a_{1}=a_{1} \\
+\end{cases}
+$$
+
+我们解出两组解：
+
+$$
+\begin{aligned}
+    \begin{cases}
+        a_{0} =1 \\
+        a_{1} =0 \\
+	\end{cases}
+	\qquad
+    \begin{cases}
+        a_{0} =1 \\
+        a_{1} =1 \\
+    \end{cases}
+\end{aligned}
+$$
+
+于是可以这样安排我们的矩阵：
+
+$$\mathbf{M_1}=\begin{bmatrix} 1 & 0 \\ 1 & 1 \end{bmatrix}$$
+
+$$\mathbf{M_2}=\begin{bmatrix} 1 & 1 \\ 1 & 0 \end{bmatrix}$$
+
+为什么不能这样这样安排：
+
+$$\mathbf{M_3}=\begin{bmatrix} 1 & 0 \\ 1 & 0 \end{bmatrix}$$
+
+$$\mathbf{M_4}=\begin{bmatrix} 1 & 1 \\ 1 & 1 \end{bmatrix}$$
+
+原因是，这两个矩阵都没有对应的逆矩阵，求逆矩阵可以再列出一个方程，然后解出 $x_0,x_1$。（可以注意到求解方程的意义正好对应了 FWT 逆操作的意义）
+
+$$
+\begin{cases}
+    a_{0,0}x_0 + a_{0,1}x_1 =b_0 \\
+    a_{1,0}x_0 + a_{1,1}x_1 =b_1 \\
+\end{cases}
+$$
+
+拿 $\mathbf{M_1}$ 举例，有：
+
+$$
+\begin{cases}
+    x_0 = b_1 \\
+    x_0 + x_1 =b_2 \\
+\end{cases}
+$$
+
+那么显然：
+
+$$
+\begin{cases}
+	x_0 = b_1 \\
+	x_1 = b_2-b_1 \\
+\end{cases}
+$$
+
+于是其逆矩阵就是：
+
+$$\mathbf{M_1^{-1}}=\begin{bmatrix} 1 & 0 \\ -1 & 1 \end{bmatrix}$$
+
+而对于 $\mathbf{M_3}$ 来说，有：
+
+$$
+\begin{cases}
+	x_0 = b_1 \\
+	x_0 = b_2 \\
+\end{cases}
+$$
+
+显然不合法。于是不能使用 $\mathbf{M_3}$ 这个矩阵。
+
+这样，我们解出矩阵 $\mathbf{M}$，然后求出逆矩阵 $\mathbf{M^{-1}}$，就可以解决任意操作符 $\circ$ 的 FWT 问题。
+
+\subsection{$\circ$ 运算需要满足的性质}
+
+由于：
+
+$$a_{j} \times a_{k}=a_{j \circ k}$$
+
+有：
+
+$$
+a_{j \circ k}=a_j \times a_k=a_k \times a_j=a_{k \circ j}
+$$
+
+$$
+a_{j \circ (k \circ l)}=a_j \times a_{k \circ l}=a_j \times a_k \times a_l=a_{j \circ k} \times a_{l}=a_{(j \circ k)\circ l}
+$$
+
+于是 $\circ$ 运算必须满足交换律和结合律。
+
+\subsection{不进位加法的 FWT}
+
+我们定义不进位加法 $\oplus_p$ 运算，为：
+
+$$
+a \oplus_p b  =
+\left\{
+    \begin{array}{l}
+        a+b \quad (0 \le a+b \le p-1) \\
+        a+b-p \quad (p \le a+b \le 2p-2) \\
+    \end{array}
+\right.
+$$
+
+容易发现，其矩阵系数 $a$ 满足：
+
+$$a_{i,j} \times a_{i,k}=a_{i,j \oplus_p k}$$
+
+这里，我们发现，这组方程的特解即是：
+
+$$a_{i,j} = \omega_{p}^j$$
+
+因为单位根运算满足：
+
+$$\omega_{p}^k = \omega_{p}^{k+p}$$
+
+$$\omega_{p}^{i+j} = \omega_{p}^i \times \omega_{p}^j$$
+
+进而发现，方程有 $p$ 组解，第 $i$ 组解（从 $0$ 开始编号）为：
+
+$$a_{i,j} = \omega_{p}^{j \times i}$$
+
+那么我们可以列出矩阵：
+
+$$
+\begin{bmatrix} 1& 1 & 1& \cdots & 1\\ 1& \omega_p^1& \omega_p^2& \cdots & \omega_p^{p - 1}\\ 1& \omega_p^2 & \omega_p^4& \cdots & w_p^{2(p - 1)}\\ \vdots& \vdots& \vdots& \ddots& \vdots\\ 1& \omega_p^{p - 1}& \omega_p^{2(p - 1)} & \cdots & \omega_p^{(p - 1)(p - 1)} \end{bmatrix}
+$$
+
+此矩阵就是\textsl{范德蒙德矩阵}。
+
+我们不加证明地给出它的逆矩阵：
+
+$$
+\frac 1 p \begin{bmatrix} 1& 1 & 1& \cdots & 1\\ 1& \omega_p^{-1}& \omega_p^{-2}& \cdots & \omega_p^{-(p - 1)}\\ 1& \omega_p^{-2} & \omega_p^{-4}& \cdots & \omega_p^{-2(p - 1)}\\ \vdots& \vdots& \vdots& \ddots& \vdots\\ 1& \omega_p^{-(p - 1)}& \omega_p^{-2(p - 1)} & \cdots & \omega_p^{-(p - 1)(p - 1)} \end{bmatrix}
+$$
+
+这样，我们就可以完成模 $p$ 意义下的不进位加法卷积，此算法即\textsl{多维广义离散傅里叶变换}。
+
+具体程序实现，我们可以算出 $\omega_p^1$ 即 $\cos \frac{p}{2\pi} + i\sin \frac{p}{2\pi}$，如果能用根号形式表示，即：$a+b\sqrt{x}i$，我们可以模拟复数 $a+b\sqrt{x}i$，其乘法为 $(a+b\sqrt{x}i)(c+d\sqrt{x}i)=(ac-xbd)+(ac+bd)\sqrt{x}i$，加法为 $(a+b\sqrt xi)+(c+d\sqrt xi)=(a+b)+(c+d)\sqrt xi$。
+
+或者，更加通用地，我们将长度为 $p$ 的多项式环作为一种数据结构，假设是 $F=\sum_{i=0}^{p-1} \omega_p^i f_i$，有：$F \times \omega_p^k=F=\sum_{i=0}^{p-1} \omega_p^i f_{i\ominus k}$，$F \times G=\sum_{i=0}^{p-1} \sum_{j=0}^{p-1} w_p^{i \oplus j} f_i \times g_j$。
+
+注意，如果对某个数 $mod$ 取模，若 $p$ 在 $mod$ 下没有对应的逆，则不能使用此算法。
+
+多维广义离散傅里叶变换的代码实现：
 
 \begin{algorithm}
 	\caption{多维广义离散傅里叶变换}
 	\begin{algorithmic}[1]
-		\Require 幂级数 $f$，单位根 $w_k$，操作符 $opr$ 代表正变换还是逆变换。
+		\Require 幂级数 $f$，单位根 $w_p$，操作符 $opr$ 代表正变换还是逆变换。
 		\Ensure $f$ 的傅里叶变换
-		\Function {FourierTransform}{$f,w_k,opr$}
+		\Function {FourierTransform}{$f,w_p,opr$}
 			\If $\ opr=1$
-				\State $matrix_{i,j}=w^{(i-1)(j-1)}_k$
+				\State $\textbf{M}_{i,j} \gets w^{(i-1)(j-1)}_p$
 			\Else
-				\State $matrix_{i,j}=\frac{1}{k}w^{-(i-1)(j-1)}_k$
+				\State $\textbf{M}_{i,j} \gets \frac{1}{p}w^{-(i-1)(j-1)}_p$
 			\EndIf
 			\For{$i \gets 1 \textbf{ to } n$}
-				\For{$\texttt{The k vectors satisfying }1 \cdots k\texttt{ on the i-th bit and the other bits are same.}$}
-					\State $v \gets \texttt{the k vectors}$
-					\For{$j \gets 1 \textbf{ to } k$}
+				\For{$\texttt{The p vectors satisfying }1 \cdots p\texttt{ on the i-th bit and the other bits are same.}$}
+					\State $v \gets \texttt{the p vectors}$
+					\For{$j \gets 1 \textbf{ to } p$}
 						\State $g_j \gets f_{v_j}$
 					\EndFor
-					\State $g \gets g \times matrix$
-					\For{$j \gets 1 \textbf{ to } k$}
+					\State $g \gets g \times \textbf{M}$
+					\For{$j \gets 1 \textbf{ to } p$}
 						\State $f_{v_j} \gets g_j$
 					\EndFor
 				\EndFor
@@ -449,4 +735,23 @@ $$
 		\EndFunction
 	\end{algorithmic}
 \end{algorithm}
+
+\subsection{共显性问题的快速算法}
+
+如果将 $\texttt{A}$ 对应到 $1$，$\texttt{a}$ 对应到 $0$，容易发现：
+
+\begin{table}[htbp]
+	\centering
+	\caption{编码运算表}
+	\begin{tabular}{cV{3}c|c}
+		$+$ & $1(\texttt{A})$ & $0(\texttt{a})$\\ \hlinewd{1pt}
+		$1(\texttt{A})$ & $2(\texttt{A})$ & $1(\texttt{Aa})$\\ \hline
+		$0(\texttt{a})$ & $1(\texttt{Aa})$ & $0(\texttt{a})$\\
+	\end{tabular}
+\end{table}
+
+我们发现 $\texttt{A}$ 对应 $2$，$\texttt{Aa}$ 对应 $1$，$\texttt{a}$ 对应 $0$。
+
+只要使用三次单位根 $\omega_3=\cos 120^\circ + \sin 120^\circ \rm i$，即可轻松解决此问题，时间复杂度是 $\mathcal O(n \times 3^n)$。
+
 \end{document}

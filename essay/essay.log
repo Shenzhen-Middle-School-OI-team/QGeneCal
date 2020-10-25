@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020/W32TeX) (preloaded format=xelatex 2020.10.24)  25 OCT 2020 22:10
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020/W32TeX) (preloaded format=xelatex 2020.10.24)  25 OCT 2020 22:24
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -836,83 +836,90 @@ Package fontspec Info: Font family 'FangSong(0)' created for font 'FangSong'
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 105.
+(hyperref)                removing `math shift' on input line 107.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 105.
+(hyperref)                removing `math shift' on input line 107.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 111.
+(hyperref)                removing `math shift' on input line 113.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\oplus' on input line 111.
+(hyperref)                removing `\oplus' on input line 113.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 111.
+(hyperref)                removing `math shift' on input line 113.
 
 [2]
 LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10.53937> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 151.
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 153.
  [3] [4] [5] [6]
-Overfull \hbox (4.06114pt too wide) detected at line 379
+Overfull \hbox (4.06114pt too wide) detected at line 383
 [][]
  []
 
 [7]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 387.
+put line 391.
  [8] [9]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 484.
+(hyperref)                removing `math shift' on input line 492.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathop' on input line 484.
+(hyperref)                removing `\mathop' on input line 492.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathgroup' on input line 484.
+(hyperref)                removing `\mathgroup' on input line 492.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\symoperators' on input line 484.
+(hyperref)                removing `\symoperators' on input line 492.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\nmlimits@' on input line 484.
+(hyperref)                removing `\nmlimits@' on input line 492.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 484.
+(hyperref)                removing `math shift' on input line 492.
 
 [10] [11] [12]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 644.
+(hyperref)                removing `math shift' on input line 652.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\circ' on input line 644.
+(hyperref)                removing `\circ' on input line 652.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 644.
+(hyperref)                removing `math shift' on input line 652.
 
 [13] [14]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 764.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 772.
  [15]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 764.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 772.
  (./essay.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 764.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 764.
-Package rerunfilecheck Info: File `essay.out' has not changed.
-(rerunfilecheck)             Checksum: 3F8517D41F42D3092B14FEDC852E0E89;4015.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 764.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 772.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 772.
+
+
+Package rerunfilecheck Warning: File `essay.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `essay.out':
+(rerunfilecheck)             Before: 3F8517D41F42D3092B14FEDC852E0E89;4015
+(rerunfilecheck)             After:  DB43D6ADAD4CEB440E6874AA98D8BA71;4039.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 772.
  ) 
 Here is how much of TeX's memory you used:
  18484 strings out of 481358

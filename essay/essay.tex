@@ -62,6 +62,8 @@
 		 
 \section{定义}
 
+%此处是否应有生物学中配子,基因型,表现型等等的定义? 
+
 \subsection{基因集合}
 
 我们用 $\mathbb{G}$ 来表示\textsl{基因集合}。
@@ -114,7 +116,7 @@
 
 $$(L \oplus R)_i=(\max(L_i,R_i),\min(L_i,R_i))$$
 
-$\max,\min$ 为取序号较大/较小者。
+$\max,\min$ 为取序号较大/较小者。排序可以根据生物中通用的表示方法来定义。
 
 如 $(\texttt{A},\texttt{b}) + (\texttt{a},\texttt{B})=((\texttt{A},\texttt{a}),(\texttt{B},\texttt{b}))$。
 
@@ -177,6 +179,8 @@ $$\begin{aligned}
 \subsection{表现型映射}
 
 我们创建映射：$\operatorname{exp}:\mathbb{G} \times \mathbb{G} \to \mathbb{E}$，对于一对等位基因 $l,r \in G$ 使得 $\operatorname{exp}(l,r)$ 为这个个体的表现型。
+
+%exp是不是不太好,容易和指数函数弄混
 
 比如 $\operatorname{exp}(\texttt{A},\texttt{a})=\texttt{A}$，$\operatorname{exp}(\texttt{a},\texttt{a})=\texttt{a}$。
 
@@ -333,7 +337,7 @@ $$
 
 $$f_S=\sum_{T \subseteq S} (-1)^{|S|-|T|}\hat f_T$$
 
-可以用容斥简单证明。
+由容斥原理可以证明。
 
 \subsubsection*{朴素的变换和反演的实现}
 
@@ -347,7 +351,7 @@ $$f_S=\sum_{T \subseteq S} (-1)^{|S|-|T|}\hat f_T$$
 
 $$\mathcal O(\sum_{i=0}^k \binom{k}{i}2^i)= \mathcal O(3^k)$$
 
-比上述做法稍有进步。
+比朴素做法稍有进步。
 
 \subsubsection*{进一步优化的变换和反演的实现}
 
@@ -421,7 +425,9 @@ $$
 
 \subsection{共显性问题}
 
-有一种花卉，基因型为 $\texttt{AA}$ 时表现为红色，基因型为 $\texttt{Aa}$ 时表现为粉色，基因型为 $\texttt{aa}$ 时表现为白色。
+有的时候一对等位基因对应的不只有一对相对性状,而有更复杂的情况。
+
+例如有一种花卉，基因型为 $\texttt{AA}$ 时表现为红色，基因型为 $\texttt{Aa}$ 时表现为粉色，基因型为 $\texttt{aa}$ 时表现为白色。
 
 \begin{table}[htbp]
 	\centering
@@ -439,7 +445,9 @@ $$
 
 \subsection{复等位基因问题}
 
-喷瓜的性别由等位基因 $\texttt{g}^{-},\texttt{g}^{+},\texttt{G}$ 决定，其中：
+一对相对形状由多个等位基因决定.
+
+例如 喷瓜的性别由等位基因 $\texttt{g}^{-},\texttt{g}^{+},\texttt{G}$ 决定，其中：
 
 \begin{table}[htbp]
 	\centering

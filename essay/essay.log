@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020/W32TeX) (preloaded format=xelatex 2020.10.24)  25 OCT 2020 21:37
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020/W32TeX) (preloaded format=xelatex 2020.10.24)  25 OCT 2020 22:10
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -809,7 +809,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 LaTeX Font Info:    Font shape `TU/SimSun(0)/m/sl' in size <10.53937> not avail
 able
 (Font)              Font shape `TU/SimSun(0)/m/it' tried instead on input line 
-54.
+61.
 
 Package fontspec Info: Could not resolve font "FangSong/BI" (it probably
 (fontspec)             doesn't exist).
@@ -836,90 +836,90 @@ Package fontspec Info: Font family 'FangSong(0)' created for font 'FangSong'
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 98.
+(hyperref)                removing `math shift' on input line 105.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 98.
+(hyperref)                removing `math shift' on input line 105.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 104.
+(hyperref)                removing `math shift' on input line 111.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\oplus' on input line 104.
+(hyperref)                removing `\oplus' on input line 111.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 104.
+(hyperref)                removing `math shift' on input line 111.
 
 [2]
 LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10.53937> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 144.
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 151.
  [3] [4] [5] [6]
-Overfull \hbox (4.06114pt too wide) detected at line 372
+Overfull \hbox (4.06114pt too wide) detected at line 379
 [][]
  []
 
 [7]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 380.
+put line 387.
  [8] [9]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 477.
+(hyperref)                removing `math shift' on input line 484.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathop' on input line 477.
+(hyperref)                removing `\mathop' on input line 484.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathgroup' on input line 477.
+(hyperref)                removing `\mathgroup' on input line 484.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\symoperators' on input line 477.
+(hyperref)                removing `\symoperators' on input line 484.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\nmlimits@' on input line 477.
+(hyperref)                removing `\nmlimits@' on input line 484.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 477.
+(hyperref)                removing `math shift' on input line 484.
 
 [10] [11] [12]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 637.
+(hyperref)                removing `math shift' on input line 644.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\circ' on input line 637.
+(hyperref)                removing `\circ' on input line 644.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 637.
+(hyperref)                removing `math shift' on input line 644.
 
 [13] [14]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 757.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 764.
  [15]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 757.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 764.
  (./essay.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 757.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 757.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 764.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 764.
 Package rerunfilecheck Info: File `essay.out' has not changed.
 (rerunfilecheck)             Checksum: 3F8517D41F42D3092B14FEDC852E0E89;4015.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 757.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 764.
  ) 
 Here is how much of TeX's memory you used:
- 18450 strings out of 481358
- 363632 string characters out of 5927880
+ 18484 strings out of 481358
+ 365430 string characters out of 5927880
  667164 words of memory out of 5000000
- 35503 multiletter control sequences out of 15000+600000
- 540680 words of font info for 105 fonts, out of 8000000 for 9000
+ 35531 multiletter control sequences out of 15000+600000
+ 540712 words of font info for 109 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  56i,14n,68p,364b,371s stack positions out of 5000i,500n,10000p,200000b,80000s
 

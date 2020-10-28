@@ -13,34 +13,45 @@
 %\usepackage{minted}
 \usepackage{amssymb}
 \usepackage{tabularx}
+\usepackage{tikz}
+\usepackage{graphviz}
 
 
 \usepackage{makecell}
 \usepackage{boldline}
 
-\usepackage{algorithm}  
-\usepackage{algorithmicx}  
-\usepackage{algpseudocode}  
-\usepackage{amsmath}  % 用于伪代码
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{amsmath}
 
+% 用于伪代码
 \floatname{algorithm}{算法}
 \renewcommand{\algorithmicrequire}{\textbf{输入:}}
 \renewcommand{\algorithmicensure}{\textbf{输出:}}
 
-
+% 用于表格粗线部分
 \makeatletter
-\def\hlinewd#1{%
-\noalign{\ifnum0=`}\fi\hrule \@height #1 %
+\def\hlinewd#1{
+\noalign{\ifnum0=`}\fi\hrule \@height #1
 \futurelet\reserved@a\@xhline}
 \makeatother
 
-\usepackage[top = 0.8in, bottom = 0.8in, left = 0.8in, right = 0.8in]{geometry} %设置页边距
+% tikz 样式
+\tikzset{
+	bluenode/.style={circle,minimum width=30pt,minimum height=30pt,draw=blue},
+	rednode/.style={circle,minimum width=30pt,minimum height=30pt,draw=red},
+	blacknode/.style={circle,minimum width=30pt,minimum height=30pt,draw=black},
+}
 
+\usepackage[top = 0.8in, bottom = 0.8in, left = 0.8in, right = 0.8in]{geometry} %设置页边距
 
 \title{研究性学习结题报告书}
 \author{}
 \begin{document}
+
 \maketitle
+
 \begin{itemize}
 	\item[\textbf{课题名称}] 用信息方法研究遗传学问题 \centering
 	\item[\textbf{课题负责人}] 杨景云
@@ -48,6 +59,7 @@
 	\item[\textbf{指导教师}] 李丽华老师
 	\item[\textbf{所在班级}] 高二(9)班
 \end{itemize}
+
 \begin{abstract}
 	由于缺少系统的方法，高中生物中有关基因遗传的计算问题一直是学习中的难点。本文从高中生物中的常见问题切入，建立一个计算遗传学中表现型比例,基因型比例和最优杂交方案的数学模型并对该模型用计算机方法进行求解。
 	
@@ -55,14 +67,20 @@
 	
 	该模型得出了手工求解表现型和基因型比例的通用方法,以及能用计算机高效求解的算法。文章最后，根据此模型求解了实际应用中的若干个问题。
 \end{abstract}
+
 \newpage
+
+\tableofcontents % 目录，需编译两次
+
+\newpage
+
 \section{约定}
 
 \textsl{真值运算符} \qquad 若 $[]$ 内表达式为真，则是 $1$，否则是 $0$。
-		 
+
 \section{定义}
 
-%此处是否应有生物学中配子,基因型,表现型等等的定义? 
+% 此处是否应有生物学中配子,基因型,表现型等等的定义? 
 
 \subsection{基因集合}
 
@@ -74,9 +92,7 @@
 
 \subsection{对于集合元素的标号}
 
-创建基因集合到 $\{1,2,\cdots |\mathbb{G}|\}$ 的映射 $f:\mathbb{G} \to \mathbb{Z}$。
-
-基因的顺序就是标号的顺序。
+创建基因集合到 $\{1,2,\cdots |\mathbb{G}|\}$ 的映射 $f:\mathbb{G} \to \mathbb{Z}$，称为基因的\textsl{标号}，基因的顺序就是标号的顺序。
 
 容易发现其有逆运算 $f'$。
 
@@ -84,7 +100,7 @@
 
 一个集合 $S$ 可以转化为一个 $|S|$ 维向量 $v$，其中 $v_i=[f'(i) \in S]$。
 
-若基因集合为 $\{\texttt{A,B}\}$，$\texttt{A}$ 标号为 $1$，$\texttt{B}$ 标号为 $2$，那么集合 $\{\texttt{A}\}$ 可以转化为 $(1,0)$。
+若基因集合为 $\{\texttt{A,B}\}$，$\texttt{A}$ 标号为 $1$，$\texttt{B}$ 标号为 $2$，那么集合 $\{\texttt{A}\}$ 可以转化为 $(1,0)$，集合 $\{\texttt{A},\texttt{B}\}$ 可以转化为 $(1,1)$。
 
 \subsection{基因片段}
 
@@ -94,23 +110,23 @@
 
 我们用 $\vec G$ 来表示\textsl{配子基因片段}。
 
-我们可以将一个具有 $k$ 个基因的配子用一个 $k$ 维向量 $\{a_i\}$ 表示，$a_i \in \mathbb{G}$。
+我们可以将一个具有 $k$ 个基因的配子用一个 $k$ 维向量 $\{a_i\}$ 表示，其中 $a_i \in \mathbb{G}$。
 
 \subsubsection*{个体基因片段}
 
 我们用 $\vec I$ 来表示\textsl{个体基因片段}。
 
-我们可以将一个具有 $k$ 对等位基因的个体用一个 $k$ 维向量 $\{(l_i,r_i)\}$表示，$l_i,r_i \in \mathbb{G}$。
+我们可以将一个具有 $k$ 对等位基因的个体用一个 $k$ 维向量 $\{(l_i,r_i)\}$表示，其中 $l_i,r_i \in \mathbb{G}$。
 
 \subsection{基因片段的运算}
 
-\subsubsection{加法运算 $+$}
+\subsubsection*{加法运算 $+$}
 
 对于 $L,R \in \mathbb{P}$，而且 $L,R$ 同为配子基因片段或个体基因片段，定义\textsl{加法运算}为两基因片段的有序拼接。
 
-如 $(\texttt{A},\texttt{C}) + (\texttt{B}) = (\texttt{A},\texttt{B},\texttt{C})$。
+如 $(\texttt{A},\texttt{C}) + (\texttt{B}) = (\texttt{A},\texttt{B},\texttt{C})$、$((\texttt{A},\texttt{a}),(\texttt{B},\texttt{b}))+((\texttt{C},\texttt{C}))=((\texttt{A},\texttt{a}),(\texttt{B},\texttt{b}),(\texttt{C},\texttt{C}))$。
 
-\subsubsection{结合运算 $\oplus$}
+\subsubsection*{结合运算 $\oplus$}
 
 对于 $L,R \in \mathbb{P}$，而且 $L,R$ 同为配子基因片段，而且长度相等，定义\textsl{结合运算}为按位有序结合：
 
@@ -140,11 +156,11 @@ $$A=\sum_{i \in \mathbb{P}} a_i x^{i}$$
 
 \subsection{基因片段生成函数的系列运算}
 
-\subsubsection*{乘法运算 $\times$}
+\subsubsection*{乘法运算}
 
 $$x^L \times x^R=x^{L+R}$$
 
-\subsubsection*{结合乘法运算 $\otimes$}
+\subsubsection*{结合乘法运算}
 
 $$x^L \otimes x^R=x^{L \oplus R}$$
 
@@ -193,7 +209,7 @@ $$\begin{aligned}
 
 \subsection{计算个体的表现型}
 
-个体的表现型可以用一个 $k$ 维向量 $\vec E$ 表示，其中
+个体的\textsl{表现型}可以用一个 $k$ 维向量 $\vec E$ 表示，其中：
 
 $$\vec E_i=\operatorname{exp}(\vec I_i)$$
 
@@ -201,13 +217,13 @@ $$\vec E_i=\operatorname{exp}(\vec I_i)$$
 
 给定环 $R$ 上的 $n$ 维向量 $\vec A=\{a_i\},\vec B=\{b_i\}$ 和下标运算 $\circ$，设 $C=\{c_i\}=A*B$，则满足：
 
-\begin{equation}
-	c_i=\sum_{j,k} [j \circ k=i] a_jb_k \label{(1)}
-\end{equation}
+\begin{equation*}
+	c_i=\sum_{j,k} [j \circ k=i] a_jb_k
+\end{equation*}
 
-称 $C$ 为 $A$ 和 $B$ 关于 $\circ$ 的离散卷积，以下简称卷积。
+称 $C$ 为 $A$ 和 $B$ 关于 $\circ$ 的离散卷积，以下简称\textsl{卷积}。
 
-记 $C=A*_{\circ}B$，如果不引起混淆，简记为 $C=A*B$，其中 $*$ 为卷积算子。
+记 $C=A*_{\circ}B$，如果不引起混淆，简记为 $C=A*B$，其中 $*$ 为\textsl{卷积算子}。
 
 若 $\circ = +$，就是我们熟悉的多项式乘法运算。
 
@@ -255,7 +271,7 @@ $$H=F \times G$$
 
 所以总时间复杂度是 $\mathcal O(k 2^k)$，对于 $n$ 个个体都计算一次，时间复杂度为 $\mathcal O(nk 2^k)$，是不能接受的。
 
-\subsubsection*{快速做法}
+\subsubsection*{优化做法}
 
 考虑维护配子出现次数函数 $f$，一开始为 $x^{\texttt{None}}$，考虑每次加入一对基因，$f$ 的变化。假设它变为 $f'$。
 
@@ -270,6 +286,47 @@ $$H=F \times G$$
 但是程序处理时，加入到第 $i$ 个等位基因时，可以只用考虑 $0 \sim 2^i$ 的函数值，总时间复杂度是 $\mathcal O(\sum_{i=1}^k 2^i)=\mathcal O(2^k)$，可以将一个 $k$ 优化掉。
 
 对于 $n$ 个个体都计算一次，时间复杂度为 $\mathcal O(n2^k)$，比较快速。
+
+\newpage
+
+\subsubsection*{快速做法}
+
+首先，我们需要引入 \textsl{Trie 树}，它由下列部分组成：
+
+\begin{enumerate}
+	\item \textsl{字符集} $\Sigma$ \qquad Trie 树只能输入属于字符集的字符。
+	\item \textsl{状态集合} $Q$ \qquad 状态集合相当于 Trie 树的节点（node）。
+	\item \textsl{起始状态} $start$ \qquad 起始状态是 Trie 树的根（root）。
+	\item \textsl{结束状态集合} $F$ \qquad $F \subsetneqq Q$，是特殊的状态。
+	\item \textsl{转移函数} $\delta$ \qquad 转移状态是接受两个参数返回一个值的函数，第一个参数和返回值都是一个状态，第二个参数是一个字符。相当于 Trie 树节点之间的边（edge）。
+\end{enumerate}
+
+我们可以定义\textsl{广义转移函数}，令其第二个参数可以接受一个字符串 $s$，它是递归定义的：
+
+$$\delta(v,s)=\delta(\delta(v,s_1),s_{2 \cdots |s|})$$
+
+给定字符串集 $S$，其中每一个元素的都是字符串，由这些元素建立起的 Trie 树满足：
+
+\begin{enumerate}
+	\item $\forall s \in S, \delta(start,s) \in F$。
+	\item $\forall s \notin S, \delta(start,s) \notin F$。
+\end{enumerate}
+
+由字符集 $\{\texttt{a},\texttt{ab},\texttt{ac}\}$ 建立起的 Trie 树如图所示：
+
+\begin{center}
+\begin{tikzpicture}[sibling distance=80pt,bluenode/.style =]
+	\node[bluenode] (1) at(0,0) {$start$};
+	\node[blacknode] (2) at(-1.5,-2){};
+	\node[blacknode] (3) at(1.5,-2){};
+	\node[blacknode] (4) at(-1.5,-4){};
+	
+	\draw[->] (1)--(2);
+	\draw[->] (1)--(3);
+	\draw[->] (2)--(4);
+
+\end{tikzpicture}
+\end{center}
 
 \subsection{基因片段生成函数的求法}
 

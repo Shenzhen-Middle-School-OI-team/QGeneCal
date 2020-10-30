@@ -40,10 +40,16 @@
 
 % tikz 样式
 \tikzset{
-	treenode/.style={align=center,inner sep=0pt,text centered},
-	bluenode/.style={treenode,circle,minimum width=30pt,minimum height=30pt,draw=blue},
-	rednode/.style={treenode,circle,minimum width=30pt,minimum height=30pt,draw=red},
-	blacknode/.style={treenode,circle,minimum width=30pt,minimum height=30pt,draw=black},
+    treenode/.style={align=center,inner sep=0pt,text centered,circle,minimum width=25pt,minimum height=25pt},
+    bluenode/.style={treenode,draw=blue},
+    rednode/.style={treenode,draw=red},
+    blacknode/.style={treenode,draw=black},
+    caption/.style={below=0.3cm, align=flush center,text width=8cm},
+    abovecaption/.style={above=0.3cm, align=flush center,text width=8cm}
+    level 1/.style = {sibling distance=3cm},
+    level 2/.style = {sibling distance=2cm},
+    level 3/.style = {sibling distance=2cm}, 
+    level distance = 2.5cm
 }
 
 \usepackage[top = 0.8in, bottom = 0.8in, left = 0.8in, right = 0.8in]{geometry} %设置页边距
@@ -55,19 +61,19 @@
 \maketitle
 
 \begin{itemize}
-	\item[\textbf{课题名称}] 用信息方法研究遗传学问题 \centering
-	\item[\textbf{课题负责人}] 杨景云
-	\item[\textbf{课题成员}] blablabla
-	\item[\textbf{指导教师}] 李丽华老师
-	\item[\textbf{所在班级}] 高二(9)班
+    \item[\textbf{课题名称}] 用信息方法研究遗传学问题 \centering
+    \item[\textbf{课题负责人}] 杨景云
+    \item[\textbf{课题成员}] blablabla
+    \item[\textbf{指导教师}] 李丽华老师
+    \item[\textbf{所在班级}] 高二(9)班
 \end{itemize}
 
 \begin{abstract}
-	由于缺少系统的方法，高中生物中有关基因遗传的计算问题一直是学习中的难点。本文从高中生物中的常见问题切入，建立一个计算遗传学中表现型比例,基因型比例和最优杂交方案的数学模型并对该模型用计算机方法进行求解。
-	
-	本文将数学中的生成函数,计算机科学中快速求解卷积的算法,以及遗传学中的基本定律结合。通过对基因片段二进制编码后,引入集合幂级数来表示基因片段出现次数,那么产生配子和配子结合的过程就是集合幂级数的不同形式卷积。进而用快速莫比乌斯变换和快速沃尔什变换在很低的算法时间复杂度内求解该问题。
-	
-	该模型得出了手工求解表现型和基因型比例的通用方法,以及能用计算机高效求解的算法。文章最后，根据此模型求解了实际应用中的若干个问题。
+    由于缺少系统的方法，高中生物中有关基因遗传的计算问题一直是学习中的难点。本文从高中生物中的常见问题切入，建立一个计算遗传学中表现型比例,基因型比例和最优杂交方案的数学模型并对该模型用计算机方法进行求解。
+    
+    本文将数学中的生成函数,计算机科学中快速求解卷积的算法,以及遗传学中的基本定律结合。通过对基因片段二进制编码后,引入集合幂级数来表示基因片段出现次数,那么产生配子和配子结合的过程就是集合幂级数的不同形式卷积。进而用快速莫比乌斯变换和快速沃尔什变换在很低的算法时间复杂度内求解该问题。
+    
+    该模型得出了手工求解表现型和基因型比例的通用方法,以及能用计算机高效求解的算法。文章最后，根据此模型求解了实际应用中的若干个问题。
 \end{abstract}
 
 \newpage
@@ -122,13 +128,13 @@
 
 \subsection{基因片段的运算}
 
-\subsubsection*{加法运算 $+$}
+\subsubsection*{加法运算}
 
 对于 $L,R \in \mathbb{P}$，而且 $L,R$ 同为配子基因片段或个体基因片段，定义\textsl{加法运算}为两基因片段的有序拼接。
 
 如 $(\texttt{A},\texttt{C}) + (\texttt{B}) = (\texttt{A},\texttt{B},\texttt{C})$、$((\texttt{A},\texttt{a}),(\texttt{B},\texttt{b}))+((\texttt{C},\texttt{C}))=((\texttt{A},\texttt{a}),(\texttt{B},\texttt{b}),(\texttt{C},\texttt{C}))$。
 
-\subsubsection*{结合运算 $\oplus$}
+\subsubsection*{结合运算}
 
 对于 $L,R \in \mathbb{P}$，而且 $L,R$ 同为配子基因片段，而且长度相等，定义\textsl{结合运算}为按位有序结合：
 
@@ -173,8 +179,8 @@ $$x^L \otimes x^R=x^{L \oplus R}$$
 构造生成函数：
 
 $$\begin{aligned}
-	G &= (\frac{1}{2} x^{\texttt{A}}+ \frac{1}{2}x^{\texttt{a}})(\frac{1}{2} x^{\texttt{B}}+ \frac{1}{2}x^{\texttt{B}}) \\
-				&= \frac{1}{2} x^{\texttt{AB}} + \frac{1}{2} x^{\texttt{aB}}
+    G &= (\frac{1}{2} x^{\texttt{A}}+ \frac{1}{2}x^{\texttt{a}})(\frac{1}{2} x^{\texttt{B}}+ \frac{1}{2}x^{\texttt{B}}) \\
+                &= \frac{1}{2} x^{\texttt{AB}} + \frac{1}{2} x^{\texttt{aB}}
 \end{aligned}$$
 
 即配子数量比为 $\texttt{AB} : \texttt{aB}=1:1$。
@@ -184,8 +190,8 @@ $$\begin{aligned}
 构造生成函数：
 
 $$\begin{aligned}
-	I &= G \otimes G \\
-		&= \frac{1}{4} x^{\texttt{AABB}} + \frac{1}{2} x^{\texttt{AaBB}} + \frac{1}{4} x^{\texttt{aaBB}}
+    I &= G \otimes G \\
+        &= \frac{1}{4} x^{\texttt{AABB}} + \frac{1}{2} x^{\texttt{AaBB}} + \frac{1}{4} x^{\texttt{aaBB}}
 \end{aligned}$$
 
 即基因型数量比为 $\texttt{AABB} : \texttt{AaBB} : \texttt{aaBB}=1:2:1$。
@@ -205,8 +211,8 @@ $$\begin{aligned}
 \subsection{表现型映射的性质}
 
 \begin{itemize}
-	\item $\operatorname{exp}(i,j)=\operatorname{exp}(j,i)$。
-	\item $\operatorname{exp}(i,i)=i$。
+    \item $\operatorname{exp}(i,j)=\operatorname{exp}(j,i)$。
+    \item $\operatorname{exp}(i,i)=i$。
 \end{itemize}
 
 \subsection{计算个体的表现型}
@@ -220,7 +226,7 @@ $$\vec E_i=\operatorname{exp}(\vec I_i)$$
 给定环 $R$ 上的 $n$ 维向量 $\vec A=\{a_i\},\vec B=\{b_i\}$ 和下标运算 $\circ$，设 $C=\{c_i\}=A*B$，则满足：
 
 \begin{equation*}
-	c_i=\sum_{j,k} [j \circ k=i] a_jb_k
+    c_i=\sum_{j,k} [j \circ k=i] a_jb_k
 \end{equation*}
 
 称 $C$ 为 $A$ 和 $B$ 关于 $\circ$ 的离散卷积，以下简称\textsl{卷积}。
@@ -242,9 +248,9 @@ $$H=F \times G$$
 参考 2.9 中做法，我们分步计算。
 
 \begin{enumerate}
-	\item 对于第 $i$ 个个体，求配子生成函数 $G_i$。
-	\item 计算 $G=\sum_{i=1}^n G_i$。 
-	\item 计算 $I=G \otimes G$，
+    \item 对于第 $i$ 个个体，求配子生成函数 $G_i$。
+    \item 计算 $G=\sum_{i=1}^n G_i$。 
+    \item 计算 $I=G \otimes G$，
 \end{enumerate}
 
 \subsection{配子生成函数的求法}
@@ -258,15 +264,15 @@ $$H=F \times G$$
 拿 $\texttt{AaBB}$ 举例：
 
 \begin{table}[htbp]
-	\centering
-	\caption{配子计算表}
-	\begin{tabular}{|c|c|}
-		选择的二进制数 & 得到的配子 \\
-		00 & \texttt{AB} \\
-		01 & \texttt{AB} \\
-		10 & \texttt{aB} \\
-		11 & \texttt{aB} \\
-	\end{tabular}
+    \centering
+    \caption{配子计算表}
+    \begin{tabular}{|c|c|}
+        选择的二进制数 & 得到的配子 \\
+        00 & \texttt{AB} \\
+        01 & \texttt{AB} \\
+        10 & \texttt{aB} \\
+        11 & \texttt{aB} \\
+    \end{tabular}
 \end{table}
 
 生成二进制数的\textsl{时间复杂度}为 $\mathcal O(2^k)$，而计算配子的时间复杂度为 $\mathcal O(k)$。
@@ -296,11 +302,11 @@ $$H=F \times G$$
 首先，我们需要引入 \textsl{Trie 树}，它由下列部分组成：
 
 \begin{enumerate}
-	\item \textsl{字符集} $\Sigma$ \qquad Trie 树只能输入属于字符集的字符。
-	\item \textsl{状态集合} $Q$ \qquad 状态集合相当于 Trie 树的节点（node）。
-	\item \textsl{起始状态} $start$ \qquad 起始状态是 Trie 树的根（root）。
-	\item \textsl{结束状态集合} $F$ \qquad $F \subsetneqq Q$，是特殊的状态。
-	\item \textsl{转移函数} $\delta$ \qquad 转移状态是接受两个参数返回一个值的函数，第一个参数和返回值都是一个状态，第二个参数是一个字符。特别地，若没有定义，返回值为 $\texttt{null}$；且 $\delta(\texttt{null},c)=\texttt{null}$。转移函数相当于 Trie 树节点之间的边（edge）。
+    \item \textsl{字符集} $\Sigma$ \qquad Trie 树只能输入属于字符集的字符。
+    \item \textsl{状态集合} $Q$ \qquad 状态集合相当于 Trie 树的节点（node）。
+    \item \textsl{起始状态} $start$ \qquad 起始状态是 Trie 树的根（root）。
+    \item \textsl{结束状态集合} $F$ \qquad $F \subsetneqq Q$，是特殊的状态。
+    \item \textsl{转移函数} $\delta$ \qquad 转移状态是接受两个参数返回一个值的函数，第一个参数和返回值都是一个状态，第二个参数是一个字符。特别地，若没有定义，返回值为 $\texttt{null}$；且 $\delta(\texttt{null},c)=\texttt{null}$。转移函数相当于 Trie 树节点之间的边（edge）。
 \end{enumerate}
 
 我们可以定义\textsl{广义转移函数}，令其第二个参数可以接受一个字符串 $s$，它是递归定义的：
@@ -310,8 +316,8 @@ $$\delta(v,s)=\delta(\delta(v,s_1),s_{2 \cdots |s|})$$
 给定字符串集 $S$，其中每一个元素的都是字符串，由这些元素建立起的 Trie 树满足：
 
 \begin{enumerate}
-	\item $\forall s \in S, \delta(start,s) \in F$。
-	\item $\forall s \notin S, \delta(start,s) \notin F$。
+    \item $\forall s \in S, \delta(start,s) \in F$。
+    \item $\forall s \notin S, \delta(start,s) \notin F$。
 \end{enumerate}
 
 由字符集 $\{\texttt{a},\texttt{ab},\texttt{ac},\texttt{b}\}$ 建立起的 Trie 树如图所示：
@@ -319,11 +325,19 @@ $$\delta(v,s)=\delta(\delta(v,s_1),s_{2 \cdots |s|})$$
 \begin{center}
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.5cm, semithick]
 
-\node[rednode]         (ST)                    {$start$};
-\node[blacknode]         (A) [below left of=ST]  {};
-\node[blacknode]         (B) [below right of=ST] {};
-\node[blacknode]         (AB) [below left of=A]  {};
-\node[blacknode]         (AC) [below right of=A]    {};
+% \node[rednode]           (ST)                    {$start$};
+% \node[blacknode]         (A) [below left of=ST]  {};
+% \node[blacknode]         (B) [below right of=ST] {};
+% \node[blacknode]         (AB) [below left of=A]  {};
+% \node[blacknode]         (AC) [below right of=A]    {};
+
+\node[rednode](ST){$start$}
+child{ node[blacknode](A){}
+    child{node[blacknode] (AB){}}
+    child{node[blacknode] (AC){}}
+}
+child{ node[blacknode](B){}}
+;
 
 \path
 (ST) edge              node {\texttt{a}} (A)
@@ -340,25 +354,148 @@ $$\delta(v,s)=\delta(\delta(v,s_1),s_{2 \cdots |s|})$$
 
 如何利用 Trie 树的结构，来求解配子生成函数，我们可以定义字符集 $\Sigma=\{\texttt{AA},\texttt{Aa},\texttt{aa},\texttt{BB},\texttt{Bb},\texttt{bb},\cdots\}$。
 
-这是一棵插入了 $\texttt{AABb},\texttt{AABB},\texttt{AaBB}$ 的 Trie 树。
+这是一棵插入了 $\texttt{AABb},\texttt{AABB},\texttt{AaBB},\texttt{AaBB}$ 的 Trie 树。
 
 \begin{center}
-	\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.5cm, semithick]
-	
-	\node[rednode]         (ST)                    {$start$};
-	\node[blacknode]         (A) [below left of=ST]  {};
-	\node[blacknode]         (B) [below right of=ST] {};
-	\node[blacknode]         (AB) [below left of=A]  {};
-	\node[blacknode]         (AC) [below right of=A]    {};
-	
-	\path
-	(ST) edge              node {\texttt{a}} (A)
-		 edge              node {\texttt{b}} (B)
-	(A)  edge              node {\texttt{b}} (AB)
-		 edge              node {\texttt{c}} (AC)
-	;
-	\end{tikzpicture}
+\begin{tikzpicture}[->,sibling distance=10em,>=stealth',shorten >=1pt,auto, semithick]
+
+\node[rednode](ST){$start$}
+child{ node[bluenode](AA){}
+    child{node[blacknode] (AABb){1}}
+    child{node[blacknode] (AABB){1}}
+}
+child{ node[bluenode](Aa){}
+    child{node[blacknode] (AaBB){2}}
+}
+;
+
+\path
+(ST) edge              node {\texttt{AA}} (AA)
+        edge              node {\texttt{Aa}} (Aa)
+(AA) edge              node {\texttt{Bb}} (AABb)
+        edge              node {\texttt{BB}} (AABB)
+(Aa) edge              node {\texttt{BB}} (AaBB);
+\end{tikzpicture}
 \end{center}
+
+我们在结束节点 $v$ 标记一个值 $cnt_v$，代表有多少字符串 $s$ 使得 $\delta(start,s)=v$。
+
+程序实现时，我们从最底端开始递推，一直递推到第一层，我们的递推必须有\textsl{初状态}和\textsl{递推公式}。
+
+我们首先来看初状态，节点 $v$ 的初状态就是 $cnt_v$。
+
+我们在图上节点旁标注初状态：
+
+\begin{center}
+\begin{tikzpicture}[->,sibling distance=10em,>=stealth',shorten >=1pt,auto, semithick]
+
+\node[rednode](ST){$start$}
+child{ node[bluenode](AA){}
+    child{node[blacknode] (AABb){1}}
+    child{node[blacknode] (AABB){1}}
+}
+child{ node[bluenode](Aa){}
+    child{node[blacknode] (AaBB){2}}
+}
+;
+
+\path
+(ST) edge              node {\texttt{AA}} (AA)
+     edge              node {\texttt{Aa}} (Aa)
+(AA) edge              node {\texttt{Bb}} (AABb)
+     edge              node {\texttt{BB}} (AABB)
+(Aa) edge              node {\texttt{BB}} (AaBB);
+
+\node[caption] at (AABb.south) {$1$};
+\node[caption] at (AABB.south) {$1$};
+\node[caption] at (AaBB.south) {$2$};
+
+\end{tikzpicture}
+\end{center}
+
+我们再来看递推公式，设根节点的配子生成函数为 $F$，而它的三个子节点的配子生成函数为 $f_{\texttt{aa}},f_{\texttt{Aa}},f_{\texttt{AA}}$（如果不存在设为 $0$），那么有递推式：
+
+$$
+\begin{aligned}
+    F &= (x^{\texttt{a}}+x^{\texttt{a}})f_{\texttt{aa}} + (x^{\texttt{A}}+x^{\texttt{a}})f_{\texttt{Aa}} + (x^{\texttt{A}}+x^{\texttt{A}})f_{\texttt{AA}} \\
+      &= x^{\texttt{a}}(f_{\texttt{aa}} \times 2 + f_{\texttt{Aa}}) + x^{\texttt{A}}(f_{\texttt{AA}} \times 2 + f_{\texttt{Aa}})
+\end{aligned}
+$$
+
+\newpage
+
+有了初状态和递推公式，就可以通过程序递推到根节点，求解出整个种群的配子生成函数的和。
+
+\textbf{递推到第二层}
+
+\begin{center}
+\begin{tikzpicture}[->,sibling distance=10em,>=stealth',shorten >=1pt,auto, semithick]
+
+\node[rednode](ST){$start$}
+child{ node[bluenode](AA){}
+    child{node[blacknode] (AABb){1}}
+    child{node[blacknode] (AABB){1}}
+}
+child{ node[bluenode](Aa){}
+    child{node[blacknode] (AaBB){2}}
+}
+;
+
+\path
+(ST) edge              node {\texttt{AA}} (AA)
+     edge              node {\texttt{Aa}} (Aa)
+(AA) edge              node {\texttt{Bb}} (AABb)
+     edge              node {\texttt{BB}} (AABB)
+(Aa) edge              node {\texttt{BB}} (AaBB);
+
+\node[caption] at (AABb.south) {$1$};
+\node[caption] at (AABB.south) {$1$};
+\node[caption] at (AaBB.south) {$2$};
+\node at (AA.west) {$3x^{\texttt{B}}+x^{\texttt{b}} \qquad \qquad$};
+\node at (Aa.east) {$\qquad 2x^{\texttt{B}}$};
+
+\end{tikzpicture}
+\end{center}
+
+\textbf{递推到第一层}
+
+$$\begin{aligned}F(x) &= x^{\texttt{A}}(2\times(3x^{\texttt{B}}+x^{\texttt{b}})+2x^{\texttt{B}})+x^{\texttt{a}}(2x^{\texttt{B}}) \\ &= 2x^{\texttt{aB}}+2x^{\texttt{Ab}}+8x^{\texttt{AB}}\end{aligned}$$
+
+\begin{center}
+\begin{tikzpicture}[->,sibling distance=10em,>=stealth',shorten >=1pt,auto, semithick]
+
+\node[rednode](ST){$start$}
+child{ node[bluenode](AA){}
+    child{node[blacknode] (AABb){1}}
+    child{node[blacknode] (AABB){1}}
+}
+child{ node[bluenode](Aa){}
+    child{node[blacknode] (AaBB){2}}
+}
+;
+
+\path
+(ST) edge              node {\texttt{AA}} (AA)
+        edge              node {\texttt{Aa}} (Aa)
+(AA) edge              node {\texttt{Bb}} (AABb)
+        edge              node {\texttt{BB}} (AABB)
+(Aa) edge              node {\texttt{BB}} (AaBB);
+
+\node[caption] at (AABb.south) {$1$};
+\node[caption] at (AABB.south) {$1$};
+\node[caption] at (AaBB.south) {$2$};
+\node at (AA.west) {$3x^{\texttt{B}}+x^{\texttt{b}} \qquad \qquad$};
+\node at (Aa.east) {$\qquad 2x^{\texttt{B}}$};
+\end{tikzpicture}
+\end{center}
+
+容易发现此做法的最坏时间复杂度为：
+
+$$\mathcal T(i)=3 \times \mathcal T(i-1) + \mathcal O(2^i)$$
+
+实际上，因为节点数可能不满，程序运行时间可能比理论更优。
+
+\newpage
 
 \subsection{基因片段生成函数的求法}
 
@@ -393,13 +530,13 @@ $$f=\sum_{S \subseteq U} f_S x^S$$
 这样发现集合并卷积刚好符合“显性基因克制隐形基因”的条件，因为只要某一位有对应的显性基因，那么个体就表现为显性，可以结合集合运算表来理解：
 
 \begin{table}[htbp]
-	\centering
-	\caption{集合运算表}
-	\begin{tabular}{cV{3}c|c}
-		$\cup$ & $\{\texttt{A}\}$ & $\varnothing$ \\ \hlinewd{1pt}
-		$\{\texttt{A}\}$ & $\{\texttt{A}\}$ & $\{\texttt{A}\}$\\ \hline
-		$\varnothing$ & $\{\texttt{A}\}$ & $\varnothing$
-	\end{tabular}
+    \centering
+    \caption{集合运算表}
+    \begin{tabular}{cV{3}c|c}
+        $\cup$ & $\{\texttt{A}\}$ & $\varnothing$ \\ \hlinewd{1pt}
+        $\{\texttt{A}\}$ & $\{\texttt{A}\}$ & $\{\texttt{A}\}$\\ \hline
+        $\varnothing$ & $\{\texttt{A}\}$ & $\varnothing$
+    \end{tabular}
 \end{table}
 
 
@@ -415,10 +552,10 @@ $$\hat f_S=\sum_{T \subseteq S} f_T$$
 
 $$
 \begin{aligned}
-	\hat h_S &=\sum_{L} \sum_{R} [(L \cup R) \subseteq S] f_L g_R \\
-		 &= \sum_{L} \sum_{R} [L \subseteq S][R \subseteq S] f_L g_R \\
-		 &= \sum_{L} [L \subseteq S] f_L \sum_{R} [R \subseteq S] g_R \\
-		 &= \hat f_S \hat g_S
+    \hat h_S &=\sum_{L} \sum_{R} [(L \cup R) \subseteq S] f_L g_R \\
+         &= \sum_{L} \sum_{R} [L \subseteq S][R \subseteq S] f_L g_R \\
+         &= \sum_{L} [L \subseteq S] f_L \sum_{R} [R \subseteq S] g_R \\
+         &= \hat f_S \hat g_S
 \end{aligned}
 $$
 
@@ -477,35 +614,35 @@ $$
 \subsubsection*{快速莫比乌斯变换和反演的伪代码实现}
 
 \begin{algorithm}
-	\caption{快速莫比乌斯变换}
-	\begin{algorithmic}[1]
-		\Require 集合幂级数 $f$
-		\Ensure $f$ 的莫比乌斯变换
-		\Function {FastMobiusTransform}{$f$}
-			\For{$i \gets 1 \textbf{ to } n$}
-				\For{$\textbf{all }S \subseteq U \setminus \{i\}$}
-					\State $f_{S \cup \{i\}} \gets f_{S \cup \{i\}} + f_{S}$
-				\EndFor
-			\EndFor
-			\State \Return{$f$}
-		\EndFunction
-	\end{algorithmic}
+    \caption{快速莫比乌斯变换}
+    \begin{algorithmic}[1]
+        \Require 集合幂级数 $f$
+        \Ensure $f$ 的莫比乌斯变换
+        \Function {FastMobiusTransform}{$f$}
+            \For{$i \gets 1 \textbf{ to } n$}
+                \For{$\textbf{all }S \subseteq U \setminus \{i\}$}
+                    \State $f_{S \cup \{i\}} \gets f_{S \cup \{i\}} + f_{S}$
+                \EndFor
+            \EndFor
+            \State \Return{$f$}
+        \EndFunction
+    \end{algorithmic}
 \end{algorithm}
 
 \begin{algorithm}
-	\caption{快速莫比乌斯反演}
-	\begin{algorithmic}[1]
-		\Require 集合幂级数 $f$
-		\Ensure $f$ 的莫比乌斯反演
-		\Function {FastMobiusInversion}{$f$}
-			\For{$i \gets 1 \textbf{ to } n$}
-				\For{$\textbf{all }S \subseteq U \setminus \{i\}$}
-					\State $f_{S \cup \{i\}} \gets f_{S \cup \{i\}} - f_{S}$
-				\EndFor
-			\EndFor
-			\State \Return{$f$}
-		\EndFunction
-	\end{algorithmic}
+    \caption{快速莫比乌斯反演}
+    \begin{algorithmic}[1]
+        \Require 集合幂级数 $f$
+        \Ensure $f$ 的莫比乌斯反演
+        \Function {FastMobiusInversion}{$f$}
+            \For{$i \gets 1 \textbf{ to } n$}
+                \For{$\textbf{all }S \subseteq U \setminus \{i\}$}
+                    \State $f_{S \cup \{i\}} \gets f_{S \cup \{i\}} - f_{S}$
+                \EndFor
+            \EndFor
+            \State \Return{$f$}
+        \EndFunction
+    \end{algorithmic}
 \end{algorithm}
 
 \newpage
@@ -519,13 +656,13 @@ $$
 例如有一种花卉，基因型为 $\texttt{AA}$ 时表现为红色，基因型为 $\texttt{Aa}$ 时表现为粉色，基因型为 $\texttt{aa}$ 时表现为白色。
 
 \begin{table}[htbp]
-	\centering
-	\caption{共显性表现型表}
-	\begin{tabular}{cV{3}c|c|c}
-		$\operatorname{exp}$ & $\texttt{A}$ & $\texttt{a}$ \\ \hlinewd{1pt}
-		$\texttt{A}$ & $\texttt{A}$ & $$\texttt{Aa}$$ \\ \hline
-		$\texttt{a}$ & $\texttt{Aa}$ & $$\texttt{a}$$
-	\end{tabular}
+    \centering
+    \caption{共显性表现型表}
+    \begin{tabular}{cV{3}c|c|c}
+        $\operatorname{exp}$ & $\texttt{A}$ & $\texttt{a}$ \\ \hlinewd{1pt}
+        $\texttt{A}$ & $\texttt{A}$ & $$\texttt{Aa}$$ \\ \hline
+        $\texttt{a}$ & $\texttt{Aa}$ & $$\texttt{a}$$
+    \end{tabular}
 \end{table}
 
 我们将基因片段中的显性和隐性基因抽取出来，形成一个集合，如 $\texttt{ABc} \Rightarrow \{\texttt{A},\texttt{B},\texttt{c}\}$，对这样的集合作集合并卷积，也可以理解为把一对等位基因拆成两位，$\texttt{A} \Rightarrow 10$，$\texttt{a} \Rightarrow 01$。
@@ -539,14 +676,14 @@ $$
 例如 喷瓜的性别由等位基因 $\texttt{g}^{-},\texttt{g}^{+},\texttt{G}$ 决定，其中：
 
 \begin{table}[htbp]
-	\centering
-	\caption{喷瓜表现型表}
-	\begin{tabular}{cV{3}c|c|c}
-		$\operatorname{exp}$ & $\texttt{g}^{-}$ & $\texttt{g}^{+}$ & $\texttt{G}$\\ \hlinewd{1pt}
-		$\texttt{g}^{-}$ & $\texttt{g}^{-}$ & $\texttt{g}^{+}$ & $\texttt{G}$\\ \hline
-		$\texttt{g}^{+}$ & $\texttt{g}^{+}$ & $\texttt{g}^{+}$ & $\texttt{G}$\\ \hline
-		$\texttt{G}$ & $\texttt{G}$ & $\texttt{G}$ & $\texttt{G}$
-	\end{tabular}
+    \centering
+    \caption{喷瓜表现型表}
+    \begin{tabular}{cV{3}c|c|c}
+        $\operatorname{exp}$ & $\texttt{g}^{-}$ & $\texttt{g}^{+}$ & $\texttt{G}$\\ \hlinewd{1pt}
+        $\texttt{g}^{-}$ & $\texttt{g}^{-}$ & $\texttt{g}^{+}$ & $\texttt{G}$\\ \hline
+        $\texttt{g}^{+}$ & $\texttt{g}^{+}$ & $\texttt{g}^{+}$ & $\texttt{G}$\\ \hline
+        $\texttt{G}$ & $\texttt{G}$ & $\texttt{G}$ & $\texttt{G}$
+    \end{tabular}
 \end{table}
 
 容易发现，这些等位基因构成一个\textsl{偏序集}，我们发现若 $\texttt{g}^{-} \le \texttt{g}^{+} \le \texttt{G}$，则 $\operatorname{exp}$ 运算对应 $\max$ 运算。
@@ -554,14 +691,14 @@ $$
 将 $\texttt{g}^{-},\texttt{g}^{+},\texttt{G}$ 编码成为 $00,01,10$，那么容易看出：
 
 \begin{table}[htbp]
-	\centering
-	\caption{编码运算表}
-	\begin{tabular}{cV{3}c|c|c}
-		$\operatorname{or}$ & $00(\texttt{g}^{-})$ & $01(\texttt{g}^{+})$ & $10(\texttt{G})$\\ \hlinewd{1pt}
-		$00(\texttt{g}^{-})$ & $00(\texttt{g}^{-})$ & $01(\texttt{g}^{+})$ & $10(\texttt{G})$\\ \hline
-		$01(\texttt{g}^{+})$ & $01(\texttt{g}^{+})$ & $01(\texttt{g}^{+})$ & $11(\texttt{G})$\\ \hline
-		$10(\texttt{G})$ & $10(\texttt{G})$ & $11(\texttt{G})$ & $10(\texttt{G})$
-	\end{tabular}
+    \centering
+    \caption{编码运算表}
+    \begin{tabular}{cV{3}c|c|c}
+        $\operatorname{or}$ & $00(\texttt{g}^{-})$ & $01(\texttt{g}^{+})$ & $10(\texttt{G})$\\ \hlinewd{1pt}
+        $00(\texttt{g}^{-})$ & $00(\texttt{g}^{-})$ & $01(\texttt{g}^{+})$ & $10(\texttt{G})$\\ \hline
+        $01(\texttt{g}^{+})$ & $01(\texttt{g}^{+})$ & $01(\texttt{g}^{+})$ & $11(\texttt{G})$\\ \hline
+        $10(\texttt{G})$ & $10(\texttt{G})$ & $11(\texttt{G})$ & $10(\texttt{G})$
+    \end{tabular}
 \end{table}
 
 发现 $11,10$ 都对应 $\texttt{G}$，而 $00$ 对应 $\texttt{g}^-$，$01$ 对应 $\texttt{g}^+$。我们在程序实现时最后一步处理一下即可。
@@ -659,10 +796,10 @@ $$a_{i,j} \times a_{i,k}=a_{i,j \circ k}$$
 
 $$
 \begin{cases}
-	a_{0} \times a_{0}=a_{0} \\
-	a_{1} \times a_{0}=a_{1} \\
-	a_{0} \times a_{1}=a_{1} \\
-	a_{1} \times a_{1}=a_{1} \\
+    a_{0} \times a_{0}=a_{0} \\
+    a_{1} \times a_{0}=a_{1} \\
+    a_{0} \times a_{1}=a_{1} \\
+    a_{1} \times a_{1}=a_{1} \\
 \end{cases}
 $$
 
@@ -673,8 +810,8 @@ $$
     \begin{cases}
         a_{0} =1 \\
         a_{1} =0 \\
-	\end{cases}
-	\qquad
+    \end{cases}
+    \qquad
     \begin{cases}
         a_{0} =1 \\
         a_{1} =1 \\
@@ -716,8 +853,8 @@ $$
 
 $$
 \begin{cases}
-	x_0 = b_1 \\
-	x_1 = b_2-b_1 \\
+    x_0 = b_1 \\
+    x_1 = b_2-b_1 \\
 \end{cases}
 $$
 
@@ -729,8 +866,8 @@ $$\mathbf{M_1^{-1}}=\begin{bmatrix} 1 & 0 \\ -1 & 1 \end{bmatrix}$$
 
 $$
 \begin{cases}
-	x_0 = b_1 \\
-	x_0 = b_2 \\
+    x_0 = b_1 \\
+    x_0 = b_2 \\
 \end{cases}
 $$
 
@@ -813,31 +950,31 @@ $$
 多维广义离散傅里叶变换的代码实现：
 
 \begin{algorithm}
-	\caption{多维广义离散傅里叶变换}
-	\begin{algorithmic}[1]
-		\Require 幂级数 $f$，单位根 $w_p$，操作符 $opr$ 代表正变换还是逆变换。
-		\Ensure $f$ 的傅里叶变换
-		\Function {FourierTransform}{$f,w_p,opr$}
-			\If $\ opr=1$
-				\State $\textbf{M}_{i,j} \gets w^{(i-1)(j-1)}_p$
-			\Else
-				\State $\textbf{M}_{i,j} \gets \frac{1}{p}w^{-(i-1)(j-1)}_p$
-			\EndIf
-			\For{$i \gets 1 \textbf{ to } n$}
-				\For{$\texttt{The p vectors satisfying }1 \cdots p\texttt{ on the i-th bit and the other bits are same.}$}
-					\State $v \gets \texttt{the p vectors}$
-					\For{$j \gets 1 \textbf{ to } p$}
-						\State $g_j \gets f_{v_j}$
-					\EndFor
-					\State $g \gets g \times \textbf{M}$
-					\For{$j \gets 1 \textbf{ to } p$}
-						\State $f_{v_j} \gets g_j$
-					\EndFor
-				\EndFor
-			\EndFor
-			\State \Return{$f$}
-		\EndFunction
-	\end{algorithmic}
+    \caption{多维广义离散傅里叶变换}
+    \begin{algorithmic}[1]
+        \Require 幂级数 $f$，单位根 $w_p$，操作符 $opr$ 代表正变换还是逆变换。
+        \Ensure $f$ 的傅里叶变换
+        \Function {FourierTransform}{$f,w_p,opr$}
+            \If $\ opr=1$
+                \State $\textbf{M}_{i,j} \gets w^{(i-1)(j-1)}_p$
+            \Else
+                \State $\textbf{M}_{i,j} \gets \frac{1}{p}w^{-(i-1)(j-1)}_p$
+            \EndIf
+            \For{$i \gets 1 \textbf{ to } n$}
+                \For{$\texttt{The p vectors satisfying }1 \cdots p\texttt{ on the i-th bit and the other bits are same.}$}
+                    \State $v \gets \texttt{the p vectors}$
+                    \For{$j \gets 1 \textbf{ to } p$}
+                        \State $g_j \gets f_{v_j}$
+                    \EndFor
+                    \State $g \gets g \times \textbf{M}$
+                    \For{$j \gets 1 \textbf{ to } p$}
+                        \State $f_{v_j} \gets g_j$
+                    \EndFor
+                \EndFor
+            \EndFor
+            \State \Return{$f$}
+        \EndFunction
+    \end{algorithmic}
 \end{algorithm}
 
 \subsection{共显性问题的快速算法}
@@ -845,13 +982,13 @@ $$
 如果将 $\texttt{A}$ 对应到 $1$，$\texttt{a}$ 对应到 $0$，容易发现：
 
 \begin{table}[htbp]
-	\centering
-	\caption{编码运算表}
-	\begin{tabular}{cV{3}c|c}
-		$+$ & $1(\texttt{A})$ & $0(\texttt{a})$\\ \hlinewd{1pt}
-		$1(\texttt{A})$ & $2(\texttt{A})$ & $1(\texttt{Aa})$\\ \hline
-		$0(\texttt{a})$ & $1(\texttt{Aa})$ & $0(\texttt{a})$\\
-	\end{tabular}
+    \centering
+    \caption{编码运算表}
+    \begin{tabular}{cV{3}c|c}
+        $+$ & $1(\texttt{A})$ & $0(\texttt{a})$\\ \hlinewd{1pt}
+        $1(\texttt{A})$ & $2(\texttt{A})$ & $1(\texttt{Aa})$\\ \hline
+        $0(\texttt{a})$ & $1(\texttt{Aa})$ & $0(\texttt{a})$\\
+    \end{tabular}
 \end{table}
 
 我们发现 $\texttt{A}$ 对应 $2$，$\texttt{Aa}$ 对应 $1$，$\texttt{a}$ 对应 $0$。

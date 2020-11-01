@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020/W32TeX) (preloaded format=xelatex 2020.6.4)  30 OCT 2020 23:15
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020/W32TeX) (preloaded format=xelatex 2020.6.4)  31 OCT 2020 12:23
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -928,43 +928,43 @@ Package fontspec Info: Font family 'FangSong(0)' created for font 'FangSong'
  [3]
 LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10.53937> not available
 (Font)              Font shape `TU/lmtt/b/n' tried instead on input line 177.
- [4] [5] [6] [7] [8] [9] [10]
-Overfull \hbox (4.06114pt too wide) detected at line 607
+ [4] [5] [6] [7] [8] [9] [10] [11]
+Overfull \hbox (4.06114pt too wide) detected at line 629
 [][]
  []
 
-[11]
-Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 615.
- [12] [13] [14] [15] [16]
+[12]
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 637.
+ [13] [14] [15] [16] [17]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 876.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\circ' on input line 876.
+(hyperref)                removing `math shift' on input line 898.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 876.
+(hyperref)                removing `\circ' on input line 898.
 
-[17] [18] [19]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 997.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 997.
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 898.
+
+[18] [19] [20]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1019.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1019.
  (./essay.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 997.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 997.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1019.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1019.
 Package rerunfilecheck Info: File `essay.out' has not changed.
 (rerunfilecheck)             Checksum: 7AFA24C4D10CA71E24993826A8D3BEBA;3818.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 997.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1019.
  ) 
 Here is how much of TeX's memory you used:
- 29049 strings out of 479418
- 599907 string characters out of 5888106
- 879448 words of memory out of 5000000
- 45992 multiletter control sequences out of 15000+600000
- 540712 words of font info for 109 fonts, out of 8000000 for 9000
+ 29080 strings out of 479418
+ 601555 string characters out of 5888106
+ 879806 words of memory out of 5000000
+ 46022 multiletter control sequences out of 15000+600000
+ 542278 words of font info for 116 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  60i,14n,72p,414b,1093s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on essay.pdf (19 pages).
+Output written on essay.pdf (20 pages).

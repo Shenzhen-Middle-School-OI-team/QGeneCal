@@ -1107,6 +1107,27 @@ $$
 
 \subsection{子集卷积}
 
+定义：
+
+$$h_S =\sum_{L} \sum_{R} [(L \cup R) = S][(L \cap R)=\varnothing] f_L g_R$$
+
+为集合幂级数 $F$ 和 $G$ 的子集卷积。
+
+\subsection{子集卷积的朴素实现}
+
+用我们之前提到过的枚举子集方法，可以 $\mathcal O(3^k)$ 实现子集卷积，已经比上述做法优秀了，但是我们还要寻求更加优秀的做法。
+
+\subsection{子集卷积的快速实现}
+
+注意到：$[L\cup R=S][L\cap R=\varnothing]=[L\cup R=S][|L|+|R|=|S|]$。
+
+定义二元幂级数 $\mathbf f_{i,S}$，$\mathbf f_{|S|,S}=f_{S}$，其他情况均为 $0$。
+
+式子可化为：
+
+$$\mathbf h_{i,S}=\sum_{L\subseteq U} \sum_{R\subseteq U} [L \cup R=S][i=j+k] \mathbf f_{j,L} \mathbf g_{k,R}$$
+
+那么就可以把它看成二元生成函数，第一维就是普通卷积，第二维是集合卷积。我们处理这类问题的方法是分别对两维做卷积。
 
 
 \newpage

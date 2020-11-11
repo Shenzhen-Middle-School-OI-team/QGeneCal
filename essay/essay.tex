@@ -624,17 +624,24 @@ $$\mathcal O\left(\sum_{i=0}^k \binom{k}{i}2^i\right)= \mathcal O(3^k)$$
 
 对于所有 $i\notin S$ 的 $S$，满足：
 
-$\hat f_S^{(i)}=\hat f_S^{(i-1)} \\ \hat f_{S\cup\{i\}}^{(i)}=\hat f_S^{(i-1)}+\hat f_{S\cup\{i\}}^{(i-1)}$。
+$$
+\begin{cases}
+\hat f_S^{(i)}=\hat f_S^{(i-1)} \\
+\hat f_{S\cup\{i\}}^{(i)}=\hat f_S^{(i-1)}+\hat f_{S\cup\{i\}}^{(i-1)}
+\end{cases}
+$$
 
-我们解释一下两个式子。
+我们解释一下两个式子，对于第一个式子：
 
-$$\begin{aligned}
+$$
+\begin{aligned}
 \hat f_S^{(i)} &= \sum_{T \subseteq S}[(S \setminus T)\subseteq\{1,\cdots,i\}]f_T\\
                &= \sum_{T \subseteq S}[(S \setminus T)\subseteq\{1,\cdots,i-1\}]f_T\\
                &= \hat f_S^{(i-1)}
-\end{aligned}$$
+\end{aligned}
+$$
 
-这里我们发现 $i \notin (S \setminus T)$，所以可以直接把 $\{i\}$ 去掉，也是等价的。
+对于第二个式子：
 
 $$
 \begin{aligned}
@@ -642,7 +649,8 @@ $$
                &= \sum_{T \subseteq (S\cup\{i\}) \text{ and } i \notin T}[((S\cup\{i\}) \setminus T)\subseteq\{1,\cdots,i\}]f_T+\sum_{T \subseteq (S\cup\{i\}) \text{ and } i \in T}[((S\cup\{i\}) \setminus T)\subseteq\{1,\cdots,i-1\}]f_T\\
                &= \sum_{T \subseteq S \text{ and } i \notin T}[(S \setminus T)\subseteq\{1,\cdots,i-1\}]f_T+\sum_{T \subseteq (S\cup\{i\}) \text{ and } i \in T}[((S\cup\{i\}) \setminus T)\subseteq\{1,\cdots,i-1\}]f_T\\
                &= \hat f_S^{(i-1)}+\hat f_{S \cup \{i\}}^{(i-1)}
-\end{aligned}$$
+\end{aligned}
+$$
 
 这样，我们 $\mathcal{O}(n2^n)$ 求出 $\hat f_S,\hat g_S$，按位乘，然后再反演回去即可。
 
@@ -652,15 +660,15 @@ $$
 \begin{algorithm}
     \caption{快速莫比乌斯变换}
     \begin{algorithmic}[1]
-        \Require 集合幂级数 $f$
-        \Ensure $f$ 的莫比乌斯变换
-        \Function {FastMobiusTransform}{$f$}
+        \Require 集合幂级数 $F$
+        \Ensure $F$ 的莫比乌斯变换
+        \Function {FastMobiusTransform}{$F$}
             \For{$i \gets 1 \textbf{ to } n$}
                 \For{$\textbf{all }S \subseteq U \setminus \{i\}$}
                     \State $f_{S \cup \{i\}} \gets f_{S \cup \{i\}} + f_{S}$
                 \EndFor
             \EndFor
-            \State \Return{$f$}
+            \State \Return{$F$}
         \EndFunction
     \end{algorithmic}
 \end{algorithm}
@@ -668,20 +676,73 @@ $$
 \begin{algorithm}
     \caption{快速莫比乌斯反演}
     \begin{algorithmic}[1]
-        \Require 集合幂级数 $f$
+        \Require 集合幂级数 $F$
         \Ensure $f$ 的莫比乌斯反演
-        \Function {FastMobiusInversion}{$f$}
+        \Function {FastMobiusInversion}{$F$}
             \For{$i \gets 1 \textbf{ to } n$}
                 \For{$\textbf{all }S \subseteq U \setminus \{i\}$}
                     \State $f_{S \cup \{i\}} \gets f_{S \cup \{i\}} - f_{S}$
                 \EndFor
             \EndFor
-            \State \Return{$f$}
+            \State \Return{$F$}
         \EndFunction
     \end{algorithmic}
 \end{algorithm}
 
 \newpage
+
+\subsubsection*{求解表现型生成函数的伪代码实现}
+
+\begin{algorithm}
+    \caption{求解表现型生成函数}
+    \begin{algorithmic}[1]
+        \Require 配子生成函数 $G$
+        \Ensure 表现型生成函数 $E$
+		\Function {GetExpressionType}{$G$}
+			\State G=FastMobiusTransform(G)
+            \For{$\textbf{all }S \subseteq U$}
+                \State $g_S=g_S \times g_S$
+            \EndFor
+			\State H=FastMobiusInversion(G)
+            \State \Return{$H$}
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+
+\subsubsection*{此算法对于求解手算求解自由交配问题的启示}
+
+\textbf{有两种基因型分别为 $\texttt{AaBb}$ 和 $\texttt{Aabb}$ 的个体，分别占比 $\frac{1}{3}$ 和 $\frac{2}{3}$，求解自由交配后的表现型比例。}
+
+\begin{enumerate}
+	\item 首先求解配子生成函数 $G$。\\ 
+		$$
+		\begin{aligned}
+			G &= G_1+G_2 \\
+			  &= \frac{1}{3} \times (\frac{1}{4}x^{\texttt{ab}}+\frac{1}{4}x^{\texttt{Ab}}+\frac{1}{4}x^{\texttt{aB}}+\frac{1}{4}x^{\texttt{AB}})+\frac{2}{3} \times (\frac{1}{2}x^{\texttt{ab}} + \frac{1}{2}x^{\texttt{Ab}}) \\
+			  &= \frac{5}{12} x^{\texttt{ab}} + \frac{5}{12} x^{\texttt{Ab}} + \frac{1}{12} x^{\texttt{aB}} + \frac{1}{12} x^{\texttt{AB}}
+		\end{aligned}
+		$$
+	\item 再转化为集合幂级数。\\
+		$$F = \frac{5}{12} x^{\varnothing} + \frac{5}{12} x^{\{\texttt{A}\}} + \frac{1}{12} x^{\{\texttt{B}\}} + \frac{1}{12} x^{\{\texttt{A},\texttt{B}\}}$$
+	\item 对它做莫比乌斯变换。\\
+		$$
+		\begin{aligned}
+			F &= \frac{5}{12} x^{\varnothing} + \frac{5+5}{12} x^{\{\texttt{A}\}} + \frac{1+5}{12} x^{\{\texttt{B}\}} + \frac{1+5+1+5}{12} x^{\{\texttt{A},\texttt{B}\}} \\
+			  &= \frac{5}{12} x^{\varnothing} + \frac{10}{12} x^{\{\texttt{A}\}} + \frac{6}{12} x^{\{\texttt{B}\}} + \frac{12}{12} x^{\{\texttt{A},\texttt{B}\}}
+		\end{aligned}
+		$$
+	\item 每一项都做平方。\\
+		$$F=\frac{25}{144} x^{\varnothing} + \frac{100}{144} x^{\{\texttt{A}\}} + \frac{36}{144} x^{\{\texttt{B}\}} + \frac{144}{144} x^{\{\texttt{A},\texttt{B}\}}$$
+	\item 做莫比乌斯反演。\\
+		$$
+		\begin{aligned}
+			F &= \frac{25}{144} x^{\varnothing} + \frac{100-25}{144} x^{\{\texttt{A}\}} + \frac{36-25}{144} x^{\{\texttt{B}\}} + \frac{144-100-36+25}{144} x^{\{\texttt{A},\texttt{B}\}} \\
+			  &= \frac{25}{144} x^{\varnothing} + \frac{75}{144} x^{\{\texttt{A}\}} + \frac{11}{144} x^{\{\texttt{B}\}} + \frac{33}{144} x^{\{\texttt{A},\texttt{B}\}} \\
+		\end{aligned}
+		$$
+	\item 即表现型比例 $\texttt{ab} : \texttt{Ab} : \texttt{aB} : \texttt{AB}=25:75:11:33$。
+
+\end{enumerate}
 
 \section{只有显隐性情况群体自由交配的计算的推广}
 

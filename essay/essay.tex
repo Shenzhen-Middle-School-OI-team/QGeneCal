@@ -623,7 +623,7 @@ $$\mathcal O\left(\sum_{i=0}^k \binom{k}{i}2^i\right)= \mathcal O(3^k)$$
 
 我们使用递推的思路，推导出 $\hat f_S$。
 
-设 $\hat f_S^{(i)}=\sum_{T\subseteq S}[(S\setminus T)\subseteq\{1,\cdots,i\}]f_T$，$\hat f_S^{(n)}$ 即是目标序列。
+设 $\hat f_S^{(i)}=\sum_{T\subseteq S}[(S\setminus T)\subseteq\{1,\cdots,i\}]f_T$，$\hat f_S^{(n)}$ 就是目标序列。
 
 首先有 $\hat f_S^{(0)}=f_S$，因为只有当 $S \setminus T$ 为空集时，才能属于空集。
 
@@ -952,7 +952,7 @@ $$
 
 $$a_{i,j} \times a_{i,k}=a_{i,j \oplus_p k}$$
 
-这里，我们发现，这组方程的特解即是：
+这里，我们发现，这组方程的特解就是：
 
 $$a_{i,j} = \omega_{p}^j$$
 

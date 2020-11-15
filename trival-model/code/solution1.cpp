@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 #define MAXN 20
 #define MAXM 400000
-#define int long long 
 using namespace std;
 inline int read(){
     int x=0,f=1;
@@ -43,9 +42,7 @@ bool isUpper(char ch){
     return 'A'<=ch&&ch<='Z';
 }
 int val[MAXM];
-#undef int
 int main(){
-#define int long long 
     k=read(),n=read();
     N=k,M=(1<<N);
     int inv=ksm(M,MOD-2);
@@ -67,11 +64,9 @@ int main(){
             now<<=1;
         }
         for (int i=0;i<now;++i){
-            cerr<<val[i]<<" ";
             f[i]=(f[i]+1ll*val[i]*frequency%MOD*inv%MOD)%MOD;
             val[i]=0;
         }
-        cerr<<endl;
     }
     FMT(f,1);
     for (int i=0;i<M;++i) f[i]=1ll*f[i]*f[i]%MOD;
@@ -82,7 +77,7 @@ int main(){
             else putchar('a'+j-1);
         }
         putchar(' ');
-        printf("%lld\n",f[i]);
+        printf("%d\n",f[i]);
     }
     return 0;
 }

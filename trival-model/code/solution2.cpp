@@ -69,7 +69,6 @@ namespace Trie{
 	vector<int>dfs(int node,int depth){
 		vector<int>v;
 		v.resize(1<<(k-depth));
-//		cerr<<"resize:"<<(1<<(k-depth))<<endl;
 		if (depth==k){
 			v[0]=tree[node].end;
 			return v;
@@ -117,9 +116,3 @@ int main(){
     }
     return 0;
 }
-
-/*
-2 2
-AaBb 332748118
-Aabb 665496236
-*/

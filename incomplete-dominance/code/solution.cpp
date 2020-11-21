@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
-#define MAXN 20
-#define MAXM 1000005
+#define MAXN 25
+#define MAXM 5000005
 #define MOD 998244353
 using namespace std;
 inline int read(){
@@ -52,7 +52,7 @@ namespace Trie{
 	}
 	vector<int>dfs(int node,int depth){
 		vector<int>v;
-		v.resize(ksm(3,(k-depth)));
+		v.resize(ksm(2,(k-depth)));
 		if (depth==k){
 			v[0]=tree[node].end;
 			return v;
@@ -122,11 +122,10 @@ void FWT(Poly *f,int opr){
 }
 int val[MAXM];
 int b[MAXM];
-void Split(int x){
-	int top=0;
-	while (x){
-		b[++top]=x%3;
-		x/=3;
+void Split(int x,int base,int len){
+	for (int i=1;i<=len;++i){
+		b[i]=x%base;
+		x/=base;
 	}
 }
 int main(){
@@ -141,17 +140,22 @@ int main(){
         Insert(frequency);
     }
     vector<int>ret=dfs(1,0);
-    for (int i=0;i<M;++i) f[i].a0=1ll*ret[i]*inv%MOD;
+	for (int i=0;i<(1<<N);++i){
+		Split(i,2,k);
+		int now=0;
+		for (int j=k;j>=1;--j) now*=3,now+=b[j];
+		f[now].a0=1ll*ret[i]*inv%MOD;
+	}
     FWT(f,1);
     for (int i=0;i<M;++i) f[i]=f[i]*f[i];
     FWT(f,-1);
     for (int i=0;i<M;++i){
-    	Split(i);
+    	Split(i,3,k);
     	for (int j=1;j<=k;++j){
-    		if (b[j]==0) printf("%c",(char)('a'-1+j));
-    		else if (b[j]==1) printf("%c%c",(char)('A'-1+j),(char)('a'-1+j));
-    		else printf("%c",(char)('A'-1+j));
+    		if (b[j]==0) putchar((char)('a'-1+j));
+    		else if (b[j]==1) putchar((char)('A'-1+j)),putchar((char)('a'-1+j));
+    		else putchar((char)('A'-1+j));
 		}
-		printf(" %lld\n",((f[i].a0-f[i].a1+MOD)%MOD+MOD)%MOD);
+		printf(" %d\n",((f[i].a0-f[i].a1+MOD)%MOD+MOD)%MOD);
 	}
 }

@@ -21,10 +21,6 @@ int n,m;
 int a[MAXN],b[MAXN],c[MAXN];
 int F[U][MAXN],G[U][MAXN],H[U][MAXN];
 void FMT(int *f,int op){
-	/*
-	op=1：快速莫比乌斯变换
-	op=-1：快速莫比乌斯反演
-	*/
 	for (int i=0;i<n;++i){
 		for (int j=0;j<m;++j){
 			if ((j&(1<<i))==0){

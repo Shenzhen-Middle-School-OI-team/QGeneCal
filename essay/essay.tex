@@ -1,4 +1,4 @@
-\documentclass{article}
+\documentclass[12pt]{article} %正文字体大小为小四
 \usepackage{ctex}
 \usepackage{import}
 \usepackage{hyperref}	% 用于交叉引用
@@ -54,24 +54,42 @@
 }
 
 \usepackage[top = 0.8in, bottom = 0.8in, left = 0.8in, right = 0.8in]{geometry} %设置页边距
+%按照老师标准修改格式
+
+%首行缩进2字符
+\RequirePackage{indentfirst}
+\setlength{\parindent}{2em}
+% 行间距1.15
+\linespread{1.15}
+
 
 \title{研究性学习结题报告书}
+
+
 \author{}
 \begin{document}
-
+	
 \maketitle
 
 \begin{itemize}
-    \item[\textbf{课题名称}] 用信息方法研究遗传学问题 \centering
-    \item[\textbf{课题负责人}] 杨景云
-    \item[\textbf{课题成员}] blablabla
-    \item[\textbf{指导教师}] 李丽华老师
-    \item[\textbf{所在班级}] 高二(9)班
+	\item[\textbf{课题名称}] 用信息方法研究遗传学问题 \centering
+	\item[\textbf{课题负责人}] 杨景云
+	\item[\textbf{课题成员}] blablabla
+	\item[\textbf{指导教师}] 李丽华老师
+	\item[\textbf{所在班级}] 高二(9)班
 \end{itemize}
 
+\newpage 
+
 \begin{abstract}
-    高中生物中有关基因遗传的计算问题一直是学习中的难点。本文从高中生物中的常见问题切入，建立一个计算遗传学中表现型比例,基因型比例和最优杂交方案的数学模型并提出了高效求解该模型的算法。本文通过对基因片段二进制编码后,引入集合幂级数来表示基因片段出现次数。根据遗传学基本定律,产生配子和配子结合的过程就是集合幂级数的不同形式卷积。进而用快速莫比乌斯变换和快速沃尔什变换算法在很低的算法时间复杂度内求解该问题。
-     该模型得出了手工求解表现型和基因型比例的通用方法,以及基于用计算机高效求解的算法。文章最后,根据此模型求解了实际应用中的若干个问题。
+\fontsize{12.0pt}{\baselineskip}\selectfont %小四
+%\newline %空一行
+高中生物中有关基因遗传的计算问题一直是学习中的难点。本文从高中生物中的常见问题切入，建立一个计算遗传学中表现型比例,基因型比例和最优杂交方案的数学模型并提出了高效求解该模型的算法。本文通过对基因片段二进制编码后， 引入集合幂级数来表示基因片段出现次数。根据遗传学基本定律,产生配子和配子结合的过程就是集合幂级数的不同形式卷积。进而用快速莫比乌斯变换和快速沃尔什变换算法在很低的算法时间复杂度内求解该问题。
+该模型得出了手工求解表现型和基因型比例的通用方法,以及基于用计算机高效求解的算法。文章最后,根据此模型求解了实际应用中的若干个问题。
+\newline %空一行
+\newline
+\textbf{关键字:}
+\newline %空一行
 \end{abstract}
 
 \newpage
@@ -275,7 +293,7 @@ $$H=F \times G$$
 
 \subsection{配子生成函数的求法}
 
-将基因片段对应到一个二进制数，如 $\texttt{AB}=(11)_2=3,\texttt{aB}=(01)_2=1$。
+在这里，我们将基因片段对应到一个二进制数，如 $\texttt{AB}=(11)_2=3,\texttt{aB}=(01)_2=1$。
 
 \subsubsection*{朴素求法}
 
@@ -523,17 +541,48 @@ $$
                   &= \mathcal O\left( \left (\sum_{i=0}^k (\frac{3}{2})^i \right) \times 2^k \right) \\
                   &= \mathcal O\left( \left(\frac{\left(\frac{3}{2}\right)^{k+1}-1}{\frac{3}{2}-1}\right) \times 2^k\right) \\
                   &= \mathcal O(3^{k+1} - 2^{k+1}) \\
-                  &= \mathcal O(3^k-2^k)
+                  &= \mathcal O(3^k-2^k)\\
+                  &= \mathcal O(3^k)
 \end{aligned}
 $$
 
-实际上，因为节点数可能不满，程序运行时间可能比理论更优。
+但是，通过严格的时间复杂度证明，可以发现这种做法一定比第一种做法要优，记 $n$ 为个体的个数，那么下界为 $\Omega(n)$，上界为 $\mathcal O(2^k)$。
 
-\subsubsection*{回顾与总结}
+实现时，我们可以考虑使用 \texttt{C++ Library} 中的 \texttt{vector} 数据结构，由于它按照元素个数倍增地开空间，可以获得较的空间复杂度。
 
-我们从模拟手算配子的过程开始，不断地运用配子生成函数的性质，进行优化，我们还巧妙地利用了 Trie 树的树形结构，压缩了无关状态，使得程序在时空复杂度上俱优。
+\subsubsection{三种程序运行时间}
 
-并且，我们针对两种不同的情况，即 $n$ 比较小，$k$ 比较大的情况和 $n$ 比较大，$k$ 比较小的情况，各提出了一种快速做法。这也提示我们，想到一种做法不能马上停止，而是针对不同的数据范围，分析这种做法的优劣，并且针对其他的数据范围提出新的做法，这才能使我们的做法趋于完备和高效。
+测评环境为 AMD EPYC 7K62 48-Core Processor。
+
+\begin{table}[htbp]
+	\centering
+	\caption{当 $k=2,n=9$ 时的时间空间效率}
+	\begin{tabular}{c|c|c|c}
+		& $\texttt{solution0.cpp}$ & $\texttt{solution1.cpp}$ & $\texttt{solution2.cpp}$ \\ \hline
+		时间 & 2ms & 2ms & 2ms \\ \hline
+		空间 & 252KiB & 248KiB & 252KiB
+	\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+	\centering
+	\caption{当 $k=15,n=15$ 时的时间空间效率}
+	\begin{tabular}{c|c|c|c}
+		& $\texttt{solution0.cpp}$ & $\texttt{solution1.cpp}$ & $\texttt{solution2.cpp}$ \\ \hline
+		时间 & \color{red}{>1000ms} & 12ms & 10ms \\ \hline
+		空间 & 1024KiB & 660KiB & 912KiB
+	\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+	\centering
+	\caption{当 $k=13,n=531441$ 时的时间空间效率}
+	\begin{tabular}{c|c|c|c}
+		& $\texttt{solution0.cpp}$ & $\texttt{solution1.cpp}$ & $\texttt{solution2.cpp}$ \\ \hline
+		时间 & \color{red}{>1000ms} & \color{red}{>1000ms} & 190ms \\ \hline
+		空间 & 384KiB & 384KiB & 26432KiB
+	\end{tabular}
+\end{table}
 
 \newpage
 
@@ -734,12 +783,12 @@ $$
 	\item 对它做莫比乌斯变换。\\
 		$$
 		\begin{aligned}
-			F &= \frac{5}{12} x^{\varnothing} + \frac{5+5}{12} x^{\{\texttt{A}\}} + \frac{1+5}{12} x^{\{\texttt{B}\}} + \frac{1+5+1+5}{12} x^{\{\texttt{A},\texttt{B}\}} \\
+			\hat F &= \frac{5}{12} x^{\varnothing} + \frac{5+5}{12} x^{\{\texttt{A}\}} + \frac{1+5}{12} x^{\{\texttt{B}\}} + \frac{1+5+1+5}{12} x^{\{\texttt{A},\texttt{B}\}} \\
 			  &= \frac{5}{12} x^{\varnothing} + \frac{10}{12} x^{\{\texttt{A}\}} + \frac{6}{12} x^{\{\texttt{B}\}} + \frac{12}{12} x^{\{\texttt{A},\texttt{B}\}}
 		\end{aligned}
 		$$
 	\item 每一项都做平方。\\
-		$$F=\frac{25}{144} x^{\varnothing} + \frac{100}{144} x^{\{\texttt{A}\}} + \frac{36}{144} x^{\{\texttt{B}\}} + \frac{144}{144} x^{\{\texttt{A},\texttt{B}\}}$$
+		$$(\hat F)^2=\frac{25}{144} x^{\varnothing} + \frac{100}{144} x^{\{\texttt{A}\}} + \frac{36}{144} x^{\{\texttt{B}\}} + \frac{144}{144} x^{\{\texttt{A},\texttt{B}\}}$$
 	\item 做莫比乌斯反演。\\
 		$$
 		\begin{aligned}
@@ -748,7 +797,6 @@ $$
 		\end{aligned}
 		$$
 	\item 即表现型比例 $\texttt{ab} : \texttt{Ab} : \texttt{aB} : \texttt{AB}=25:75:11:33$。
-
 \end{enumerate}
 
 \section{只有显隐性情况群体自由交配的计算的推广}
@@ -762,7 +810,7 @@ $$
 \begin{table}[htbp]
     \centering
     \caption{共显性表现型表}
-    \begin{tabular}{cV{3}c|c|c}
+    \begin{tabular}{cV{3}c|c}
         $\operatorname{exp}$ & $\texttt{A}$ & $\texttt{a}$ \\ \hlinewd{1pt}
         $\texttt{A}$ & $\texttt{A}$ & $$\texttt{Aa}$$ \\ \hline
         $\texttt{a}$ & $\texttt{Aa}$ & $$\texttt{a}$$
@@ -1049,9 +1097,17 @@ $$
 
 或者，更加通用地，我们将长度为 $p$ 的多项式环作为一种数据结构，假设是 $F=\sum_{i=0}^{p-1} \omega_p^i f_i$，有：$F \times \omega_p^k=F=\sum_{i=0}^{p-1} \omega_p^i f_{i\ominus k}$，$F \times G=\sum_{i=0}^{p-1} \sum_{j=0}^{p-1} w_p^{i \oplus j} f_i \times g_j$。
 
-注意，如果对某个数 $mod$ 取模，若 $p$ 在 $mod$ 下没有对应的逆，则不能使用此算法。
+此算法也可以使用 Bluestein's Algorithm 优化，即对上式变形后再进行一次卷积：
 
-多维广义离散傅里叶变换的代码实现：
+$$
+\begin{aligned}
+	X_k & = \sum_{i=0}^{n-1}x_i\omega_n^{ik} \\
+	& = \sum_{i=0}^{n-1}x_i\omega_{2n}^{-{(k-i)^2+i^2+k^2}} \\
+	& = \omega_{2n}^{-{k^2}}\sum_{i=0}^{n-1}x_i\omega_{2n}^{-{i^2}}\omega_{2n}^{-{(k-i)^2}}
+\end{aligned}
+$$
+
+但是通常 $k$ 不大，所以和直接暴力卷积时间上差距会不大。
 
 \begin{algorithm}
     \caption{多维广义离散傅里叶变换}
@@ -1101,6 +1157,57 @@ $$
 
 \newpage
 
+\section{通过后代表现型生成函数倒推亲代配子生成函数}
+
+在生产生活中，有时并不能知道亲代的基因型，这时，我们可以使用上述算法的逆操作，先将表现型生成函数做一次 FWT，之后开根号，最后再 FWT 回去：
+
+\begin{algorithm}
+	\caption{求解亲代配子生成函数}
+	\begin{algorithmic}[1]
+		\Require 表现型生成函数 $E$
+		\Ensure 配子生成函数 $G$
+		\Function {GetGameteType}{$E$}
+		\State E=FastMobiusTransform(E)
+		\For{$\textbf{all }S \subseteq U$}
+		\State $e_S=\sqrt{e_S}$
+		\EndFor
+		\State G=FastMobiusInversion(E)
+		\State \Return{$E$}
+		\EndFunction
+	\end{algorithmic}
+\end{algorithm}
+
+事实上，得知亲代配子生成函数，并不能推出亲代个体基因型生成函数，因为可能存在多对一的情况，如 $\frac{1}{2}x^{\texttt{AA}}+\frac{1}{2}x^{\texttt{aa}}$ 和 $x^{\texttt{Aa}}$ 对应的配子生成函数都是一样的。但是在研究生物的进化时，配子生成函数远比个体基因型生成函数有用得多。
+
+\section{非等位基因之间的常见相互作用以及对应的解法}
+
+\subsection{互补基因(Complementary gene)}
+
+若干个非等位的显性基因只有同时存在时才出现某一性状，其中任何一个基因发生突变都会导致同一突变型性状，这些基因称为互补基因。
+
+我们可以使用集合并卷积，不同的是只要配子有两个基因其中一个时，该位就为 1。
+
+\subsection{累加作用(Additive effect)}
+
+两种显性基因同时存在时表现为一种性状;单独存在时，表现另一种性状;而两对基因均为隐性纯合时表现第三种性状。
+
+发生累加作用的每个基因只有部分作用。
+
+我们可以使用不进位加法卷积，当这个基因对某种性状有增加作用时，记为 $+1$，而有减少作用是则记为 $-1$，最后对每个配子都这么算一遍再卷积。
+
+事实上，上述共显性问题是累加作用的一个子集。
+
+\subsection{抑制作用(Inhibitor)和上位效应(Epistasis)}
+
+有些基因本身并不能表现任何可见的表型效应，但它的存在，完全抑制了其它非等位基因的作用，这种基因称为抑制基因。
+
+两对独立遗传的基因共同对某一性状发生作用，而且其中一对基因对另一对基因的表现有遮盖作用，这种效应称为上位效应。
+
+我们可以使用取 $\max$ 的卷积，对于抑制基因，可以将其设为极大值，而上位基因的隐性基因设为极小值，显性基因设为极大值。
+
+\subsection{总结一般规律}
+在这里，我们使用了化归的思想，将未知的问题转化为我们已知的不进位加法卷积和取 $\max$ 的卷积，从而获得了具有普适性的解法。同时，需要强调的是，只要基因之间的相互作用具有“抑制”的意义，就可以使用取 $\max$ 的卷积，而基因之间的相互作用具有“叠加”的意义，就可以使用不进位加法卷积。s
+
 \section{纯合致死问题的快速算法}
 
 生物界中，有一些个体会因为显性基因纯合而死亡，我们假定有 $k$ 对等位基因，只要其中一对显性纯合，个体都会胚胎致死，通过共显性问题的快速做法，我们可以得到一个时间复杂度为 $\mathcal O(n \times 3^n)$ 的做法，但是这个时间复杂度有些过大。
@@ -1117,7 +1224,7 @@ $$h_S =\sum_{L} \sum_{R} [(L \cup R) = S][(L \cap R)=\varnothing] f_L g_R$$
 
 \subsection{子集卷积的朴素实现}
 
-用我们之前提到过的枚举子集方法，可以 $\mathcal O(3^k)$ 实现子集卷积，已经比上述做法优秀了，但是我们还要寻求更加优秀的做法。
+用我们之前提到过的枚举子集方法，可以 $\mathcal O(3^k)$ 实现子集卷积，参见 \texttt{solution0.cpp}。该做法已经比上述做法优秀了，但是我们还要寻求更加优秀的做法。
 
 \subsection{子集卷积的快速实现}
 
@@ -1129,8 +1236,71 @@ $$h_S =\sum_{L} \sum_{R} [(L \cup R) = S][(L \cap R)=\varnothing] f_L g_R$$
 
 $$\mathbf h_{i,S}=\sum_{L\subseteq U} \sum_{R\subseteq U} [L \cup R=S][i=j+k] \mathbf f_{j,L} \mathbf g_{k,R}$$
 
-那么就可以把它看成二元生成函数，第一维就是普通卷积，第二维是集合卷积。我们处理这类问题的方法是分别对两维做卷积。
+那么就可以把它看成二元生成函数，第一维就是普通卷积，第二维是集合卷积。我们处理这类问题的方法是分别对两维做卷积，可以参照 \texttt{solution1.cpp}。
 
+\subsection{实际效率}
+
+通过 \texttt{\_\_int128} 等优化，发现有时朴素做法时间上比快速做法还优秀。
+
+\begin{table}[htbp]
+	\centering
+	\caption{当 $k=17$ 时的时间空间效率}
+	\begin{tabular}{c|c|c}
+		& $\texttt{solution0.cpp}$ & $\texttt{solution1.cpp}$\\ \hline
+		时间 & 194ms & 245ms \\ \hline
+		空间 & 3240KiB & 59628 KiB 
+	\end{tabular}
+\end{table}
+
+当内存比较紧张时，朴素做法也是一种可以考虑的做法。
+
+\section{不允许自交时的计算方法}
+
+当不允许自交时，可以使用类似于我们使用 Trie 树求配子的方法，然后去掉不合法的方案。
+
+\section{多不同作用等位基因时的优化}
+
+由于 FWT 按位独立，我们可以使用类似于康托展开的做法，来获得一个较为密集的编号。
+
+假设现在有一个 $k$ 为向量 $\vec F$，第 $i$ 维能够取到的值有 $S_{i,1},S_{i,2},\cdots,S_{i,|S_i|}$。那么，我们使用这样的编号方法：
+
+$$\vec F \to \sum_{i=1}^k \sum_{j=1}^{|S_i|} [\vec F_i = S_{i,|S_i|}](\prod_{j=1}^{i-1}|S_j|)$$
+
+就可以获得时间复杂度为 $\mathcal O(k\prod_{i=1}^k |S_i|)$ 的做法。
+
+\section{蓝色玫瑰问题}
+
+\subsection{问题描述}
+
+你有一张表，记录了基因型对应的花色，你一开始有某些种基因型对应的种子，在花朵未开放之前，你可以挑选花朵的颜色，保留一些想要的颜色，而去除不想要的颜色。然后剩下的花开放后自由交配（可以自交）。求最少培育多少株植物，才能得到想要的蓝色花色。你只能使用当前代系玫瑰的种子，而不能使用前面几代的花种，因为它们已经过期了。
+
+\subsection{思路与方法}
+
+容易发现，该问题中，能够掌握的仅是挑选哪些颜色。我们希望通过程序，做出最优化的选择。这就让我们想到了对每个颜色做出“估价”，然后问题转化为了挑选一些颜色，使得估价最大化。
+
+\subsection{对配子的估价}
+
+首先，我们需要对配子做出估价，我们容易想到如下的几个估价函数：
+
+$$g_1(\vec G)=\sum_{[color(\vec F)=blue]} \sum_{i=1}^k ([\vec G_i=\vec F_{i,0}]+[\vec G_i=\vec F_{i,1}])$$
+
+$$g_2(\vec G)=2^{g_1(\vec G)}$$
+
+$$g_3(\vec G)=\sum_{[color(\vec F)=blue]} \sum_{i=1}^k ([\vec G_i=\vec F_{i,0} \text{ and } \vec G_i=\vec F_{i,1}])$$
+
+\subsection{对颜色的估价}
+
+对颜色的估价，实际就是该颜色对应的基因型产生的配子估价值的总和。
+
+$$g(c)=\sum_{[color(\vec F)=c]} \sum_{\vec G \in G(\vec F)} g(\vec G)$$
+
+\subsection{最优化的策略}
+
+我们不能选取全部颜色，而是只能选取部分颜色，因为不能培养太多种子，我们再定义函数 $cnt(c)=\sum_F [color(\vec F)=c]$，代表颜色 $c$ 对应了多少个体，那么我们需要以下的值最大：
+
+$$M=\frac{\sum_{c \in S} g(c)}{\sum_{c\in S}{cnt(c)}}$$
+
+事实上这是一个 01 分数规划问题，通过 $\mathcal O(n \log |S|)$ 的二分，就可以求出答案。
 
 \newpage
 

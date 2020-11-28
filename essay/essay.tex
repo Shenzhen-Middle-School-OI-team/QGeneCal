@@ -281,6 +281,8 @@ $$H=F \times G$$
 
 和卷积 $\vec F=\{f_i\},\vec G=\{g_i\},\vec H=\vec F *_{\circ} \vec G=\{h_i\}$ 等价。
 
+\newpage
+
 \section{只有显隐性情况群体自由交配的计算}
 
 参考 2.9 中做法，我们分步计算。
@@ -293,9 +295,11 @@ $$H=F \times G$$
 
 \subsection{配子生成函数的求法}
 
-在这里，我们将基因片段对应到一个二进制数，如 $\texttt{AB}=(11)_2=3,\texttt{aB}=(01)_2=1$。
+求配子生成函数，我们可以先求出每种配子有多少个，最后每项除以 $2^k$。 
 
 \subsubsection*{朴素求法}
+
+在这里，我们将基因片段对应到一个二进制数，如 $\texttt{AB}=(11)_2=3,\texttt{aB}=(01)_2=1$。
 
 模拟生成配子的过程，每次生成一个长度为 $k$ 的二进制数，若第 $i$ 位为 $0$，则选择第 $i$ 对等位基因的其中一个，否则选择另一个。
 
@@ -799,6 +803,8 @@ $$
 	\item 即表现型比例 $\texttt{ab} : \texttt{Ab} : \texttt{aB} : \texttt{AB}=25:75:11:33$。
 \end{enumerate}
 
+\newpage
+
 \section{只有显隐性情况群体自由交配的计算的推广}
 
 \subsection{共显性问题}
@@ -1101,9 +1107,9 @@ $$
 
 $$
 \begin{aligned}
-	X_k & = \sum_{i=0}^{n-1}x_i\omega_n^{ik} \\
-	& = \sum_{i=0}^{n-1}x_i\omega_{2n}^{-{(k-i)^2+i^2+k^2}} \\
-	& = \omega_{2n}^{-{k^2}}\sum_{i=0}^{n-1}x_i\omega_{2n}^{-{i^2}}\omega_{2n}^{-{(k-i)^2}}
+	[x^k]F & = \sum_{i=0}^{n-1}f_i\omega_n^{ik} \\
+	& = \sum_{i=0}^{n-1}f_i\omega_{2n}^{-{(k-i)^2+i^2+k^2}} \\
+	& = \omega_{2n}^{-{k^2}}\sum_{i=0}^{n-1}f_i\omega_{2n}^{-{i^2}}\omega_{2n}^{-{(k-i)^2}}
 \end{aligned}
 $$
 
@@ -1121,7 +1127,7 @@ $$
                 \State $\textbf{M}_{i,j} \gets \frac{1}{p}w^{-(i-1)(j-1)}_p$
             \EndIf
             \For{$i \gets 1 \textbf{ to } n$}
-                \For{$\texttt{The p vectors satisfying }1 \cdots p\texttt{ on the i-th bit and the other bits are same.}$}
+                \For{$\texttt{p vectors satisfying }1 \cdots p\texttt{ on the i-th bit and the other bits are same.}$}
                     \State $v \gets \texttt{the p vectors}$
                     \For{$j \gets 1 \textbf{ to } p$}
                         \State $g_j \gets f_{v_j}$
@@ -1178,6 +1184,30 @@ $$
 \end{algorithm}
 
 事实上，得知亲代配子生成函数，并不能推出亲代个体基因型生成函数，因为可能存在多对一的情况，如 $\frac{1}{2}x^{\texttt{AA}}+\frac{1}{2}x^{\texttt{aa}}$ 和 $x^{\texttt{Aa}}$ 对应的配子生成函数都是一样的。但是在研究生物的进化时，配子生成函数远比个体基因型生成函数有用得多。
+
+\section{多倍体的解法}
+
+多倍体是指体细胞中含有三个或三个以上染色体组的个体，为了方便起见，以下我们都讨论三倍体。
+
+容易发现，三倍体进行配子生成函数的运算时，需要乘三次，于是针对只有显隐性情况的群体自由交配，我们可以设计以下的算法：
+
+\begin{algorithm}
+	\caption{求解多倍体表现型生成函数}
+	\begin{algorithmic}[1]
+		\Require 配子生成函数 $G$
+		\Ensure 表现型生成函数 $E$
+		\Function {GetPolyploidExpressionType}{$G$}
+		\State G=FastMobiusTransform(G)
+		\For{$\textbf{all }S \subseteq U$}
+		\State $g_S=g_S \times g_S \times g_S$
+		\EndFor
+		\State H=FastMobiusInversion(G)
+		\State \Return{$H$}
+		\EndFunction
+	\end{algorithmic}
+\end{algorithm}
+
+这样的算法还可以推广到更多的情况，这里不再赘述。
 
 \section{非等位基因之间的常见相互作用以及对应的解法}
 

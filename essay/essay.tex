@@ -17,6 +17,8 @@
 \usepackage{tikz}
 \usetikzlibrary{arrows}
 \usepackage{graphviz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.16}
 
 
 \usepackage{makecell}
@@ -74,21 +76,34 @@
 \begin{itemize}
 	\item[\textbf{课题名称}] 用信息方法研究遗传学问题 \centering
 	\item[\textbf{课题负责人}] 杨景云
-	\item[\textbf{课题成员}] blablabla
+	\item[\textbf{课题成员}]{ 
+		\begin{itemize} 
+			\item 杨景云 2019530093 \centering
+			\item 杨培源 2019530256
+			\item 孟涵宇 2019530676
+			\item 靳柏舟 2019530303
+			\item 张杜宇 2019530484
+			\item 张佳皓 2019530414
+			\item 国星 2019530568
+			\item 杨广源 2019530743
+			\item 杨邓弘 2019530307
+		\end{itemize}
+	}\centering
 	\item[\textbf{指导教师}] 李丽华老师
 	\item[\textbf{所在班级}] 高二(9)班
 \end{itemize}
+
 
 \newpage 
 
 \begin{abstract}
 \fontsize{12.0pt}{\baselineskip}\selectfont %小四
 %\newline %空一行
-高中生物中有关基因遗传的计算问题一直是学习中的难点。本文从高中生物中的常见问题切入，建立一个计算遗传学中表现型比例,基因型比例和最优杂交方案的数学模型并提出了高效求解该模型的算法。本文通过对基因片段二进制编码后， 引入集合幂级数来表示基因片段出现次数。根据遗传学基本定律,产生配子和配子结合的过程就是集合幂级数的不同形式卷积。进而用快速莫比乌斯变换和快速沃尔什变换算法在很低的算法时间复杂度内求解该问题。
-该模型得出了手工求解表现型和基因型比例的通用方法,以及基于用计算机高效求解的算法。文章最后,根据此模型求解了实际应用中的若干个问题。
+高中生物中有关基因遗传的计算问题一直是学习中的难点。本文从高中生物中的常见问题切入，建立一个计算遗传学中表现型比例,基因型比例和最优杂交方案的数学模型并提出了高效求解该模型的算法。本文通过对基因片段二进制编码后，引入集合幂级数来表示基因片段出现次数。根据遗传学基本定律，产生配子和配子结合的过程就是集合幂级数的不同形式卷积。进而用快速莫比乌斯变换和快速沃尔什变换算法在很低的算法时间复杂度内求解该问题。
+该模型得出了手工求解表现型和基因型比例的通用方法，以及基于用计算机高效求解的算法。文章最后，根据此模型求解了实际应用中的若干个问题。
 \newline %空一行
 \newline
-\textbf{关键字:}
+\textbf{关键字：信息学方法、遗传学问题、数学模型、二进制约定、生成函数、表现型映射、Trie 树、FWT 算法、时间复杂度、子集卷积。}
 \newline %空一行
 \end{abstract}
 
@@ -149,6 +164,8 @@ $(\frac{2}{3}x^{\text{A}}+\frac{1}{3} x^{\text{a}})(\frac{1}{2}x^{\text{B}}+\fra
 一个集合 $S$ 可以转化为一个 $|S|$ 维向量 $v$，其中 $v_i=[f'(i) \in S]$。
 
 若基因集合为 $\{\texttt{A,B}\}$，$\texttt{A}$ 标号为 $1$，$\texttt{B}$ 标号为 $2$，那么集合 $\{\texttt{A}\}$ 可以转化为 $(1,0)$，集合 $\{\texttt{A},\texttt{B}\}$ 可以转化为 $(1,1)$。
+
+之后，我们会对这种转化进行完善。
 
 \subsection{基因片段}
 
@@ -248,7 +265,7 @@ $$\begin{aligned}
 
 比如 $\operatorname{exp}(\texttt{A},\texttt{a})=\texttt{A}$，$\operatorname{exp}(\texttt{a},\texttt{a})=\texttt{a}$。
 
-\subsection{表现型映射的性质}
+\subsection{表现型映射的一般性质}
 
 \begin{itemize}
     \item $\operatorname{exp}(i,j)=\operatorname{exp}(j,i)$。
@@ -359,12 +376,38 @@ $$H=F \times G$$
 
 $$\delta(v,s)=\delta(\delta(v,s_1),s_{2 \cdots |s|})$$
 
+\newpage 
+
 给定字符串集 $S$，其中每一个元素的都是字符串，由这些元素建立起的 Trie 树满足：
 
 \begin{enumerate}
     \item $\forall s \in S, \delta(start,s) \in F$。
     \item $\forall s \notin S, \delta(start,s) \notin F$。
 \end{enumerate}
+
+由以下算法，我们可以以 $\mathcal O(\sum |s|)$ 的时间复杂度和最坏 $\mathcal O(\sum |s|)$ 的空间复杂度建立起一个 Trie 树。
+
+\begin{algorithm}
+	\caption{构建 Trie 树}
+	\begin{algorithmic}[1]
+		\Require $n$ 个字符串 $s_1,s_2,\cdots,s_n$
+		\Ensure 插入了这些字符串的 Trie 树。
+		\Function {InsertString}{$s_1,s_2,\cdots,s_n$}
+		\State $tot \gets 1$
+		\For{$i \gets 1 \textbf{ to } n$}
+			\State $root \gets 1$
+			\For{$j \gets 1 \textbf{ to } |s_i|$}
+				\If{$\delta(root,s_{i,j})=\texttt{null}$}
+					\State $tot \gets tot+1$
+					\State $\delta(root,s_{i,j}) \gets tot$
+				\EndIf
+				\State $root \gets \delta(root,s_{i,j})$
+			\EndFor
+		\EndFor
+		\State \Return{$F$}
+		\EndFunction
+	\end{algorithmic}
+\end{algorithm}
 
 由字符集 $\{\texttt{a},\texttt{ab},\texttt{ac},\texttt{b}\}$ 建立起的 Trie 树如图所示：
 
@@ -535,7 +578,7 @@ child{ node[bluenode](Aa){}
 
 \newpage
 
-容易发现此做法的最坏时间复杂度为：
+发现当 $n=3^k$ 时，此做法的时间复杂度为：
 
 $$\mathcal T(i)=3 \times \mathcal T(i-1) + \mathcal O(2^i)$$
 
@@ -547,48 +590,13 @@ $$
                   &= \mathcal O\left( \left (\sum_{i=0}^k (\frac{3}{2})^i \right) \times 2^k \right) \\
                   &= \mathcal O\left( \left(\frac{\left(\frac{3}{2}\right)^{k+1}-1}{\frac{3}{2}-1}\right) \times 2^k\right) \\
                   &= \mathcal O(3^{k+1} - 2^{k+1}) \\
-                  &= \mathcal O(3^k-2^k)\\
                   &= \mathcal O(3^k)
 \end{aligned}
 $$
 
-但是，通过严格的时间复杂度证明，可以发现这种做法一定比第一种做法要优，记 $n$ 为个体的个数，那么下界为 $\Omega(n)$，上界为 $\mathcal O(2^k)$。
+但是，通过严格的时间复杂度证明，可以发现这种做法一定比第一种做法要优，其下界为 $\Omega(n)$，上界为 $\mathcal O(2^k)$。
 
 实现时，我们可以考虑使用 \texttt{C++ Library} 中的 \texttt{vector} 数据结构，由于它按照元素个数倍增地开空间，可以获得较的空间复杂度。
-
-\subsubsection{三种程序运行时间}
-
-测评环境为 AMD EPYC 7K62 48-Core Processor。
-
-\begin{table}[htbp]
-	\centering
-	\caption{当 $k=2,n=9$ 时的时间空间效率}
-	\begin{tabular}{c|c|c|c}
-		& $\texttt{solution0.cpp}$ & $\texttt{solution1.cpp}$ & $\texttt{solution2.cpp}$ \\ \hline
-		时间 & 2ms & 2ms & 2ms \\ \hline
-		空间 & 252KiB & 248KiB & 252KiB
-	\end{tabular}
-\end{table}
-
-\begin{table}[htbp]
-	\centering
-	\caption{当 $k=15,n=15$ 时的时间空间效率}
-	\begin{tabular}{c|c|c|c}
-		& $\texttt{solution0.cpp}$ & $\texttt{solution1.cpp}$ & $\texttt{solution2.cpp}$ \\ \hline
-		时间 & \color{red}{>1000ms} & 12ms & 10ms \\ \hline
-		空间 & 1024KiB & 660KiB & 912KiB
-	\end{tabular}
-\end{table}
-
-\begin{table}[htbp]
-	\centering
-	\caption{当 $k=13,n=531441$ 时的时间空间效率}
-	\begin{tabular}{c|c|c|c}
-		& $\texttt{solution0.cpp}$ & $\texttt{solution1.cpp}$ & $\texttt{solution2.cpp}$ \\ \hline
-		时间 & \color{red}{>1000ms} & \color{red}{>1000ms} & 190ms \\ \hline
-		空间 & 384KiB & 384KiB & 26432KiB
-	\end{tabular}
-\end{table}
 
 \newpage
 
@@ -598,7 +606,7 @@ $$
 
 \subsubsection*{朴素做法}
 
-考虑朴素地实现 $(1)$ 中的卷积，时间复杂度为 $\mathcal O(4^k)$，是不能接受的。
+考虑朴素地实现 $(1)$ 中的卷积，时间复杂度为 $\mathcal O(4^k)$，是不能接受的。我们通过此算法和配子的朴素求法结合，可以写出 $\texttt{solution0.cpp}$。
 
 \subsubsection*{优化的第一步}
 
@@ -608,7 +616,7 @@ $$
 
 可以使用符号：
 
-$$f=\sum_{S \subseteq U} f_S x^S$$
+$$F=\sum_{S \subseteq U} f_S x^S$$
 
 来表示一个\textsl{集合生成函数}。
 
@@ -622,7 +630,7 @@ $$h_S =\sum_{L} \sum_{R} [(L \cup R) = S] f_L g_R$$
 
 定义全集 $U$ 是：$\{\texttt{A},\texttt{B},\cdots\}$。
 
-我们将基因片段中的显性基因抽取出来，形成一个集合，如 $\texttt{ABc} \Rightarrow \{\texttt{A},\texttt{B}\}$。
+我们将基因片段中的显性基因抽取出来，形成一个集合，如 $\texttt{ABc} \to \{\texttt{A},\texttt{B}\}$。
 
 这样发现集合并卷积刚好符合“显性基因克制隐形基因”的条件，因为只要某一位有对应的显性基因，那么个体就表现为显性，可以结合集合运算表来理解：
 
@@ -639,7 +647,7 @@ $$h_S =\sum_{L} \sum_{R} [(L \cup R) = S] f_L g_R$$
 
 \subsubsection*{集合生成函数的快速卷积算法：FWT}
 
-仿照 FFT 的思路，\textbf{我们求出 $f$ 的一种变换 $\hat f$，使得 $f * g = h \Rightarrow \hat f_i \times \hat g_i = \hat h_i$}，即将系数表示法转化为点值表示法。
+仿照 FFT 的思路，\textbf{我们求出 $F$ 的一种变换 $\hat F$，使得 $F \circ G = H \Rightarrow \hat f_i \times \hat g_i = \hat h_i$}，即将系数表示法转化为点值表示法。
 
 我们给出关于集合并卷积的 FWT 运算，即快速莫比乌斯变换。
 
@@ -656,7 +664,7 @@ $$
 \end{aligned}
 $$
 
-我们求出 $\hat h_S$ 后，当然需要将 $\hat h$ 转化为 $h$，于是需要反演运算：
+我们求出 $\hat h_S$ 后，当然需要将 $\hat H$ 转化为 $H$，于是需要反演运算：
 
 $$f_S=\sum_{T \subseteq S} (-1)^{|S|-|T|}\hat f_T$$
 
@@ -684,12 +692,14 @@ $$\mathcal O\left(\sum_{i=0}^k \binom{k}{i}2^i\right)= \mathcal O(3^k)$$
 
 首先有 $\hat f_S^{(0)}=f_S$，因为只有当 $S \setminus T$ 为空集时，才能属于空集。
 
+我们先给出：
+
 对于所有 $i\notin S$ 的 $S$，满足：
 
 $$
 \begin{cases}
-\hat f_S^{(i)}=\hat f_S^{(i-1)} \\
-\hat f_{S\cup\{i\}}^{(i)}=\hat f_S^{(i-1)}+\hat f_{S\cup\{i\}}^{(i-1)}
+	\hat f_S^{(i)}=\hat f_S^{(i-1)} \\
+	\hat f_{S\cup\{i\}}^{(i)}=\hat f_S^{(i-1)}+\hat f_{S\cup\{i\}}^{(i-1)}
 \end{cases}
 $$
 
@@ -714,7 +724,9 @@ $$
 \end{aligned}
 $$
 
-这样，我们 $\mathcal{O}(n2^n)$ 求出 $\hat f_S,\hat g_S$，按位乘，然后再反演回去即可。
+这样，我们 $\mathcal{O}(k2^k)$ 求出 $\hat f_S,\hat g_S$，按位乘，然后再反演回去即可。
+
+通过此算法和快速做法 1，快速做法 2 分别结合，我们可以写出 $\texttt{trival-model/code/solution1.cpp}$ 和 $\texttt{trival-model/code/solution2.cpp}$。
 
 
 \subsubsection*{快速莫比乌斯变换和反演的伪代码实现}
@@ -798,12 +810,52 @@ $$
 	\item 做莫比乌斯反演。\\
 		$$
 		\begin{aligned}
-			F &= \frac{25}{144} x^{\varnothing} + \frac{100-25}{144} x^{\{\texttt{A}\}} + \frac{36-25}{144} x^{\{\texttt{B}\}} + \frac{144-100-36+25}{144} x^{\{\texttt{A},\texttt{B}\}} \\
+			F^2 &= \frac{25}{144} x^{\varnothing} + \frac{100-25}{144} x^{\{\texttt{A}\}} + \frac{36-25}{144} x^{\{\texttt{B}\}} + \frac{144-100-36+25}{144} x^{\{\texttt{A},\texttt{B}\}} \\
 			  &= \frac{25}{144} x^{\varnothing} + \frac{75}{144} x^{\{\texttt{A}\}} + \frac{11}{144} x^{\{\texttt{B}\}} + \frac{33}{144} x^{\{\texttt{A},\texttt{B}\}} \\
 		\end{aligned}
 		$$
 	\item 即表现型比例 $\texttt{ab} : \texttt{Ab} : \texttt{aB} : \texttt{AB}=25:75:11:33$。
+	\item 我们也可以直接运用集合幂级数的乘法定义。\\
+		$$
+		\begin{aligned}
+			F^2 &= \frac{5 \times 5}{144} x^{\varnothing} + \frac{5 \times 5 \times 3}{144} x^{\{\texttt{A}\}} + \frac{1 \times 1 + 5 \times 1 \times 2}{144} x^{\{\texttt{B}\}} + \frac{1 \times 5 \times 6 + 1 \times 1 \times 3}{144} x^{\{\texttt{A},\texttt{B}\}}
+		\end{aligned}
+		$$
 \end{enumerate}
+
+\subsubsection*{三种程序运行时间}
+
+测评环境为 AMD EPYC 7K62 48-Core Processor，全部测试数据见 $\texttt{trival-model/data}$ 目录下的 $\texttt{big}$ 和 $\texttt{small}$ 目录。
+
+\begin{table}[htbp]
+	\centering
+	\caption{当 $k=2,n=9$ 时的时间空间效率}
+	\begin{tabular}{c|c|c|c}
+		& $\texttt{solution0.cpp}$ & $\texttt{solution1.cpp}$ & $\texttt{solution2.cpp}$ \\ \hline
+		时间 & 2ms & 2ms & 2ms \\ \hline
+		空间 & 252KiB & 248KiB & 252KiB
+	\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+	\centering
+	\caption{当 $k=15,n=15$ 时的时间空间效率}
+	\begin{tabular}{c|c|c|c}
+		& $\texttt{solution0.cpp}$ & $\texttt{solution1.cpp}$ & $\texttt{solution2.cpp}$ \\ \hline
+		时间 & \color{red}{>1000ms} & 12ms & 10ms \\ \hline
+		空间 & 1024KiB & 660KiB & 912KiB
+	\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+	\centering
+	\caption{当 $k=13,n=531441$ 时的时间空间效率}
+	\begin{tabular}{c|c|c|c}
+		& $\texttt{solution0.cpp}$ & $\texttt{solution1.cpp}$ & $\texttt{solution2.cpp}$ \\ \hline
+		时间 & \color{red}{>1000ms} & \color{red}{>1000ms} & 190ms \\ \hline
+		空间 & 384KiB & 384KiB & 26432KiB
+	\end{tabular}
+\end{table}
 
 \newpage
 
@@ -825,13 +877,13 @@ $$
     \end{tabular}
 \end{table}
 
-我们将基因片段中的显性和隐性基因抽取出来，形成一个集合，如 $\texttt{ABc} \Rightarrow \{\texttt{A},\texttt{B},\texttt{c}\}$，对这样的集合作集合并卷积，也可以理解为把一对等位基因拆成两位，$\texttt{A} \Rightarrow 10$，$\texttt{a} \Rightarrow 01$。
+我们将基因片段中的显性和隐性基因抽取出来，形成一个集合，如 $\texttt{ABc} \to \{\texttt{A},\texttt{B},\texttt{c}\}$，对这样的集合作集合并卷积，也可以理解为把一对等位基因拆成两位，$\texttt{A} \to 10$，$\texttt{a} \to 01$。
 
 容易发现这样做的时间复杂度为 $\mathcal O(2k \times 2^{2k})=\mathcal O(2k \times 4^k)$，和朴素做法差不多，是不可接受的。
 
 \subsection{复等位基因问题}
 
-一对相对形状由多个等位基因决定.
+一对相对性状由多个等位基因决定，这样的基因称为 \textsl{复等位基因}。
 
 例如 喷瓜的性别由等位基因 $\texttt{g}^{-},\texttt{g}^{+},\texttt{G}$ 决定，其中：
 
@@ -871,6 +923,20 @@ $$
 
 以上两个问题在只运用集合并卷积的情况下，都没有较低时间复杂度的算法，下面，我们引入高维 FWT，并且逐渐探寻 FWT 的一般式。
 
+\subsection{基因集合到向量的转化和向量的标号}
+
+我们将等位基因标号，如 $\texttt{g}^{-} \to 0, \texttt{g}^{+} \to 1 , \texttt{G} \to 2$，我们将配子按顺序对应到一个向量，如：
+
+$$\texttt{ag}^{+} \to (0,1), \texttt{AG} \to (1,2)$$
+
+假设现在有一个 $k$ 维向量 $\vec F$，第 $i$ 维能够取到的值有 $S_{i,1},S_{i,2},\cdots,S_{i,|S_i|}$。那么，我们使用这样的标号方法：
+
+$$\vec F \to \sum_{i=1}^k \sum_{j=1}^{|S_i|} [\vec F_i = S_{i,|S_i|}](\prod_{j=1}^{i-1}|S_j|)$$
+
+就可以将 $0 \sim \prod_{i=1}^k |S_i|-1$ 之间的整数不重不漏地对应到一个配子上，方便我们的计算。
+
+特别地，当 $|S_i|$ 全部相等时，可以将每个标号看成一个 $|S_i|$ 进制数，每个数位对应了相应的基因，以下我们主要研究这种情况。
+
 \subsection{定义}
 
 定义生成函数 $F=\sum f_S x^S$，其中 $S$ 不再是一个集合，而是一个每维可以取 $0,\cdots ,k-1$ 的向量。
@@ -887,7 +953,7 @@ $$\begin{aligned}0 \circ 0 = 0 \\ 1 \circ 0 = 1 \\ 0 \circ 1 = 1 \\ 1 \circ 1 = 
 
 定义：
 
-$$\hat f[x^S]=\sum[S \circ T=S] f_T$$
+$$[x^S]\hat f=\sum[S \circ T=S] f_T$$
 
 容易发现：
 
@@ -908,9 +974,13 @@ $$\begin{aligned} \hat h_S &= \sum_{L} \sum_{R} [(S \circ L) =S][(S \circ R)=S] 
 
 那么，我们在 FWT 的 $k$ 个向量中，取前缀和即可，如果是反演的话，相邻做差即可。
 
+此算法具有比较自然的高维前缀和的意义。
+
 \subsection{喷瓜问题的快速算法}
 
-通过上述算法，将 $\texttt{g}^-$ 对应到 $0$，$\texttt{g}^+$ 对应到 $1$，$\texttt{G}$ 对应到 $2$，我们就可以解决上述的喷瓜问题，时间复杂度为 $\mathcal O(n \times 3^n)$。
+通过上述算法，将 $\texttt{g}^-$ 对应到 $0$，$\texttt{g}^+$ 对应到 $1$，$\texttt{G}$ 对应到 $2$，我们就可以解决上述的喷瓜问题，时间复杂度为 $\mathcal O(k \times 3^k)$。
+
+事实上，只要性状的表现方式具有偏序性，都可以使用上述方式进行优化。
 
 \subsection{任意操作符的 FWT 问题}
 
@@ -1051,7 +1121,7 @@ $$
 a_{j \circ (k \circ l)}=a_j \times a_{k \circ l}=a_j \times a_k \times a_l=a_{j \circ k} \times a_{l}=a_{(j \circ k)\circ l}
 $$
 
-于是 $\circ$ 运算必须满足交换律和结合律。
+于是 $\circ$ 运算必须满足交换律和结合律，这是我们需要非常注意的一点。
 
 \subsection{不进位加法的 FWT}
 
@@ -1117,8 +1187,12 @@ $$
 
 但是通常 $k$ 不大，所以和直接暴力卷积时间上差距会不大。
 
+为了保证精度，我们可以使用分圆多项式(Cyclotomic polynomial)进行优化，这里不再赘述。
+
+\newpage
+
 \begin{algorithm}
-    \caption{多维广义离散傅里叶变换}
+    \caption{多维广义离散傅里叶变换（未经优化）}
     \begin{algorithmic}[1]
         \Require 幂级数 $f$，单位根 $w_p$，操作符 $opr$ 代表正变换还是逆变换。
         \Ensure $f$ 的傅里叶变换
@@ -1145,6 +1219,8 @@ $$
     \end{algorithmic}
 \end{algorithm}
 
+\newpage
+
 \subsection{共显性问题的快速算法}
 
 如果将 $\texttt{A}$ 对应到 $1$，$\texttt{a}$ 对应到 $0$，容易发现：
@@ -1162,6 +1238,28 @@ $$
 我们发现 $\texttt{A}$ 对应 $2$，$\texttt{Aa}$ 对应 $1$，$\texttt{a}$ 对应 $0$。
 
 只要使用三次单位根 $\omega_3=\cos 120^\circ + \rm i \sin 120^\circ$，即可轻松解决此问题，时间复杂度是 $\mathcal O(n \times 3^n)$。
+
+详情可见 $\texttt{incomplete-dominance/code/solution.cpp}$，这里我们使用的是上述多项式环的计算方法。
+
+\subsection{效率表}
+
+\begin{table}[htbp]
+	\centering
+	\caption{当 $k=13,n=1062882$ 时的时间空间效率}
+	\begin{tabular}{c|c}
+		& $\texttt{solution.cpp}$ \\ \hline
+		时间 & 982ms \\ \hline
+		空间 & 44376KiB
+	\end{tabular}
+\end{table}
+
+\subsection{当向量每维大小不等时的优化}
+
+从 FWT 操作中，我们可以看出操作是按位独立的。于是，对于不同的维数，我们使用不同的矩阵即可，时间复杂度可以做到 $\mathcal O(k  \prod_{i=1}^k |S_i|)$。
+
+\subsection{回顾与总结}
+
+我们想一下之前共显性问题和复等位基因朴素解法为什么时间复杂度如此之高，原因是，一些状态被重复使用，如共显性问题中，$\varnothing$ 和 $\{\texttt{a}\}$ 都对应了白色，而复等位基因问题中，$11,10$ 都对应了 $\texttt{G}$。我们设计算法时，一定要考虑重复问题，尽可能做到不重不漏，每种状态都恰好对应一种性状。通过“不重不漏”的思想，我们可以证明我们后面给出的两种算法时间复杂度都是最优秀的。
 
 \newpage
 
@@ -1194,7 +1292,7 @@ $$
 容易发现，三倍体进行配子生成函数的运算时，需要乘三次，于是针对只有显隐性情况的群体自由交配，我们可以设计以下的算法：
 
 \begin{algorithm}
-	\caption{求解多倍体表现型生成函数}
+	\caption{求解多倍体（三倍体）表现型生成函数}
 	\begin{algorithmic}[1]
 		\Require 配子生成函数 $G$
 		\Ensure 表现型生成函数 $E$
@@ -1221,7 +1319,7 @@ $$
 
 \subsection{累加作用(Additive effect)}
 
-两种显性基因同时存在时表现为一种性状;单独存在时，表现另一种性状;而两对基因均为隐性纯合时表现第三种性状。
+两种显性基因同时存在时表现为一种性状；单独存在时，表现另一种性状；而两对基因均为隐性纯合时表现第三种性状。
 
 发生累加作用的每个基因只有部分作用。
 
@@ -1230,6 +1328,8 @@ $$
 事实上，上述共显性问题是累加作用的一个子集。
 
 \subsection{抑制作用(Inhibitor)和上位效应(Epistasis)}
+
+\textsl{某种双翅目昆虫的体色有黄色、淡绿色和白色，当基因型为 $\texttt{bb\_\_}$ 表现为白色，当基因型为 $\texttt{B\_aa}$ 表现为淡绿色，当基因型为 $\texttt{B\_A\_}$ 表现为黄色。}
 
 有些基因本身并不能表现任何可见的表型效应，但它的存在，完全抑制了其它非等位基因的作用，这种基因称为抑制基因。
 
@@ -1244,7 +1344,7 @@ $$
 
 \section{纯合致死问题的快速算法}
 
-生物界中，有一些个体会因为显性基因纯合而死亡，我们假定有 $k$ 对等位基因，只要其中一对显性纯合，个体都会胚胎致死，通过共显性问题的快速做法，我们可以得到一个时间复杂度为 $\mathcal O(n \times 3^n)$ 的做法，但是这个时间复杂度有些过大。
+生物界中，有一些个体会因为显性基因纯合而死亡，我们假定有 $k$ 对等位基因，只要其中一对显性纯合，个体都会胚胎致死，通过共显性问题的快速做法，我们可以得到一个时间复杂度为 $\mathcal O(k \times 3^k)$ 的做法，但是这个时间复杂度过大。
 
 为了研究这类问题的快速做法，我们引入 \textsl{子集卷积}。
 
@@ -1270,7 +1370,7 @@ $$h_S =\sum_{L} \sum_{R} [(L \cup R) = S][(L \cap R)=\varnothing] f_L g_R$$
 
 $$\mathbf h_{i,S}=\sum_{L\subseteq U} \sum_{R\subseteq U} [L \cup R=S][i=j+k] \mathbf f_{j,L} \mathbf g_{k,R}$$
 
-那么就可以把它看成二元生成函数，第一维就是普通卷积，第二维是集合卷积。我们处理这类问题的方法是分别对两维做卷积，可以获得 $\mathcal O(n^2 2^n)$ 的优秀时间复杂度。参见 \texttt{solution1.cpp}。
+那么就可以把它看成二元生成函数，第一维就是普通卷积，第二维是集合卷积。我们处理这类问题的方法是分别对两维做卷积，可以获得 $\mathcal O(k^2 2^k)$ 的优秀时间复杂度。参见 \texttt{solution1.cpp}。
 
 \subsection{实际效率}
 
@@ -1290,17 +1390,7 @@ $$\mathbf h_{i,S}=\sum_{L\subseteq U} \sum_{R\subseteq U} [L \cup R=S][i=j+k] \m
 
 \section{不允许自交时的计算方法}
 
-当不允许自交时，可以使用类似于我们使用 Trie 树求配子的方法，然后去掉不合法的方案。
-
-\section{多不同作用等位基因时的优化}
-
-由于 FWT 按位独立，我们可以使用类似于康托展开的做法，来获得一个较为密集的编号。
-
-假设现在有一个 $k$ 为向量 $\vec F$，第 $i$ 维能够取到的值有 $S_{i,1},S_{i,2},\cdots,S_{i,|S_i|}$。那么，我们使用这样的编号方法：
-
-$$\vec F \to \sum_{i=1}^k \sum_{j=1}^{|S_i|} [\vec F_i = S_{i,|S_i|}](\prod_{j=1}^{i-1}|S_j|)$$
-
-就可以获得时间复杂度为 $\mathcal O(k\prod_{i=1}^k |S_i|)$ 的做法。
+当不允许自交时，可以使用类似 Trie 树求配子的方法，然后去掉不合法的方案。
 
 \section{蓝色玫瑰问题}
 
@@ -1335,6 +1425,27 @@ $$g(c)=\sum_{[color(\vec F)=c]} \sum_{\vec G \in G(\vec F)} g(\vec G)$$
 $$M=\frac{\sum_{c \in S} g(c)}{\sum_{c\in S}{cnt(c)}}$$
 
 事实上这是一个 01 分数规划问题，通过 $\mathcal O(n \log |S|)$ 的二分，就可以求出答案。
+
+\section{附录：复杂度增长快慢}
+
+\begin{center}
+\begin{tikzpicture}
+	\begin{semilogyaxis}[legend pos=outer north east]
+		\addplot[domain=1:20,blue] {x * 2^x};
+		\addlegendentry{$\mathcal O(k \times 2^k)$};
+		\addplot[domain=1:20,yellow] {x^2 * 2^x};
+		\addlegendentry{$\mathcal O(k^2 \times 2^k)$};
+		\addplot[domain=1:20,red] {3^x};
+		\addlegendentry{$\mathcal O(3^k)$};
+		\addplot[domain=1:20,green] {x * 3^x};
+		\addlegendentry{$\mathcal O(k \times 3^k)$};
+		\addplot[domain=1:20,violet] {4^x};
+		\addlegendentry{$\mathcal O(4^k)$};
+	\end{semilogyaxis}
+\end{tikzpicture}
+\end{center}
+
+一般计算机能够在 1000ms 内跑 $10^7$ 的时间复杂度。
 
 \newpage
 

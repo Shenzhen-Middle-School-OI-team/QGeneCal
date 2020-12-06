@@ -103,7 +103,7 @@
 该模型得出了手工求解表现型和基因型比例的通用方法，以及基于用计算机高效求解的算法。文章最后，根据此模型求解了实际应用中的若干个问题。
 \newline %空一行
 \newline
-\textbf{关键字：信息学方法、遗传学问题、数学模型、二进制约定、生成函数、表现型映射、Trie 树、FWT 算法、时间复杂度、子集卷积。}
+\textbf{关键字：信息学方法、遗传学问题、数学模型、生成函数、Trie 树、FWT 算法、子集卷积。}
 \newline %空一行
 \end{abstract}
 
@@ -151,15 +151,9 @@ $(\frac{2}{3}x^{\text{A}}+\frac{1}{3} x^{\text{a}})(\frac{1}{2}x^{\text{B}}+\fra
 
 对于只有显隐性的情况，基因集合由一系列大写字母和小写字母组成，大写字母表示显性，小写字母表示隐性。对于只有两对等位基因 $\texttt{A,B}$ 的情况，$\mathbb{G}=\{\texttt{A,B,a,b}\}$。
 
-对于另一些更复杂的情况，拿喷瓜举例，基因集合可以写作 $\mathbb{G}=\{\texttt{g}^{-},\texttt{g}^{+},\texttt{G}\}$。
+对于另一些更复杂的情况，拿喷瓜($\mathit{Ecballium\ elaterium}$)举例，基因集合可以写作 $\mathbb{G}=\{\texttt{g}^{-},\texttt{g}^{+},\texttt{G}\}$。
 
-\subsection{对于集合元素的标号}
-
-创建基因集合到 $\{1,2,\cdots |\mathbb{G}|\}$ 的映射 $f:\mathbb{G} \to \mathbb{Z}$，称为基因的\textsl{标号}，基因的顺序就是标号的顺序。
-
-容易发现其有逆运算 $f'$。
-
-\subsection{集合到向量的转化}
+为了便于用计算机处理,创建基因集合到 $\{1,2,\cdots |\mathbb{G}|\}$ 的映射 $f:\mathbb{G} \to \mathbb{Z}$，称为基因的\textsl{标号}，基因的顺序就是标号的顺序。容易发现其有逆运算 $f'$。
 
 一个集合 $S$ 可以转化为一个 $|S|$ 维向量 $v$，其中 $v_i=[f'(i) \in S]$。
 
@@ -171,27 +165,19 @@ $(\frac{2}{3}x^{\text{A}}+\frac{1}{3} x^{\text{a}})(\frac{1}{2}x^{\text{B}}+\fra
 
 \textsl{基因片段}是一个向量。记基因片段组成的集合为 $\mathbb{P}$。
 
-\subsubsection*{配子基因片段}
-
 我们用 $\vec G$ 来表示\textsl{配子基因片段}。
 
 我们可以将一个具有 $k$ 个基因的配子用一个 $k$ 维向量 $\{a_i\}$ 表示，其中 $a_i \in \mathbb{G}$。
-
-\subsubsection*{个体基因片段}
 
 我们用 $\vec I$ 来表示\textsl{个体基因片段}。
 
 我们可以将一个具有 $k$ 对等位基因的个体用一个 $k$ 维向量 $\{(l_i,r_i)\}$表示，其中 $l_i,r_i \in \mathbb{G}$。
 
-\subsection{基因片段的运算}
-
-\subsubsection*{加法运算}
+基因片段的基本运算如下
 
 对于 $L,R \in \mathbb{P}$，而且 $L,R$ 同为配子基因片段或个体基因片段，定义\textsl{加法运算}为两基因片段的有序拼接。
 
 如 $(\texttt{A},\texttt{C}) + (\texttt{B}) = (\texttt{A},\texttt{B},\texttt{C})$、$((\texttt{A},\texttt{a}),(\texttt{B},\texttt{b}))+((\texttt{C},\texttt{C}))=((\texttt{A},\texttt{a}),(\texttt{B},\texttt{b}),(\texttt{C},\texttt{C}))$。
-
-\subsubsection*{结合运算}
 
 对于 $L,R \in \mathbb{P}$，而且 $L,R$ 同为配子基因片段，而且长度相等，定义\textsl{结合运算}为按位有序结合：
 
@@ -201,25 +187,22 @@ $\max,\min$ 为取序号较大/较小者。排序可以根据生物中通用的�
 
 如 $(\texttt{A},\texttt{b}) + (\texttt{a},\texttt{B})=((\texttt{A},\texttt{a}),(\texttt{B},\texttt{b}))$。
 
-\subsection{生成函数 (Generating function)} 
+\subsection{基因片段生成函数} 
 
 定义：
 
 $$A=\sum_{i} a_i x^{i}$$
 
-是序列 $\{a_i\}$ 的\textsl{生成函数}。
+是序列 $\{a_i\}$ 的\textsl{生成函数}(Generating Function)。
 
 我们不关心 $x$ 的取值和级数是否收敛，把 $x$ 作为形式，只关心系数 $a_i$。
-
-\subsection{基因片段生成函数}
 
 定义：
 
 $$A=\sum_{i \in \mathbb{P}} a_i x^{i}$$
 
-是序列 $\{a_i\}$ 的\textsl{基因片段生成函数}。
+是序列 $\{a_i\}$ 的\textsl{基因片段生成函数}。以下是基因片段生成函数的基本运算。
 
-\subsection{基因片段生成函数的系列运算}
 
 \subsubsection*{乘法运算}
 
@@ -253,11 +236,9 @@ $$\begin{aligned}
 
 即基因型数量比为 $\texttt{AABB} : \texttt{AaBB} : \texttt{aaBB}=1:2:1$。
 
-\subsection{表现型集合}
+\subsection{表现型集合与表现型映射}
 
 定义 $\mathbb{E}$ 为表现型集合，一般地，$\mathbb{E}=\mathbb{G}$。
-
-\subsection{表现型映射}
 
 我们创建映射：$\operatorname{exp}:\mathbb{G} \times \mathbb{G} \to \mathbb{E}$，对于一对等位基因 $l,r \in G$ 使得 $\operatorname{exp}(l,r)$ 为这个个体的表现型。
 
@@ -265,7 +246,7 @@ $$\begin{aligned}
 
 比如 $\operatorname{exp}(\texttt{A},\texttt{a})=\texttt{A}$，$\operatorname{exp}(\texttt{a},\texttt{a})=\texttt{a}$。
 
-\subsection{表现型映射的一般性质}
+从定义可得,表现型映射有如下性质
 
 \begin{itemize}
     \item $\operatorname{exp}(i,j)=\operatorname{exp}(j,i)$。
@@ -278,8 +259,7 @@ $$\begin{aligned}
 
 $$\vec E_i=\operatorname{exp}(\vec I_i)$$
 
-\subsection{卷积}
-
+\subsection{卷积与生成函数运算的联系}
 给定环 $R$ 上的 $n$ 维向量 $\vec A=\{a_i\},\vec B=\{b_i\}$ 和下标运算 $\circ$，设 $C=\{c_i\}=A*B$，则满足：
 
 \begin{equation*}
@@ -292,7 +272,7 @@ $$\vec E_i=\operatorname{exp}(\vec I_i)$$
 
 若 $\circ = +$，就是我们熟悉的多项式乘法运算。
 
-\subsection{卷积与生成函数运算的联系}
+
 
 若满足运算 $x^L \times x^R = x^{L \circ R}$，那么生成函数 $F=\sum f_i x^i$ 的乘法：
 
@@ -937,8 +917,6 @@ $$\vec F \to \sum_{i=1}^k \sum_{j=1}^{|S_i|} [\vec F_i = S_{i,|S_i|}](\prod_{j=1
 
 特别地，当 $|S_i|$ 全部相等时，可以将每个标号看成一个 $|S_i|$ 进制数，每个数位对应了相应的基因，以下我们主要研究这种情况。
 
-\subsection{定义}
-
 定义生成函数 $F=\sum f_S x^S$，其中 $S$ 不再是一个集合，而是一个每维可以取 $0,\cdots ,k-1$ 的向量。
 
 \subsection{每维取 max 的 FWT}
@@ -976,7 +954,7 @@ $$\begin{aligned} \hat h_S &= \sum_{L} \sum_{R} [(S \circ L) =S][(S \circ R)=S] 
 
 此算法具有比较自然的高维前缀和的意义。
 
-\subsection{喷瓜问题的快速算法}
+\subsection{复等位基因问题的快速算法}
 
 通过上述算法，将 $\texttt{g}^-$ 对应到 $0$，$\texttt{g}^+$ 对应到 $1$，$\texttt{G}$ 对应到 $2$，我们就可以解决上述的喷瓜问题，时间复杂度为 $\mathcal O(k \times 3^k)$。
 
@@ -1105,7 +1083,7 @@ $$
 
 这样，我们解出矩阵 $\mathbf{M}$，然后求出逆矩阵 $\mathbf{M}^{-1}$，就可以解决任意操作符 $\circ$ 的 FWT 问题。
 
-\subsection{$\circ$ 运算需要满足的性质}
+\subsection{结合运算需要满足的性质} %标题不要有公式
 
 由于：
 
@@ -1392,7 +1370,7 @@ $$\mathbf h_{i,S}=\sum_{L\subseteq U} \sum_{R\subseteq U} [L \cup R=S][i=j+k] \m
 
 当不允许自交时，可以使用类似 Trie 树求配子的方法，然后去掉不合法的方案。
 
-\section{蓝色玫瑰问题}
+\section{最简杂交方案问题}
 
 \subsection{问题描述}
 

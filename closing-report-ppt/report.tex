@@ -1,4 +1,6 @@
-\documentclass[10pt,aspectratio=43,mathserif]{ctexbeamer}
+\documentclass{beamer}
+
+\usetheme{focus}
 
 \usepackage{ctex}
 \usepackage{import}
@@ -57,15 +59,21 @@
 }
 
 \usefonttheme[onlymath]{serif}
-\usetheme{Berkeley}
 
 
 \begin{document}
+	%\title{}
+	%\subtitle{}
+	%\author{}
+	%\institute{深圳中学}
+
+	
 	\title{用信息学方法研究遗传学问题}
 	\subtitle{基因遗传问题的数学建模与算法求解}
 	\author{杨景云小组开题报告}
 	\institute{深圳中学}
-
+	\date{2020}
+	
 	\begin{frame}
 		\titlepage
 	\end{frame}
@@ -329,7 +337,7 @@
 	\begin{frame}{研究方法——配子生成函数的朴素求法}
 		求配子生成函数，我们可以先求出每种配子有多少个，最后每项除以 $2^k$。 
 		
-		在这里，我们将基因片段对应到一个二进制数，如 $\texttt{AB}=(11)_2=3,\texttt{aB}=(01)_2=1$，模拟生成配子的过程，每次生成一个长度为 $k$ 的二进制数，若第 $i$ 位为 $0$，则选择第 $i$ 对等位基因的其中一个，否则选择另一个。
+		在这里，我们将基因片段对应到一个二进制数，如 $\texttt{AB}=(11)_2=3$，$\texttt{aB}=(01)_2=1$，模拟生成配子的过程，每次生成一个长度为 $k$ 的二进制数，若第 $i$ 位为 $0$，则选择第 $i$ 对等位基因的其中一个，否则选择另一个。
 		
 		拿 $\texttt{AaBB}$ 举例：
 		
@@ -405,8 +413,7 @@
 				\State $root \gets 1$
 				\For{$j \gets 1 \textbf{ to } |s_i|$}
 				\If{$\delta(root,s_{i,j})=\texttt{null}$}
-				\State $tot \gets tot+1$
-				\State $\delta(root,s_{i,j}) \gets tot$
+				\State $tot \gets tot+1,\delta(root,s_{i,j}) \gets tot$
 				\EndIf
 				\State $root \gets \delta(root,s_{i,j})$
 				\EndFor
@@ -481,10 +488,15 @@
 			&= \mathcal O(3^k)
 		\end{aligned}
 		$$
-		
+	\end{frame}
+
+
+	\begin{frame}{研究方法——配子生成函数的快速求法 2}
 		但是，通过严格的时间复杂度证明，可以发现这种做法一定比第一种做法要优，其下界为 $\Omega(n)$，上界为 $\mathcal O(2^k)$。
 		
 		实现时，我们可以考虑使用 \texttt{C++ Library} 中的 \texttt{vector} 数据结构，由于它按照元素个数倍增地开空间，可以获得较的空间复杂度。
+		
+		\centering \includegraphics[scale=1]{vector.png}
 	\end{frame}
 
 	\begin{frame}{研究方法——基因片段生成函数的求法}
@@ -515,7 +527,7 @@
 	\end{frame}
 
 	\begin{frame}{研究方法——基因片段生成函数的求法：FWT}
-		仿照 FFT 的思路，\textbf{我们求出 $F$ 的一种变换 $\hat F$，使得 $F \circ G = H \Rightarrow \hat f_i \times \hat g_i = \hat h_i$}，即将系数表示法转化为点值表示法。
+		仿照 FFT 的思路，我们求出 $F$ 的一种变换 $\hat F$，使得 $F \circ G = H \Rightarrow \hat f_i \times \hat g_i = \hat h_i$，即将系数表示法转化为点值表示法。
 		
 		我们给出关于集合并卷积的 FWT 运算，即快速莫比乌斯变换。
 		
@@ -661,6 +673,79 @@
 			$$
 			\item 即表现型比例 $\texttt{ab} : \texttt{Ab} : \texttt{aB} : \texttt{AB}=25:75:11:33$。
 		\end{enumerate}
+	
+		从计算过程可以看出，这种方法的计算量比常规方法减少了很多倍，并且具有很强的扩展性。
 	\end{frame}
 
+	\begin{frame}{研究方法——三种程序运行时间比较}
+		\begin{table}[htbp]
+			\centering
+			\caption{当 $k=15,n=15$ 时的时间空间效率}
+			\begin{tabular}{c|c|c|c}
+				& $\texttt{solution0.cpp}$ & $\texttt{solution1.cpp}$ & $\texttt{solution2.cpp}$ \\ \hline
+				时间 & \color{red}{>1000ms} & 12ms & 10ms \\ \hline
+				空间 & 1024KiB & 660KiB & 912KiB
+			\end{tabular}
+		\end{table}
+		
+		\begin{table}[htbp]
+			\centering
+			\caption{当 $k=13,n=531441$ 时的时间空间效率}
+			\begin{tabular}{c|c|c|c}
+				& $\texttt{solution0.cpp}$ & $\texttt{solution1.cpp}$ & $\texttt{solution2.cpp}$ \\ \hline
+				时间 & \color{red}{>1000ms} & \color{red}{>1000ms} & 190ms \\ \hline
+				空间 & 384KiB & 384KiB & 26432KiB
+			\end{tabular}
+		\end{table}
+	\end{frame}
+
+	\begin{frame}{研究方法}
+		以上只是我们研究的第一部分，我们还研究了共显性问题、复等位基因问题，并且使用每维取 max 的 FWT 和不进位加法的 FWT 解决了上述两个问题，我们还给出了通过后代表现型生成函数倒推亲代配子生成函数的方法和多倍体的解法，也研究了互补基因、累加作用、抑制作用、上位效应等非等位基因之间的常见相互作用。我们使用子集卷积解决了纯合致死问题，并且最终通过 0/1 分数规划解决了蓝玫瑰问题。
+	\end{frame}
+	
+	\begin{frame}{研究方法利弊}
+		\begin{itemize}
+			\item 研究方法特点：本课题利用交叉研究法的研究方法，运用信息学、生物遗传学及组合数学等多学科的理论、方法及成果从整体上对生物遗传学进行研究。
+			\item 研究方法益处：科学严谨，客观准确，能够通过纯理论得出研究方法，结果清晰明确，较有可信度；
+			\item 研究方法弊端：缺乏样本，未能很好得到外界反馈。
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}{结果分析讨论}
+		对于一般的问题，在生成配子生成函数或基因片段生成函数后，我们会根据不同的题干要求，运用卷积，转移函数，集合生成函数，快速莫比乌斯变换和反演等多种手法，力图在解决问题的同时减少时间复杂度，在更快的时间内运行出结果。我们还研究了各种各样的问题，如致死效应，共显性问题，涉及到非等位基因的相互作用的问题等等。
+		
+		从以上结论可以看出孟德尔的分离定律和自由组合定律，再结合非等位基因问题有助于同学们加深对孟德尔遗传定律实质的理解。我们通过卷积，快速傅里叶变换等信息学与数学等方面的技巧，结合生物方面的原理，得到了一个公式化的比常规解法更快捷的运算方法，希望对各位高中生更好地理解生物遗传学有一定的帮助。
+	\end{frame}
+
+	\begin{frame}{研究结论}
+		如附件论文所示，通过以信息学方式考察遗传问题，可以较正常解法更快速地得到结果。通过卷积与快速傅里叶变换等数学与信息技巧，我们找到了用于处理不同条件与情况下遗传学问题的公式化解法，并以此制造了一个网站：
+		
+		https://github.com/Shenzhen-Middle-School-OI-team/Power-Series-Calculation-Model-of-Genome-Combination
+		
+		这个网站主要针对学习高中遗传学的学生，使用者可以便捷地研究不同的遗传学问题，方便学生理解遗传的概念。
+		
+		本研究的成果体现了跨学科交互的作用：通过将生物学问题引入信息学处理方式，并辅以数学的计算技巧，才得到了最终的研究结论。这个研究过程不仅加深了我们对各科知识的掌握，也启发了我们对于问题要以多种思路分析的思维方式。
+	\end{frame}
+	
+	\begin{frame}{研究意义}
+		\begin{itemize}
+		\item 帮助高中生解决并更好理解高中遗传学问题；
+		\item 学习生物遗传学及信息学交叉部分的知识，并对此进行研究；
+		\item 填补前人在信息学和遗传学之间联系的研究方面空白。
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}{研究反思\&展望}
+		对于我们目前的努力，优点和不足如下：
+		\begin{enumerate}
+			\item 我们任务目标是让高中生能够更好地理解遗传学，我们采取的思路是让他们提供基因的组合，通过感受基因组合的结果，对遗传学的一些规律有基本的认识。对于这个思路，我们采用信息学的方法能够很快地给出精确的结果，因此这个思路方面我们无疑是成功的。
+			\item 我们对遗传学的问题考虑得较为周到，这使得我们能够给出高中生绝大部分关于遗传学的问题的答案。
+			\item 我们已经给出了相关的网站，因此我们的研究目标已经完成。
+			\item 我们的研究尚未收到反馈，采取让同学感受基因组合结果的思路是否能够真正更好地让同学对遗传问题的结论有更好的认识还是未知数，这也是下一步我们研究的主要目标。
+		\end{enumerate}
+	\end{frame}
+
+	\begin{frame}{}
+		\centering \huge 谢谢大家
+	\end{frame}
 \end{document}

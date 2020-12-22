@@ -3,6 +3,7 @@
 \usetheme{focus}
 
 \usepackage{ctex}
+\usepackage[]{media9}
 \usepackage{import}
 \usepackage{hyperref}	% 用于交叉引用
 \usepackage{setspace}	% 用于设置行间距
@@ -720,11 +721,39 @@
 	\begin{frame}{研究结论}
 		如附件论文所示，通过以信息学方式考察遗传问题，可以较正常解法更快速地得到结果。通过卷积与快速傅里叶变换等数学与信息技巧，我们找到了用于处理不同条件与情况下遗传学问题的公式化解法，并以此制造了一个网站：
 		
-		https://github.com/Shenzhen-Middle-School-OI-team/Power-Series-Calculation-Model-of-Genome-Combination
+		https://hkfnvg-cxtaem-3000.preview.myide.io
 		
 		这个网站主要针对学习高中遗传学的学生，使用者可以便捷地研究不同的遗传学问题，方便学生理解遗传的概念。
 		
 		本研究的成果体现了跨学科交互的作用：通过将生物学问题引入信息学处理方式，并辅以数学的计算技巧，才得到了最终的研究结论。这个研究过程不仅加深了我们对各科知识的掌握，也启发了我们对于问题要以多种思路分析的思维方式。
+	\end{frame}
+
+	\begin{frame}{网站介绍}
+		\centering \includegraphics[scale=0.5]{show1.png}
+	\end{frame}
+
+	\begin{frame}{网站介绍}
+		\centering \includegraphics[scale=0.5]{show2.png}
+	\end{frame}
+
+	\begin{frame}{网站介绍}
+		\centering \includegraphics[scale=0.5]{show3.png}
+	\end{frame}
+
+	\begin{frame}{网站介绍}
+		\includemedia[width=1\linewidth,height=0.8\linewidth,activate=pageopen,
+		passcontext,
+		transparent,
+		addresource=show.mp4,
+		flashvars={source=show.mp4}
+		]{\includegraphics[width=1\linewidth]{show}}{VPlayer.swf}
+	\end{frame}
+
+
+	\begin{frame}{网站介绍}
+		网站前端使用 Semantic-UI 实现，后端使用 Node.js 的 Express 框架实现，使用者输入数据后，会通过 https 请求发送给服务器进行处理，通过和本地的 C++ 程序交互，既能减轻用户的计算压力，又能保证高效。
+		
+		现在的不足是，服务器还属于临时服务器，不能全天候运行，并且一些功能还没有完善。我们打算今后完善功能，加入遗传图解等功能，并且部署到正式服务器上。
 	\end{frame}
 	
 	\begin{frame}{研究意义}

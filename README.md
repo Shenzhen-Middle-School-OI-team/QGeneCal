@@ -32,7 +32,7 @@ QGeneCal是一个可以高效求解高中生物中多种遗传学问题的项目
 
 - [致死问题](https://github.com/Shenzhen-Middle-School-OI-team/QGeneCal/tree/main/dominant-homozygous-lethal/code)
 
-编译命令为`g++source_file.cpp -o exec_file  -std=c++11`
+编译命令为`g++ source_file.cpp -o exec_file  -std=c++11`
 
 另外,网页版的计算工具还在开发当中,目前只完成了部分内容,可以访问[网页版](https://hkfnvg-cxtaem-3000.preview.myide.io/)使用。
 
@@ -55,7 +55,7 @@ The calculation using our method is easier than that of the traditional method, 
 - Inhibitor and Epistasis
 - Genotype lethal and gamete lethal
 
-Next, we use the Fast Walsh Transform to propose an algorithm to solve the above problems with **lower time complexity** . The algorithm is implemented in C++.
+Next, we use the Fast Walsh Transform to create an algorithm to solve the above problems with **lower time complexity** . The algorithm is implemented in C++.
 
 ## How to use QGeneCal
 
@@ -70,6 +70,6 @@ For efficient algorithms, please refer to the second half of our [essay](https:/
 
 - [Lethal Problem](https://github.com/Shenzhen-Middle-School-OI-team/QGeneCal/tree/main/dominant-homozygous-lethal/code)
 
-The compilation command is `g++source_file.cpp -o exec_file -std=c++11`
+The compilation command is `g++ source_file.cpp -o exec_file -std=c++11`
 
-In addition, the web version of the calculation tool is still under development. At present, only part of the content has been completed. You can visit the [web version](https://hkfnvg-cxtaem-3000.preview.myide.io/) to use it.
+In addition, the web version of the calculation tool is still under development. At present, only part of it has been completed. You can visit the [web version](https://hkfnvg-cxtaem-3000.preview.myide.io/) to use it.

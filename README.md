@@ -17,7 +17,7 @@ QGeneCal是一个可以高效求解高中生物中多种遗传学问题的项目
 - 抑制作用(Inhibitor)和上位效应(Epistasis)
 - 基因型致死和配子致死
 
-接着,我们利用快速沃尔什变换(Fast Walsh Transform),提出了在较低的时间复杂度下求解以上问题的算法。并采用C++实现了该算法。
+接着,我们利用快速沃尔什变换(Fast Walsh Transform),提出了**在较低的时间复杂度下**求解以上问题的算法。并采用C++实现了该算法。
 
 ## 如何使用QGeneCal
 
@@ -32,4 +32,44 @@ QGeneCal是一个可以高效求解高中生物中多种遗传学问题的项目
 
 - [致死问题](https://github.com/Shenzhen-Middle-School-OI-team/QGeneCal/tree/main/dominant-homozygous-lethal/code)
 
+编译命令为`g++source_file.cpp -o exec_file  -std=c++11`
+
 另外,网页版的计算工具还在开发当中,目前只完成了部分内容,可以访问[网页版](https://hkfnvg-cxtaem-3000.preview.myide.io/)使用。
+
+# QGeneCal
+
+QGeneCal is a project that can efficiently solve a variety of genetic problems in high school biology. This project is licensed under the [MIT License](https://mit-license.org/)
+
+## What Can QGeneCal Do
+
+We use Set Power Series to build a mathematical model, which can be used to  manually calculate the following questions simply:
+
+- Individual selfing of multiple genotypes, phenotype and proportion of offspring
+- Free mating of individuals with multiple genotypes, phenotypes and proportions of offspring
+- Reverse the possible parental genotype from the genotype of the offspring
+  
+The calculation using our method is easier than that of the traditional method, and the approach is clear. The model can also handle interacting alleles, including:
+
+- Complementary gene
+- Additive effect
+- Inhibitor and Epistasis
+- Genotype lethal and gamete lethal
+
+Next, we use the Fast Walsh Transform to propose an algorithm to solve the above problems with **lower time complexity** . The algorithm is implemented in C++.
+
+## How to use QGeneCal
+
+
+For manual calculation methods, please refer to the first 4 chapters of our [essay](https://github.com/Shenzhen-Middle-School-OI-team/QGeneCal/blob/main/essay/essay.pdf).
+
+For efficient algorithms, please refer to the second half of our [essay](https://github.com/Shenzhen-Middle-School-OI-team/QGeneCal/blob/main/essay/essay.pdf). The C++ code corresponding to the paper is as follows:
+
+- [Calculation under general conditions](https://github.com/Shenzhen-Middle-School-OI-team/QGeneCal/tree/main/only-outbreeding/code)
+
+- [Non-allele interaction](https://github.com/Shenzhen-Middle-School-OI-team/QGeneCal/tree/main/incomplete-dominance)
+
+- [Lethal Problem](https://github.com/Shenzhen-Middle-School-OI-team/QGeneCal/tree/main/dominant-homozygous-lethal/code)
+
+The compilation command is `g++source_file.cpp -o exec_file -std=c++11`
+
+In addition, the web version of the calculation tool is still under development. At present, only part of the content has been completed. You can visit the [web version](https://hkfnvg-cxtaem-3000.preview.myide.io/) to use it.
